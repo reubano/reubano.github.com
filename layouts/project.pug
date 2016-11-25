@@ -1,0 +1,49 @@
+extends base
+include _mixins/navbar
+include _mixins/aside
+include _mixins/utils
+
+block nav
+  +navbar(projects.name)
+
+block title
+  include _partials/title
+
+block content
+  - var postdate = format_date(page.date, 'MMM D, YYYY')
+  ul.breadcrumb
+    li
+      a(href=site.url)= site.title
+
+    li
+      a(href=url_for(projects.name))= projects.title
+
+    li= page.title
+
+  article.article(itemscope itemtype='http://schema.org/Article')
+    h2(itemprop='name')= page.title
+
+    small(itemprop='datePublished', content=page.date.toISOString())
+      | developed by #{site.author} on #{postdate} in #{page.language || 'n/a'}
+
+    if page.description
+      pullquote!= page.description
+
+    .content(itemprop='articleBody')
+      != page.less
+
+    include _partials/project-meta
+
+    .tags
+      +list-tags(page.tags)
+
+    footer.article-footer
+      include _partials/post-updated
+      include _partials/post-nav
+
+
+block aside
+  aside
+    +get-related(3)
+    +get-featured(projects, 3)
+    +get-recent(projects, 3)

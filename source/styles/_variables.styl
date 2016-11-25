@@ -1,0 +1,68 @@
+// Config
+support-for-ie = false
+vendor-prefixes = webkit moz ms official
+
+// Typography
+$helvetica = "Trebuchet MS", "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif
+$lucidia = "Lucida Grande", Tahoma, Verdana, Geneva, Arial, sans-serif
+$palatino = "Palatino Linotype", "Book Antiqua", Palatino, serif
+$georgia = Garamond, Georgia, Cambria, serif
+$monospace = Menlo, Consolas, "Lucida Console", Monaco, "Courier New", Courier, monospace
+$source-code = "Source Code Pro", $monospace
+$bitstream = "Bitstream Vera Sans Mono", $monospace
+$golden-ratio = 1.61803
+
+$font-sans = $helvetica
+$font-serif = $georgia
+$font-mono = $source-code
+$font-family = $font-sans
+$font-title = Lato, $font-sans
+$font-size = 1.3rem
+$small-font-size = 1rem
+$ligatures = 'false'
+$line-height = $golden-ratio
+$base-height = $font-size * $line-height
+$half-base-height = $base-height / $golden-ratio
+
+// Layout
+$max-width = 75rem
+$sidebar-width = 20 rem // need to use gr jeet col
+$logo-size = 3em
+$icon-width = 3em
+$container-width = 85%
+$pull-quote-width = 62%
+$hamburger-button-height = 2.1em
+
+$full-gutter = 1.25rem
+$half-gutter = $full-gutter / $golden-ratio
+$quarter-gutter = $half-gutter / $golden-ratio
+
+$full-headspace = 2rem
+$half-headspace = $full-headspace / $golden-ratio
+$quarter-headspace = $half-headspace / $golden-ratio
+
+$burger-spacing = .625em
+$intro-img-height = 12em
+$intro-img-height-mobile = 6em
+
+$border-radius = 5px
+$border-weight = 1px
+$heavy-border-weight = 4px
+
+// Device cutoffs http://zellwk.com/blog/media-query-units/
+// chrome sizes
+// mobile 20 - 26em (320 - 416px)
+// tablet 48em (768px)
+// laptop 64em (1024px)
+// desktop 90em (1440px)
+// hd 160em (2560px)
+
+$mobile-cutoff = 40em  // 640px
+$desktop-cutoff = 64em  // 1024px
+$hd-cutoff = 125em  // 2000px
+
+// Media queries
+$mobile = 'screen and (max-width: $mobile-cutoff)'
+$tablet = 'screen and (min-width: $mobile-cutoff) and (max-width: $desktop-cutoff)'
+$desktop = 'screen and (min-width: $desktop-cutoff)'
+$hd = 'screen and (min-width: $hd-cutoff)'

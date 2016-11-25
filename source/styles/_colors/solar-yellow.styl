@@ -1,0 +1,60 @@
+// custom colors
+$base-color = $solar-yellow
+$base-alpha = alpha($base-color, 10%)
+$base-white = blend($base-alpha, $white)
+$base-offwhite = blend($base-alpha, $offwhite)
+$base-lite-gray = blend($base-alpha, $lite-gray)
+$base-med-gray = blend($base-alpha, $med-gray)
+$base-gray = blend($base-alpha, $gray)
+$base-dark-gray = blend($base-alpha, $dark-gray)
+$base-black = blend($base-alpha, $black)
+$complement = complement($base-color)
+$pos-accent = $solar-red
+$neg-accent = $solar-violet
+$dark-pos-accent = darken($pos-accent, 30%)
+$dark-neg-accent = darken($neg-accent, 30%)
+$lite-pos-accent = lighten($pos-accent, 85%)
+$lite-neg-accent = lighten($neg-accent, 70%)
+$lite-base = lighten($base-color, 70%)
+
+// axis colors
+$font-color = darken($base-dark-gray, 30%)
+$background-color = $base-white
+$default-color = darken($base-color, 50%)  // for blockquote, button, figure, hover-glow
+$selected-text-color = $background-color
+$text-selection-color = $dark-pos-accent
+$autofill-font-color = $background-color
+$autofill-bg-color = $default-color
+
+// base theme color
+$nav-link-color = $background-color
+$nav-bg-color = $default-color
+$nav-active-color = $lite-base
+$link-color = $dark-pos-accent
+$link-visited-color = $dark-neg-accent
+$border-color = alpha($base-color, 30%)
+$divider-color = $base-color
+$tip-color = transparentify($neg-accent, $background-color)
+$info-color = transparentify($complement, $background-color)
+$warn-color = transparentify($pos-accent, $background-color)
+$button-font-color = $background-color
+$button-hover-color = $dark-pos-accent
+
+// alt theme color
+$alt-link-color = shade($link-color, 10%)
+$alt-link-visited-color = $alt-link-color
+$alt-font-color = $font-color
+$alt-bg-color = $base-offwhite
+$alt-button-font-color = $base-black
+$alt-button-color = $base-lite-gray
+$alt-button-hover-color = $base-med-gray
+
+// inverse theme color
+$inverse-link-color = $nav-active-color
+$inverse-link-visited-color = tint($lite-neg-accent, 30%)
+$inverse-font-color = $background-color
+$inverse-bg-color = $default-color
+$inverse-button-font-color = $inverse-bg-color
+$inverse-button-color = $inverse-font-color
+$inverse-button-hover-color = lighten($inverse-button-font-color, 90%)
+

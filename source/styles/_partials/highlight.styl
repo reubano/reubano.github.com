@@ -1,0 +1,47 @@
+// Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull
+
+pre
+  display block
+  overflow-x auto
+  padding $quarter-headspace
+  background $solar-black
+  color $solar-silver
+  border-radius $border-radius
+  font-family $font-mono
+
+  code
+    .meta
+      padding 0
+      margin 0
+      border none
+      background inherit
+
+    .comment, .quote
+      color $solar-gray
+
+    .keyword, .selector-tag, .addition
+      color $solar-green
+
+    .number, .string, .meta .meta-string, .literal, .doctag, .regexp
+      color $solar-cyan
+
+    .title, .section, .name, .selector-id, .selector-class
+      color $solar-blue
+
+    .attribute, .variable, .template-variable, .class .title, .type
+      color $solar-yellow
+
+    .symbol, .bullet, .subst, .meta, .meta .keyword, .selector-attr, .selector-pseudo, .link
+      color $solar-orange
+
+    .built_in, .deletion
+      color $solar-red
+
+    .formula
+      background $solar-dark-gray
+
+    .emphasis
+      font-style italic
+
+    .strong
+      font-weight bold

@@ -1,0 +1,6 @@
+- var about = find(pages.data, {'title': 'about'})
+
+h2
+  a(href=url_for(about.name))= about.title
+
+| !{about.less.toString()}

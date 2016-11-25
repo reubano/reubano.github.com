@@ -1,0 +1,25 @@
+- var user = page.user || social.flickr.user
+- var source = 'https://www.flickr.com/photos/' + user + '/' + page.id
+
+.meta
+  ul.tl
+    if page.city
+      li= page.city
+    if page.state
+      li= page.state
+    if page.country
+      li= page.country
+    li ƒ/#{page.aperture || 0}
+    li= page.exposure || 0
+    li
+      a(href=source, target='_blank', rel='noopener noreferrer') flickr
+  ul.tl
+    if page.city
+      li city
+    if page.state
+      li state
+    if page.country
+      li country
+    li aperture
+    li exposure
+    li source

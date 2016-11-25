@@ -1,0 +1,19 @@
+include utils
+
+mixin blog-excerpt(post)
+  - var readtime = min2read(post.markdown)
+  - var postdate = format_date(post.date, 'MMM D, YYYY')
+  article(itemscope itemtype='http://schema.org/Article')
+    h2(itemprop='name')
+      a(href=url_for(post.path))= post.title
+
+    p.small(itemprop='datePublished', content=post.date.toISOString())
+      | written by #{site.author} on #{postdate} ~ #{readtime} minute read ~&nbsp;
+      a(href=url_for(post.path)) view full post...
+
+    p.excerpt(itemprop='articleBody')
+      | !{post.less.toString()}
+
+    footer.excerpt-footer
+      if post.tags
+        +list-tags(post.tags)

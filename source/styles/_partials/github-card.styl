@@ -1,0 +1,68 @@
+.github-card
+  border-radius $border-radius
+  border $border-weight solid $border-color
+  padding $quarter-headspace $half-gutter
+  margin-bottom $half-headspace
+  background $alt-bg-color
+  color $alt-font-color
+  &:last-child
+    margin-bottom 0
+
+  a
+    link($alt-link-color, 'glow')
+
+  .header
+    position relative
+
+  .button
+    position absolute
+    top 0
+    right 0
+    glossy-button($alt-button-color, 'medium', $alt-button-font-color)
+
+  .header
+    padding $quarter-headspace 0
+
+    sup
+      font-size 60%
+      margin-left $quarter-gutter
+      color tint($base-dark-gray, 20%)
+
+  .content
+    padding $quarter-headspace 0
+
+    p
+      margin 0 $half-gutter 0 0
+      overflow hidden
+      clear both
+      word-wrap break-word
+
+  .footer
+    border-top $border-weight solid $border-color
+
+  .status
+    font-size 70%
+    padding-right $full-gutter
+    text-transform uppercase
+
+    strong
+      font-size 110%
+
+  @media $mobile
+    unstack()
+    col(1)
+  @media $tablet
+    stack()
+    col(1/2, uncycle: 3, cycle: 2)
+  @media $desktop
+    unstack()
+    col(1)
+  @media $hd
+    stack()
+    col(1/3, cycle: 3)
+
+
+.github-card .tag-list
+  margin $quarter-headspace 0 0
+  .tag
+    button($alt-button-color, 'medium', $alt-button-font-color)

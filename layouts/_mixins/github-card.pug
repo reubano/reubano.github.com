@@ -1,0 +1,22 @@
+include utils
+
+mixin github-card(project)
+  .github-card
+    .header
+      strong.name
+        a(href=url_for(project.path))= project.title
+        sup.language= project.language || 'n/a'
+      a.button(href=project.html_url) ★ Star
+
+    .content
+      if project.description
+        p= project.description
+      else
+        p= project.contents
+
+      if project.tags
+        +list-tags(project.tags)
+
+    .footer
+      span.status <strong>#{project.forks || 0}</strong> Forks
+      span.status <strong>#{project.stargazers_count || 0}</strong> Stars

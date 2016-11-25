@@ -1,0 +1,54 @@
+extends base
+include _mixins/aside
+
+block content
+  #intro
+    - var srcset = get_srcset('logo', 'png', false)
+    - var img_sizes = '(min-width: 640px) 33vw, 100vw'
+    - var src = url_for('images/logo.png')
+
+    img(class='cover logo', title=site.author, sizes=img_sizes, srcset=srcset, src=src, alt=site.author)
+
+    .text
+      .title
+        h1= site.title
+        p= site.subtitle
+
+      .description
+        big= site.description
+
+      .about
+        include _partials/about
+
+  #categories
+    each category in collections
+      if category.show
+        div(class='category category-' + category.name)
+          h2
+            a(href=url_for(category.name))= category.name
+
+          +get-featured(category)
+          +get-recent(category, category.count, category.filterby)
+
+    div(class='category category-about')
+      include _partials/about
+
+  #about.about-home
+    include _partials/about
+
+  #photos
+    div(class='category category-gallery')
+      h2
+        a(href=url_for('gallery')) recent gallery photos
+
+      +get-recent(gallery, 8)
+
+block alt
+  section#alt.alt
+    .container
+      each category in collections
+        if category.show
+          - var name = category.name
+          .category
+            a(href=url_for(name), class="btn block full") view #{name}...
+            a(href=url_for(name), class="btn block abbrv") #{name}...

@@ -1,0 +1,149 @@
+_ = require 'lodash'
+moment = require 'moment'
+config = require './config'
+
+sizes = [
+  {width: 75, query: '_s', key: 'url_sq'}
+  {width: 100, query: '_t', key: 'url_t'}
+  {width: 150, query: '_q', key: 'url_q'}
+  {width: 240, query: '_m', key: 'url_s'}
+  {width: 320, query: '_n', key: 'url_n'}
+  {width: 500, query: '', key: 'url_m'}
+  {width: 500, query: '', key: 'url_e'}
+  {width: 640, query: '_z', key: 'url_z'}
+  {width: 800, query: '_c', key: 'url_c'}
+  {width: 1024, query: '_b', key: 'url_l'}
+  {width: 1600, query: '_h', key: 'url_h'}
+  {width: 2048, query: '_k', key: 'url_k'}
+  {width: 2048, query: '_o', key: 'url_o'}
+]
+
+# options =
+#   pages: 'pages' # directory containing pages
+#   articles: 'articles' # directory containing contents to paginate
+
+# _getArticles = (contents) ->
+#   directories = contents[options.articles]._.directories
+#   dir_articles = directories.map (item) -> item.index
+#   bare_articles = coqntents[options.articles]._.pages
+#   articles = _.concat dir_articles, bare_articles
+#   filtered = articles.filter (item) ->
+#     item.template? and not item.draft
+#   _.sortBy filtered, (item) -> -item.date
+
+_filterData = (data) -> _.filter data, (item) -> item.featured
+filterData = _.memoize _filterData
+
+pad = (num, size) -> if num then ('000000000' + num).substr(-size) else num
+monthsAbrs = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct",
+  "Nov", "Dec"]
+
+monthNames = [
+  "January", "February", "March", "April", "May", "June", "July",
+  "August", "September", "October", "November", "December"]
+
+module.exports =
+  urlFor: (item) ->
+    stripped = item.replace '/index.html', ''
+    "#{config.site.url}/#{stripped}/"
+
+  formatDate: (date, format) ->
+    day = date.getDate()
+    index = date.getMonth()
+    year = date.getFullYear()
+    format
+      .replace('DD', pad(day.toString(), 2))
+      .replace('D', day)
+      .replace('MMMM', monthNames[index])
+      .replace('MMM', monthsAbrs[index])
+      .replace('YYYY', year)
+      .replace('YY', year.toString().slice(2))
+
+  min2read: (content, wpm=160) ->
+    word_cnt = content.toString().split(' ').length
+    Math.ceil word_cnt / wpm
+
+  # getPages: (contents) ->
+  #   dir_pages = contents[options.pages]._.directories.map (item) -> item.index
+  #   bare_pages = contents[options.pages]._.pages
+  #   pages = _.concat dir_pages, bare_pages
+  #   filtered = pages.filter (item) -> item.template? and not item.draft
+  #   _.sortBy filtered, (item) -> -item.date
+
+  # getNextPost: (articles, article, category) ->
+  #   categorized = filterArticlesByCategory articles, category
+  #   filtered = _.filter categorized, (item) -> item.date < article.date
+  #   sorted = _.sortBy filtered, (item) -> -item.date
+  #   if sorted.length then sorted[0] else false
+
+  # getPrevPost: (articles, article, category) ->
+  #   categorized = filterArticlesByCategory articles, category
+  #   filtered = _.filter categorized, (item) -> item.date > article.date
+  #   sorted = _.sortBy filtered, (item) -> item.date
+  #   if sorted.length then sorted[0] else false
+
+  getRelated: (category, article) ->
+    sorted = _.sortBy category.data, (item) ->
+      -_.intersection(article.tags, item.tags).length
+
+    sorted.filter (item) -> item.title isnt article.title
+
+  getFeatured: (category, filterby) ->
+    if filterby
+      filtered = _.filter (filterData category.data), filterby
+    else
+      filtered = filterData category.data
+
+    _.sortBy filtered, (item) -> -item.updated
+
+  getRecent: (category, filterby) ->
+    if filterby
+      filtered = _.filter category.data, filterby
+    else
+      filtered = category.data
+
+    _.sortBy filtered, (item) -> -item.date
+
+  getRandom: (category, filterby) ->
+    if filterby
+      _.shuffle _.filter category.data, filterby
+    else
+      _.shuffle category.data
+
+  # getArchives: (contents, type='all') ->
+  #   articles = _getArticles contents
+
+  #   if type in ['yearly', 'monthly']
+  #     archives = _.map articles, (item) ->
+  #       year = item.date.getFullYear()
+  #       switch type
+  #         when 'yearly' then year
+  #         when 'monthly' then "#{year}/#{item.date.getMonth() + 1}"
+
+  #     unique = _.uniq archives
+  #     unique.sort()
+  #     _.filter unique, (item) -> item
+  #   else
+  #     articles
+
+  # countArchives: (articles) ->
+  #   _.countBy articles, (item) -> moment(item.date).format 'YYYY/MM'
+
+  # css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/
+  # sitepoint.com/how-to-build-responsive-images-with-srcset/
+  # webdesignerdepot.com/2015/08/the-state-of-responsive-images/
+  # stackoverflow.com/a/12158668/408556
+  # developer.telerik.com/featured/lazy-loading-images-on-the-web/
+  getSrcset: (photo, ext='jpg', flickr=true) ->
+    if flickr
+      filtered = _.filter sizes, (s) -> photo[s.key]
+      ("#{photo[s.key]} #{s.width}w" for s in filtered).join(', ')
+    else
+      url = "#{config.site.url}/#{config.paths.images}"
+      ("#{url}/#{photo}#{s.query}.#{ext} #{s.width}w" for s in sizes).join(', ')
+
+  buildFlickrURL: (photo, query='', ext='jpg') ->
+    base = "https://farm#{photo.farm}.staticflickr.com/"
+    base +="#{photo.server}/#{photo.id}_#{photo.secret}#{query}.#{ext}"
+    base

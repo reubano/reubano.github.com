@@ -1,0 +1,29 @@
+// Twitter Card data
+meta(name='twitter:card', content='summary_large_image')
+meta(name='twitter:site', content='@'+social.twitter.user)
+meta(name='twitter:title', content=page.title)
+meta(name='twitter:creator', content='@'+social.twitter.user)
+
+if page.description
+  meta(name='twitter:description', content=page.description)
+
+if page.image
+  meta(name='twitter:image:src', content=page.image)
+
+// Open Graph data
+meta(property='og:title', content=page.title)
+meta(property='og:type', content='article')
+meta(property='og:url', content=page.url)
+meta(property='og:site_name', content=site.name)
+
+if page.description
+  meta(property='og:description', content=page.description)
+
+if page.image
+  meta(property='og:image', content=page.image)
+
+if page && page.tags && page.tags.length
+  each tag in page.tags
+    meta(property='og:article:tag', content=tag)
+
+meta(property='fb:admins', content=social.facebook.id)

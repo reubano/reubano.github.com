@@ -1,0 +1,238 @@
+article
+  h1
+    margin 0
+  .photo
+    figure($base-color)
+    margin $half-headspace 0
+
+  .meta
+    padding $quarter-headspace $quarter-gutter
+    margin $half-headspace 0
+    border $border-weight solid $border-color
+    border-radius $border-radius
+    background $alt-bg-color
+    text-align center
+    ul:first-child
+      bold()
+    li
+      overflow hidden
+      text-overflow ellipsis
+    li:not(:last-child)
+      border-right $border-weight solid $border-color
+
+  footer
+    padding $full-headspace 0 0
+    border-top $border-weight solid $border-color
+    margin-top $half-headspace
+
+    .updated
+      col(1/2)
+      vertically-align()
+      text-align center
+      shift(1/4)
+      margin-top 0
+      margin-bottom 0
+
+    .post-nav
+      col(1/4)
+      vertically-align()
+
+    .prev
+      shift(-1/2)
+
+    .next
+      text-align right
+
+    @media print
+      display none
+
+    @media $mobile
+      padding $half-headspace 0 0
+      .updated
+        col(1)
+        unshift(1/4)
+        text-align center
+
+      .post-nav
+        col(1/2)
+
+      .prev
+        unshift(-1/2)
+
+      .next
+        text-align right
+
+    .empty
+      color: $background-color
+
+    a
+      link($link-color, 'glow')
+
+.site-tags, .site-archives
+  inline-list()
+  ul
+    padding-left 0
+    li
+      margin-right $half-gutter
+
+.aside
+  margin-bottom $full-headspace
+
+  h3
+    margin 0
+  h2
+    margin-bottom 0
+  span
+    margin-left $quarter-gutter
+    small()
+    font-size 80%
+    color tint($font-color, 5%)
+    &:before
+      content '('
+    &:after
+      content ')'
+
+.breadcrumb
+  breadcrumb($divider-color: $border-color)
+  margin $half-headspace 0 $quarter-headspace
+  padding-bottom $quarter-headspace
+  opacity 0.9
+  border-bottom $border-weight solid $border-color
+
+.tag-list
+  li
+    margin-right $quarter-gutter
+
+  .tag
+    button($alt-button-color, 'large', $alt-button-font-color)
+    hover-color($alt-button-hover-color)
+    padding $quarter-headspace $half-gutter
+
+    &:hover
+      text-shadow none !important
+
+  .tag-small
+    button($alt-button-color, 'small', $alt-button-font-color)
+
+  .tag-medium
+    button($alt-button-color, 'medium', $alt-button-font-color)
+
+.two-cols
+  columns($count: 2, $gap: $full-gutter)
+
+aside
+  @media $mobile
+    col(1)
+    .aside
+      col(1)
+  @media $tablet
+    col(1)
+    .aside
+      col(1/3)
+    .site-archives, .site-tags
+      col(1/2)
+  @media $desktop
+    col(1 / (1 + $golden-ratio))
+    .aside
+      col(1)
+  @media $hd
+    col(1/5)
+    .aside
+      col(1)
+
+#category, #archives, .article
+  @media $mobile
+    col(1)
+    .one-col
+      display block
+    .two-cols
+      display none
+  @media $tablet
+    col(1)
+    .one-col
+      display block
+    .two-cols
+      display none
+  @media $desktop
+    col($golden-ratio / (1 + $golden-ratio))
+    .one-col
+      display block
+    .two-cols
+      display none
+  @media $hd
+    col(4/5)
+    .one-col
+      display none
+    .two-cols
+      display block
+
+  margin-bottom $full-headspace
+
+#archives
+  .archives-group .bottom-tags
+    display block
+    padding-bottom $quarter-headspace
+    margin-bottom $half-headspace
+    border-bottom $border-weight solid $border-color
+    &:last-child
+      border-bottom none
+
+  .inline-tags
+    display none
+
+  @media $hd
+    .inline-tags
+      display block
+    .bottom-tags
+      display none
+    .tag-list
+      padding-bottom 0
+      margin-bottom 0
+
+.gallery, .projects
+  margin-top $full-headspace
+
+.aside .gallery
+  margin-top $half-headspace
+
+.excerpts h2, .archives h2, .article h2
+  margin-bottom 0
+
+.excerpt
+  &:not(:last-child)
+    margin-bottom $half-headspace
+
+.category-title, .archives-title, .tag-title
+  margin 0
+
+.excerpts
+  .excerpt-footer
+    margin 0
+    padding 0
+    border-top none
+
+  article
+    unstack()
+    col(1)
+
+    @media $hd
+      stack()
+      col(1/2, cycle: 2)
+
+// .post-content
+//   text-align: justify
+//   text-justify: distribute
+//   word-break: normal
+// a
+//   word-break: break-all
+// .post-nav
+//   white-space: nowrap
+// .article-anchor
+//   margin-left: $half-gutter
+//   display: none
+//   &:before
+//     content: "#"
+//   @media print
+//     display: none !important
+//   .article-heading:hover &
+//     display: inline-block

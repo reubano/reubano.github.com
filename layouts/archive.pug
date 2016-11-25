@@ -1,0 +1,63 @@
+extends base
+include _mixins/navbar
+include _mixins/aside
+include _mixins/utils
+
+block nav
+  +navbar('archives')
+
+block title
+  title archives | #{site.title}
+
+block content
+  ul.breadcrumb
+    li
+      a(href=site.url)= site.title
+
+    if page.year
+      li
+        a(href=url_for('archives')) archives
+    else
+      li archives
+
+    if page.month
+      li
+        a(href=get_archives_url(page.year))= page.year
+
+      li= page.month
+    else if page.year
+      li= page.year
+
+  #archives
+    h1.archives-title archives
+
+    .archives
+      for group in archive
+        .archives-group
+          ul.tl
+            li
+              h2= group.year
+            li
+              h2 title
+            li.inline-tags
+              h2 tags
+
+          for post in group.data
+            - var _date = format_date(post.date, 'MMM DD')
+            ul.tl
+              li #{_date} <small>[#{post.collection}]</small>
+              li
+                a(href=url_for(post.path), title=post.title)= post.title
+
+              if post.tags
+                li.inline-tags
+                  +list-tags(post.tags, 'medium')
+
+            if post.tags
+              .bottom-tags
+                +list-tags(post.tags, 'medium')
+
+block aside
+  aside
+    +get-site('archives')
+    +get-site('tags')

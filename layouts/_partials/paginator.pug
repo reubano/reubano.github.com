@@ -1,0 +1,20 @@
+if page.pagination
+  - var pagination = page.pagination
+  - var _pages = pagination.pages
+
+  nav.page-navigator
+    if page.prev
+      - var href = url_for(page.prev.path)
+      a(class="extend prev" rel="prev" href=href) Prev
+
+      for p in _pages.slice(page.first.index, page.index)
+        a.page-number(href=url_for(p.path))= p.num
+
+    span(class="page-number current")= page.num
+
+    if page.next
+      for p in _pages.slice(page.next.index, page.last.index + 1)
+        a.page-number(href=url_for(p.path))= p.num
+
+      - var href = url_for(page.next.path)
+      a(class="extend next" rel="next" href=href) Next

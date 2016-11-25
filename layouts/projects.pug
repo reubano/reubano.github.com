@@ -1,0 +1,33 @@
+extends base
+include _mixins/navbar
+include _mixins/aside
+include _mixins/utils
+include _mixins/github-card
+
+block title
+  include _partials/title
+
+block nav
+  +navbar(page.name)
+
+block content
+  include _partials/collection-breadcrumb
+
+  #category
+    h1.category-title= page.title
+    .projects
+      if projects.pagination
+        for project in page.data
+          +github-card(project)
+      else
+        for project in page.data
+          +github-card(project)
+
+block aside
+  aside
+    +get-featured(projects, 4)
+    +get-recent(projects, 4)
+    +get-random(projects, 4)
+
+block paginator
+  include _partials/paginator

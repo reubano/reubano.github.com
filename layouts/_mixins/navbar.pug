@@ -1,0 +1,29 @@
+mixin navbar(cur)
+  nav#topnav(role='navigation')
+    #mobile-navbar.container
+      h1
+        a(href=site.url)= site.name
+
+      .mobile-nav
+        button(class='hamburger hamburger--squeeze', type='button', aria-label='Menu', aria-controls='navigation')
+          span.hamburger-box
+            span.hamburger-inner
+          // span.hamburger-label Menu
+
+    div(id='navbar', class='container hidden-slow')
+      h1
+        a(href=site.url)= site.name
+
+      ul.nav-list
+        each page in pages.data
+          - var href = url_for(page.name)
+          li
+            a(href=href, class={active: cur == page.name})= page.name
+
+        each category in collections
+          if category.show
+            - var href = url_for(category.name)
+            li
+              a(href=href, class={active: cur == category.name})= category.name
+
+    //input#search-input(type='search', placeholder='Search...')

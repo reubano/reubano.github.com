@@ -1,0 +1,92 @@
+/*!
+ * Hamburgers
+ * @description Tasty CSS-animated hamburgers
+ * @author Jonathan Suh @jonsuh
+ * @link https://github.com/jonsuh/hamburgers
+ */
+.hamburger
+  padding $quarter-headspace $full-gutter $quarter-headspace - .625em
+  margin $quarter-headspace 0
+  border 1px solid $nav-link-color
+  display inline-block
+  cursor pointer
+  transition-property opacity, filter
+  transition-duration 0.15s
+  transition-timing-function linear
+  font inherit
+  color inherit
+  text-transform none
+  background-color transparent
+  overflow visible
+
+  &:hover
+    opacity 0.90
+    background-color $nav-link-color
+    .hamburger-inner
+      &, &::before, &::after
+        background-color $nav-bg-color
+
+
+.hamburger-box
+  width 2.5em
+  height 1.5em
+  display inline-block
+  position relative
+
+.hamburger-label
+  color $nav-link-color
+  margin 0
+  font-size 1em
+  line-height 1em
+
+.hamburger-inner
+  display block
+  top 50%
+  margin-top -.125em
+
+  &::before, &::after
+    content ""
+    display block
+
+  &::before
+    top -.625em
+
+  &::after
+    bottom -.625em
+
+  &, &::before, &::after
+    width 2.5em
+    height .25em
+    background-color $nav-link-color
+    border-radius $border-radius
+    position absolute
+    transition-property transform
+    transition-duration 0.15s
+    transition-timing-function ease
+
+.hamburger--squeeze
+  .hamburger-inner
+    transition-duration 0.1s
+    transition-timing-function cubic-bezier(0.55, 0.055, 0.675, 0.19)
+
+  .hamburger-inner::before
+    transition top 0.1s 0.14s ease, opacity 0.1s ease
+
+  .hamburger-inner::after
+    transition bottom 0.1s 0.14s ease, transform 0.1s cubic-bezier(0.55, 0.055, 0.675, 0.19)
+
+  &.is-active
+    .hamburger-inner
+      transform rotate(45deg)
+      transition-delay 0.14s
+      transition-timing-function cubic-bezier(0.215, 0.61, 0.355, 1)
+
+      &::before
+        top 0
+        opacity 0
+        transition top 0.1s ease, opacity 0.1s 0.14s ease
+
+      &::after
+        bottom 0
+        transform rotate(-90deg)
+        transition bottom 0.1s ease, transform 0.1s 0.14s cubic-bezier(0.215, 0.61, 0.355, 1)

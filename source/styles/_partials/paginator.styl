@@ -1,0 +1,20 @@
+.page-navigator
+  clearfix()
+  text-align center
+  color $alt-font-color
+  padding $half-headspace 0
+  background $alt-bg-color
+  border-top $border-weight solid $border-color
+  overflow hidden
+  a, span
+    padding 0 $full-gutter
+    display inline-block
+  a
+    link($alt-link-color, 'glow')
+    &:visited
+      color $alt-link-visited-color
+  .page-number
+    @media mq-mini
+      display none
+  .current
+    font-weight bold

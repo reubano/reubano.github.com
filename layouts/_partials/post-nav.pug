@@ -1,0 +1,11 @@
+if page.prev
+  - var href = url_for(page.prev.path)
+  a(href=href, class='post-nav prev lsaquo', rel='prev', title=page.prev.title) newer
+else
+  span(class='post-nav prev empty') n/a
+
+if page.next
+  - var href = url_for(page.next.path)
+  a(href=href, class='post-nav next rsaquo', rel='next', title=page.next.title) older
+else
+  span(class='post-nav next empty') n/a

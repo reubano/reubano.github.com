@@ -1,0 +1,17 @@
+extends base
+include _mixins/navbar
+
+block nav
+  +navbar('404')
+
+block title
+  title Page Not Found :(
+
+block content
+  h1 Not found
+    span  :(
+  p Sorry, but the page you were trying to view does not exist.
+  p: b It looks like this was the result of either:
+  ul
+    li a mistyped address
+    li an out-of-date link

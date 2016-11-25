@@ -1,0 +1,27 @@
+mixin factoid(page)
+  .factoid
+    a(href=page.url)
+      p.big.ellipsis= page.name
+
+    dl
+      dt Language
+      dd= page.language
+      dt Stars
+      dd= page.watchers
+      dt Forks
+      dd= page.forks
+      dt Updated
+      dd= page.updated_at
+      dt Source
+      dd
+        a(href=page.html_url, class='ellipsis', target='_blank', rel='noopener noreferrer')= page.title
+
+      dt Website
+
+      if page.homepage
+        dd
+          a(href=page.homepage, target='_blank', rel='noopener noreferrer') view
+      else
+        dd N/A
+
+    p= page.description

@@ -1,0 +1,275 @@
+global-reset()
+border-box-html()
+print-styles()
+text-selection($text-selection-color, $selected-text-color)
+
+h1
+  h1()
+
+h2
+  h2()
+  border-bottom $border-weight solid $border-color
+
+h3
+  h3()
+
+h4
+  h4()
+
+h5
+  h5()
+
+h6
+  h6()
+
+html
+  font-size 100%
+
+body
+  font-size $font-size
+  line-height $line-height
+  font-family $font-family
+  color $font-color
+  text-rendering optimizeLegibility
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+  position relative
+
+html, body
+  @media screen
+    height 100%
+    overflow auto
+
+div
+  clearfix()
+
+table
+  table()
+
+.btn, button
+  button($size: 'large', $text-color: $button-font-color)
+  hover-color($button-hover-color)
+
+.alt-btn, .alt-button
+  button($alt-button-color, 'large', $alt-button-font-color)
+  hover-color($alt-button-hover-color)
+
+.inverse-btn, .inverse-button
+  button($inverse-button-color, 'large', $inverse-button-font-color)
+  hover-color($inverse-button-hover-color)
+
+input
+  autofill($autofill-bg-color, $autofill-font-color)
+
++html5-inputs()
+  input()
+
+label
+  label()
+
+blockquote
+  blockquote($base-color)
+
+pullquote
+  blockquote($base-color)
+  display block
+  margin $quarter-headspace 0 $quarter-headspace $full-gutter
+  padding-left $half-gutter
+  float right
+  width $pull-quote-width
+  font-size 125%
+
+strong, bold, b
+  bold()
+
+em
+  italic()
+
+.small, small
+  paragraph($small-font-size)
+  color tint($font-color, 5%)
+  opacity 0.6
+
+h1 a, h2 a, h4 a, p a, li a, span a
+  link($link-color, 'glow')
+
+.inverse a
+  reset-link()
+  link($link-color, 'lighten')
+
+nav a:visited
+  color $nav-link-color
+
+nav h1 a:visited:hover
+  color $nav-link-color
+
+nav a
+  link($nav-link-color, 'glow')
+
+nav a.active
+  color $nav-active-color
+  bold()
+
+a:visited
+  color $link-visited-color
+
+.breadcrumb a:visited, h2 a:visited
+  color $link-color
+
+a.btn:visited
+  color $button-font-color
+
+a.alt-btn:visited
+  color $alt-button-font-color
+
+a.inverse-btn:visited
+  color $inverse-button-font-color
+
+p
+  paragraph($font-size)
+
+.big, big
+  font-size 150%
+
+hr
+  rule(alpha($base-color, .65))
+
+ul
+  ul()
+
+ul.tl
+  tl()
+
+ol
+  ol()
+
+dt
+  text-align left
+
+img
+  border-radius $border-radius
+  margin-bottom $half-headspace
+  &.fit
+    col 1
+
+  &.cover
+    object-fit cover
+
+section
+  // center($max-width)
+  background $background-color
+
+  &.alt
+    color $alt-font-color
+    background $alt-bg-color
+    padding $full-headspace 0
+
+  &.inverse
+    color $inverse-font-color
+    background $inverse-bg-color
+    padding $full-headspace 0
+
+.container
+  center($container-width)
+
+.factoid, .thumb
+  stack()
+  border-radius $border-radius
+  col(1/3, cycle: 3)
+
+.media
+  display inline-block
+  overflow hidden
+  &>:first-child
+    float left
+    margin 0 $full-gutter 0
+  &>:last-child
+    float right
+
+.el
+  float left
+
+.arrow
+  icon-arrow($color: $divider-color)
+
+.center
+  text-align center
+
+.inline-list
+  inline-list()
+
+.bordered-list
+  ol('none')
+  padding-left 0
+  margin-left 0
+  list-style none
+
+  li
+    border-bottom $border-weight solid $border-color
+
+  li:last-child
+    border-bottom none
+
+.lower
+  lowercase()
+
+.upper
+  uppercase()
+
+.ligatures
+  open-type-ligatures()
+
+.ellipsis
+  ellipsis()
+
+.radio
+  radio()
+
+.raquo:after
+  content '⟫' !important
+
+.rsaquo:after
+  content '❯' !important
+
+.laquo:before
+  content '⟪' !important
+
+.lsaquo:before
+  content '❮' !important
+
+.raquo:after, .rsaquo:after, .laquo:before, .lsaquo:before
+  display inline-block !important
+
+.raquo:after, .rsaquo:after
+  padding-left $half-gutter
+
+.laquo:before, .lsaquo:before
+  padding-right $half-gutter
+
+.block
+  display block
+  width 100%
+
+.area
+  area()
+
+.rounded
+  rounded()
+
+.field
+  field()
+
+.clear
+  clearfix()
+
+.hidden
+  display none
+
+.hidden-slow
+  max-height 0
+  transition max-height .5s ease-out
+
+.visible-slow
+  max-height 20em
+  transition max-height .5s ease-in
+

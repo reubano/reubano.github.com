@@ -1,0 +1,17 @@
+mixin thumbnail(photo)
+  .thumbnail
+    a(href=url_for(photo, 'photo'))
+      img.fit(src=photo.url_s)
+
+    dl
+      dt Views
+      dd= photo.views
+      dt Latitude
+      dd= photo.latitude
+      dt Longitude
+      dd= photo.longitude
+      dt Taken
+      dd= photo.created_str
+      dt Source
+      dd
+        a(href=photo.url_e, class='ellipsis', target='_blank', rel='noopener noreferrer') view

@@ -1,0 +1,18 @@
+include ../_mixins/social-icon
+
+footer.inverse
+  .copyright
+    - var year = (new Date()).getFullYear()
+
+    if !site.year || site.year == year
+      p.center &copy; #{year} #{site.author}
+    else
+      p.center &copy; #{site.year} &ndash; #{year} #{site.author}
+
+  .social-links
+    // +social-icon(site, move left, move up, width, height)
+    +social-icon('twitter', 3, 1, 26, 26)
+    +social-icon('linkedin', -7, -8, 40, 40)
+    +social-icon('github', -6, -7, 42, 42)
+    +social-icon('angellist', -6, -7, 67, 67)
+    +social-icon('rss', 56, 43, 400, 400)

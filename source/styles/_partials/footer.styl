@@ -1,0 +1,48 @@
+footer
+  height auto
+  overflow auto
+  padding $full-headspace 0
+  background-color $background-color
+  color $font-color
+
+  .social-links, .copyright
+    @media $desktop
+      col(1/2)
+    @media $hd
+      col(1/2)
+
+  .social-links
+    center()
+    display table
+    margin 0 auto !important
+
+ svg.social-icon
+    display table-cell
+    width $icon-width
+    height @width
+    float left
+    margin-right $half-gutter
+    fill $font-color
+
+  svg.social-icon:hover
+    fill $link-color
+
+footer.alt
+  background-color $alt-bg-color
+  color $alt-font-color
+
+  svg.social-icon
+    fill $alt-font-color
+
+  svg.social-icon:hover
+    fill $alt-link-color
+
+footer.inverse
+  background-color $inverse-bg-color
+  color $inverse-font-color
+
+  svg.social-icon
+    fill $inverse-font-color
+
+  svg.social-icon:hover
+    fill $inverse-link-color

@@ -1,0 +1,13 @@
+mixin social-icon(site, left, top, width, height)
+  -
+    left = left || 0
+    top = top || 0
+    width = width || 32
+    height = height || 32
+    href = social[site].path
+    title = social[site].title
+    viewbox = left + ' ' + top + ' ' + width + ' ' + height
+
+  a.social-icon(href=href, target='_blank', rel='noopener noreferrer', title=title)
+    svg.social-icon(preserveaspectratio='none', viewbox=viewbox)
+      use(xlink:href='#'+site)

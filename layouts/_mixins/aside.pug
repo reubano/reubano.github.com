@@ -1,0 +1,73 @@
+include utils
+
+mixin truncate-posts(posts, count, name)
+  - var truncated = posts.slice(0, count)
+
+  if truncated.length && count && count > 1 && name == 'gallery'
+    .gallery
+      each post in truncated
+        +get-link(post, 'sm', true)
+  else if truncated.length && count && count > 1
+    ul.bordered-count
+      each post in truncated
+        li
+          +get-link(post, 'sm', true)
+  else if truncated.length
+    - var post = truncated[0]
+
+    h4
+      +get-link(post)
+
+    if post.less
+      | !{post.less.toString()}
+
+mixin get-recent(category, count, filterby)
+  +pluralize('recent', category, count)
+    +truncate-posts(get_recent(category, filterby), count, category.name, false)
+
+mixin get-random(category, count, filterby)
+  +pluralize('random', category, count)
+    +truncate-posts(get_random(category, filterby), count, category.name)
+
+mixin get-related(count)
+  - var category = locals[page.collection]
+
+  +pluralize('related', category, count)
+    +truncate-posts(get_related(category, page), count, category.name)
+
+mixin get-featured(category, count)
+  +pluralize('featured', category, count)
+    +truncate-posts(get_featured(category), count, category.name)
+
+mixin get-site(name, format='MMM &lsquo;YY')
+  if name == 'archives'
+    - var category = {singular: 'archive', plural: 'archives'}
+    +pluralize('site', category, 2)
+      ul.inline-list
+        for year_group in archive
+          - var year = year_group.year
+
+          for month_group in year_group.months
+            - var date = new Date(year, month_group.index, 1, 0, 0, 0, 0)
+            - var label = format_date(date, format)
+            - var month = month_group.index + 1
+
+            li.archive-list-item
+              a.archive-list-link(href=get_archives_url(year, month)) !{label}
+                span.archive-list-count= month_group.data.length
+  else if name == 'tags'
+    - var category = {singular: 'tag', plural: 'tags'}
+    +pluralize('site', category, 2)
+      ul.inline-list
+        for tag in tagz
+          li.archive-list-item
+            a.archive-list-link(href=url_for(tag.path))= tag.name
+              span.archive-list-count= tag.files.length
+  else
+    +pluralize('site', blog, 2)
+      ul.inline-list
+        for category in collections
+          if category.show
+            li.archive-list-item
+              a.archive-list-link(href=url_for(category.name))= category.name
+                span.archive-list-count= category.data.length
