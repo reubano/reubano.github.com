@@ -22,7 +22,6 @@
     "lodash": "^4.15.0",
     "lunr": "^0.7.1",
     "metalsmith": "^2.1.0",
-    "metalsmith-archive": "^0.1.1",
     "metalsmith-changed": "^3.0.0",
     "metalsmith-clean": "^0.0.0",
     "metalsmith-clean-css": "^5.0.0",

@@ -36,7 +36,6 @@ fingerprint = require 'metalsmith-fingerprint-ignore'
 # uncss = require 'metalsmith-uncss'
 # feed = require 'metalsmith-feed'
 # livereload = require 'metalsmith-livereload'
-# archive = require 'metalsmith-archive'
 
 end = checkpoint 'require metalsmith plugins', end
 
@@ -53,6 +52,7 @@ tags = require './plugins/tags'
 lunr = require './plugins/lunr'
 json2files = require './plugins/json-to-files'
 time = require './plugins/time'
+archive = require './plugins/archive'
 
 end = checkpoint 'require local plugins', end
 
@@ -119,6 +119,12 @@ collectionConfig =
       title: 'projects'
       show: true
       count: 3
+
+archiveConfig =
+  collections: ['blog', 'gallery', 'projects']
+  perPage: 20
+  layout: 'archive.pug'
+  pageMetadata: title: 'archive', name: 'archive'
 
 paginationConfig =
   'all':
@@ -208,7 +214,6 @@ Metalsmith(__dirname)
   #   indexPath: 'searchIndex.json'
   #   fields: tags: 5, title: 2, markdown: 1
   #   pipelineFunctions: [lunr_.trimmer]
-  # .use archive dateFields: ['publishDate', 'modifiedDate', 'date']
   .use time plugin: 'lunr'
   .use tags
     path: 'tagged/:tag/index.html'
@@ -221,6 +226,8 @@ Metalsmith(__dirname)
   .use time plugin: 'tags'
   .use pagination paginationConfig
   .use time plugin: 'pagination'
+  # .use archive archiveConfig
+  # .use time plugin: 'archive'
   .use pug
     locals: templateHelpers
     filters: marked: marked

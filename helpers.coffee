@@ -18,19 +18,6 @@ sizes = [
   {width: 2048, query: '_o', key: 'url_o'}
 ]
 
-# options =
-#   pages: 'pages' # directory containing pages
-#   articles: 'articles' # directory containing contents to paginate
-
-# _getArticles = (contents) ->
-#   directories = contents[options.articles]._.directories
-#   dir_articles = directories.map (item) -> item.index
-#   bare_articles = coqntents[options.articles]._.pages
-#   articles = _.concat dir_articles, bare_articles
-#   filtered = articles.filter (item) ->
-#     item.template? and not item.draft
-#   _.sortBy filtered, (item) -> -item.date
-
 _filterData = (data) -> _.filter data, (item) -> item.featured
 filterData = _.memoize _filterData
 
@@ -64,25 +51,6 @@ module.exports =
     word_cnt = content.toString().split(' ').length
     Math.ceil word_cnt / wpm
 
-  # getPages: (contents) ->
-  #   dir_pages = contents[options.pages]._.directories.map (item) -> item.index
-  #   bare_pages = contents[options.pages]._.pages
-  #   pages = _.concat dir_pages, bare_pages
-  #   filtered = pages.filter (item) -> item.template? and not item.draft
-  #   _.sortBy filtered, (item) -> -item.date
-
-  # getNextPost: (articles, article, category) ->
-  #   categorized = filterArticlesByCategory articles, category
-  #   filtered = _.filter categorized, (item) -> item.date < article.date
-  #   sorted = _.sortBy filtered, (item) -> -item.date
-  #   if sorted.length then sorted[0] else false
-
-  # getPrevPost: (articles, article, category) ->
-  #   categorized = filterArticlesByCategory articles, category
-  #   filtered = _.filter categorized, (item) -> item.date > article.date
-  #   sorted = _.sortBy filtered, (item) -> item.date
-  #   if sorted.length then sorted[0] else false
-
   getRelated: (category, article) ->
     sorted = _.sortBy category.data, (item) ->
       -_.intersection(article.tags, item.tags).length
@@ -110,25 +78,6 @@ module.exports =
       _.shuffle _.filter category.data, filterby
     else
       _.shuffle category.data
-
-  # getArchives: (contents, type='all') ->
-  #   articles = _getArticles contents
-
-  #   if type in ['yearly', 'monthly']
-  #     archives = _.map articles, (item) ->
-  #       year = item.date.getFullYear()
-  #       switch type
-  #         when 'yearly' then year
-  #         when 'monthly' then "#{year}/#{item.date.getMonth() + 1}"
-
-  #     unique = _.uniq archives
-  #     unique.sort()
-  #     _.filter unique, (item) -> item
-  #   else
-  #     articles
-
-  # countArchives: (articles) ->
-  #   _.countBy articles, (item) -> moment(item.date).format 'YYYY/MM'
 
   # css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/
   # sitepoint.com/how-to-build-responsive-images-with-srcset/
