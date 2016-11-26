@@ -24,9 +24,9 @@ mixin get-link(post, size='sm', thumbnail)
     a(href=url_for(post.path))= post.title
 
 mixin list-tags(tags, size)
-  if tags && tags.length
+  if tagz && tags && tags.length
     ul(class='inline-list tag-list')
-      for tag in tagz
+      for tag in tagz.data
         if tags.indexOf(tag.name) > -1
           - var href = url_for(tag.path)
           li

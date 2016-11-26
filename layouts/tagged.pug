@@ -1,0 +1,64 @@
+extends base
+include _mixins/navbar
+include _mixins/aside
+include _mixins/utils
+include _mixins/github-card
+include _mixins/blog-excerpt
+
+block title
+  title #{page.name} | #{site.title}
+
+block nav
+  +navbar(tagz.name)
+
+block content
+  ul.breadcrumb
+    li
+      a(href=site.url)= site.title
+
+    if page.slug
+      li
+        a(href=url_for(tagz.homePath))= tagz.past
+
+      li= page.slug
+    else
+      li= tagz.homePath
+
+  #category
+    - var untagged = page.slug === 'untagged'
+
+    if untagged
+      h1.tag-title untagged
+    else if page.slug
+      h1.tag-title #{tagz.past} #{page.slug}
+    else
+      h1.tag-title= tagz.name
+
+    .tag-category
+      for tag in page.data
+        .tag-slug
+          unless page.slug
+            h2
+              a(href=url_for(tag.path))= tag.slug
+
+        .tag-content
+          for post in tag.files
+            case post.collection
+              when 'blog'
+                .excerpts
+                  +blog-excerpt(post)
+              when 'projects'
+                +github-card(post)
+              when 'gallery'
+                +get-link(post, 'lg', true)
+
+block aside
+  aside
+    +get-site(tagz)
+    +get-site(archive)
+
+//- block aside
+//-   aside
+//-     each category in collections
+//-       if category.show
+//-         +get-featured(category, category.count)

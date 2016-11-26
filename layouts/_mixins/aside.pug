@@ -59,7 +59,7 @@ mixin get-site(name, format='MMM &lsquo;YY')
     - var category = {singular: 'tag', plural: 'tags'}
     +pluralize('site', category, 2)
       ul.inline-list
-        for tag in tagz
+        for tag in tagz.data
           li.archive-list-item
             a.archive-list-link(href=url_for(tag.path))= tag.name
               span.archive-list-count= tag.files.length

@@ -18,6 +18,17 @@ sizes = [
   {width: 2048, query: '_o', key: 'url_o'}
 ]
 
+REGEX = /:([\w]+(\.[\w]+)*)/g
+
+getMatch = (entry, pattern) ->
+  match = REGEX.exec(pattern)
+
+  if match
+    getMatch entry, pattern.replace ":#{match[1]}", slug(entry[match[1]])
+  else
+    pattern
+
+
 _filterData = (data) -> _.filter data, (item) -> item.featured
 filterData = _.memoize _filterData
 
@@ -96,3 +107,10 @@ module.exports =
     base = "https://farm#{photo.farm}.staticflickr.com/"
     base +="#{photo.server}/#{photo.id}_#{photo.secret}#{query}.#{ext}"
     base
+
+  getMatch: getMatch
+  slug: (content) -> slug(content, mode: 'rfc3986')
+  _: _
+  moment: moment
+  marked: marked
+  minimatch: minimatch

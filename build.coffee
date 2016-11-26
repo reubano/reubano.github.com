@@ -75,7 +75,6 @@ templateHelpers =
   get_recent: helpers.getRecent
   get_random: helpers.getRandom
   min2read: helpers.min2read
-  # count_tags: helpers.countTags
   # count_categories: helpers.countCategories
   find: _.find
   range: _.range
@@ -147,8 +146,47 @@ paginationConfig =
     layout: 'projects.pug'
     path: 'projects/page/:num/index.html'
     pageMetadata: title: 'projects', 'name': 'projects'
+  'tagz':
+    perPage: 20
+    layout: 'tagged.pug'
+    path: 'tagged/:tag/page/:num/index.html'
+    pageMetadata: title: 'tags', name: 'tags'
+  'archive':
+    perPage: 20
+    layout: 'archive.pug'
+    path: 'archives/page/:num/index.html'
+    pageMetadata: title: 'archive', name: 'archive'
 
 end = checkpoint 'set config', end
+
+enrichFunc = (entry) ->
+  tags = if entry.language then [helpers.slug(entry.language)] else []
+  description = entry.description.toLowerCase().split(' ')
+
+  vizList = [
+    'visualization', 'viz', 'visualizer', 'graph', 'chart', 'displays', '4w',
+    '3w']
+
+  if _.intersection(vizList, description).length
+    tags.push 'visualization'
+
+  if _.intersection(['hdx', 'ckan'], description).length
+    tags.push 'open-data'
+
+  if _.intersection(['api'], description).length
+    tags.push 'api'
+
+  if _.intersection(['stock', 'portfolio', 'ofx', 'qif'], description).length
+    tags.push 'finance'
+
+  if _.intersection(['application', 'app', 'apps', 'webapp'], description).length
+    tags.push 'app'
+
+  dataList = ['csv', 'json', 'data', 'analysis', 'processing']
+  if _.intersection(dataList, description).length
+    tags.push 'data'
+
+  tags
 
 Metalsmith(__dirname)
   .use time plugin: 'start', start: end
@@ -159,10 +197,11 @@ Metalsmith(__dirname)
   .use time plugin: 'metadata'
   .use json2files
     source: 'data'
+    enrich: projects: [{field: 'tags', func: enrichFunc}]
     exclude:
       projects: [
-        {field: 'fork', op: 'is', value: false},
-        {field: 'description', op: 'not in', value: 'code.google.com'}]
+        {field: 'fork', op: 'is', value: true},
+        {field: 'description', op: 'contains', value: 'code.google.com'}]
 
     pick:
       projects: [
@@ -195,6 +234,14 @@ Metalsmith(__dirname)
   .use time plugin: 'browserify'
   .use more()
   .use time plugin: 'more'
+  .use collections collectionConfig
+  .use time plugin: 'collections'
+  .use tags
+    metadataKey: 'tagz'
+    plural: 'tagz'
+    sortBy: 'date'
+    reverse: true
+  .use time plugin: 'tags'
   .use permalinks
     pattern: ':title'
     date: 'YYYY-MM-DD'
@@ -205,25 +252,15 @@ Metalsmith(__dirname)
       {match: {collection: 'blog'}, pattern: 'blog/:title'}
       {match: {collection: 'gallery'}, pattern: 'gallery/:title'}
       {match: {collection: 'projects'}, pattern: 'projects/:title'}
+      {match: {collection: 'tagz'}, pattern: 'tags/:title'}
     ]
   .use time plugin: 'permalinks'
-  .use collections collectionConfig
-  .use time plugin: 'collections'
   # .use lunr
   #   collection: 'blog'
   #   indexPath: 'searchIndex.json'
   #   fields: tags: 5, title: 2, markdown: 1
   #   pipelineFunctions: [lunr_.trimmer]
   .use time plugin: 'lunr'
-  .use tags
-    path: 'tagged/:tag/index.html'
-    pathPage: 'tagged/:tag/page/:num/index.html'
-    metadataKey: 'tagz'
-    perPage: 20
-    layout:'tag.pug'
-    sortBy: 'date'
-    reverse: true
-  .use time plugin: 'tags'
   .use pagination paginationConfig
   .use time plugin: 'pagination'
   # .use archive archiveConfig
