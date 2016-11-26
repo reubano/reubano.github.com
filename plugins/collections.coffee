@@ -1,5 +1,7 @@
-Matcher = require('minimatch').Minimatch
-_ = require 'lodash'
+helpers = require('../helpers')
+
+_ = helpers._
+Matcher = helpers.minimatch.Minimatch
 
 module.exports = (opts) ->
   keys = Object.keys(opts)

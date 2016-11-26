@@ -1,4 +1,5 @@
-_ = require 'lodash'
+helpers = require('../helpers')
+_ = helpers._
 
 module.exports = (opts) ->
   (files, metalsmith, done) ->

@@ -1,4 +1,6 @@
-minimatch = require 'minimatch'
+helpers = require('../helpers')
+
+minimatch = helpers.minimatch
 now = new Date()
 
 module.exports = (opts) ->

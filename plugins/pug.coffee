@@ -1,7 +1,9 @@
-_ = require 'lodash'
+path = require 'path'
 fs = require 'fs'
 pug = require 'pug'
-path = require 'path'
+
+helpers = require('../helpers')
+_ = helpers._
 
 module.exports =  (opts) ->
   opts = opts or {}

@@ -1,5 +1,8 @@
-_ = require 'lodash'
+helpers = require './helpers'
 
+_ = helpers._
+moment = helpers.moment
+marked = helpers.marked
 stamp = _.now()
 
 checkpoint = (name, start) ->
@@ -8,13 +11,11 @@ checkpoint = (name, start) ->
   console.log("#{name} +#{time}s")
   end
 
-Metalsmith = require 'metalsmith'
-moment = require 'moment'
-marked = require 'marked'
-lunr_ = require 'lunr'
-jeet = require 'jeet'
-axis = require 'axis'
-open = require 'open'
+Metalsmith = require './node_modules/metalsmith'
+lunr_ = require './node_modules/lunr'
+jeet = require './node_modules/jeet'
+axis = require './node_modules/axis'
+open = require './node_modules/open'
 
 end = checkpoint 'require base', stamp
 
@@ -56,7 +57,6 @@ archive = require './plugins/archive'
 
 end = checkpoint 'require local plugins', end
 
-helpers = require './helpers'
 config = require './config'
 js = config.paths.js
 

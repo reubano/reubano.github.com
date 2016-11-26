@@ -1,6 +1,5 @@
 path = require 'path'
-extname = require('path').extname
-browserify = require 'browserify'
+browserify = require '../node_modules/browserify'
 
 module.exports = (options) ->
   options.destFolder ?= 'scripts'
@@ -22,7 +21,7 @@ module.exports = (options) ->
       delete files[options.source]
     else
       Object.keys(files).forEach (file) ->
-        if extname(file) in options.extensions
+        if path.extname(file) in options.extensions
           bundler.add path.join metalsmith.source(), file
           delete files[file]
 

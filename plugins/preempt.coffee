@@ -1,4 +1,5 @@
-moment = require 'moment'
+helpers = require('../helpers')
+moment = helpers.moment
 
 parse = (date) ->
   if '/' in date

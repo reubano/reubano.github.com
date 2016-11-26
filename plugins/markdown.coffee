@@ -1,9 +1,9 @@
-basename = require('path').basename
-dirname = require('path').dirname
-extname = require('path').extname
-marked = require('marked')
+path = require 'path'
+helpers = require('../helpers')
 
-markdown = (file) -> /\.md|\.markdown/.test(extname(file))
+marked = helpers.marked
+
+markdown = (file) -> /\.md|\.markdown/.test(path.extname(file))
 
 module.exports = (options) ->
   options = options or {}
@@ -12,8 +12,8 @@ module.exports = (options) ->
   (files, metalsmith, done) ->
     for file, data of files
       if markdown(file)
-        dir = dirname(file)
-        html = basename(file, extname(file)) + '.html'
+        dir = path.dirname(file)
+        html = path.basename(file, path.extname(file)) + '.html'
         if '.' != dir
           html = dir + '/' + html
 

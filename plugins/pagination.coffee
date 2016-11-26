@@ -1,4 +1,5 @@
-_ = require 'lodash'
+helpers = require('../helpers')
+_ = helpers._
 
 DEFAULTS =
   perPage: 10

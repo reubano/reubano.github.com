@@ -1,5 +1,10 @@
-_ = require 'lodash'
-moment = require 'moment'
+path = require 'path'
+
+_ = require './node_modules/lodash'
+slug = require './node_modules/slug'
+moment = require './node_modules/moment'
+marked = require './node_modules/marked'
+minimatch = require './node_modules/minimatch'
 config = require './config'
 
 sizes = [

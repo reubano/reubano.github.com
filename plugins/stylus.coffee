@@ -1,13 +1,15 @@
-stylus = require('stylus')
-minimatch = require('minimatch')
-join = require('path').join
+path = require 'path'
+stylus = require '../node_modules/stylus'
+helpers = require('../helpers')
+
+minimatch = helpers.minimatch
 
 absPath = (relative) ->
   cwd = process.cwd()
   if (relative.slice(0, cwd.length) is cwd)
     relative
   else
-    join(process.cwd(), relative)
+    path.join(process.cwd(), relative)
 
 module.exports = (opts) ->
   opts = opts or {}
