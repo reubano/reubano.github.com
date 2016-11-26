@@ -168,13 +168,13 @@ Metalsmith(__dirname)
       projects: [
         'id', 'name', 'html_url', 'description', 'fork', 'homepage',
         'size', 'watchers', 'forks', 'created_at', 'updated_at', 'language',
-        'stargazers_count', 'featured', 'less', 'excerpt', 'open_issues']
+        'stargazers_count', 'featured', 'less', 'excerpt', 'open_issues', 'tags']
 
       gallery: [
-        'id', 'title', 'views', 'license', 'datetaken', 'latitude', 'longitude',
-        'name', 'created', 'updated', 'featured', 'url_s', 'url_t', 'url_q',
-        'url_m', 'url_n', 'url_', 'url_z', 'url_c', 'url_b', 'url_h', 'url_k',
-        'farm', 'server', 'secret']
+        'id', 'title', 'views', 'license', 'datetaken', 'latitude',
+        'longitude', 'name', 'created', 'updated', 'featured', 'url_s',
+        'url_t', 'url_q','url_m', 'url_n', 'url_', 'url_z', 'url_c',
+        'url_b', 'url_h', 'url_k', 'farm', 'server', 'secret', 'tags']
 
   .use time plugin: 'json2files'
   .use changed force: true
