@@ -116,27 +116,27 @@ collectionConfig =
       count: 3
 
 paginationConfig =
-  'blog':
+  blog:
     perPage: 6
     layout: 'blog.pug'
     path: 'blog/page/:num/index.html'
-    pageMetadata: title: 'blog', 'name': 'blog'
-  'gallery':
+    pageMetadata: title: 'blog', name: 'blog'
+  gallery:
     perPage: 12
     layout: 'gallery.pug'
     path: 'gallery/page/:num/index.html'
-    pageMetadata: title: 'gallery', 'name': 'gallery'
-  'projects':
+    pageMetadata: title: 'gallery', name: 'gallery'
+  projects:
     perPage: 10
     layout: 'projects.pug'
     path: 'projects/page/:num/index.html'
-    pageMetadata: title: 'projects', 'name': 'projects'
-  'tagz':
+    pageMetadata: title: 'projects', name: 'projects'
+  tagz:
     perPage: 20
     layout: 'tagged.pug'
     path: 'tagged/:tag/page/:num/index.html'
     pageMetadata: title: 'tags', name: 'tags'
-  'archive':
+  archive:
     perPage: 20
     layout: 'archive.pug'
     path: 'archive/page/:num/index.html'
@@ -192,7 +192,7 @@ Metalsmith(__dirname)
       projects: [
         'id', 'name', 'html_url', 'description', 'fork', 'homepage',
         'size', 'watchers', 'forks', 'created_at', 'updated_at', 'language',
-        'stargazers_count', 'featured', 'less', 'excerpt', 'open_issues', 'tags']
+        'stargazers_count', 'featured', 'open_issues', 'tags']
 
       gallery: [
         'id', 'title', 'views', 'license', 'datetaken', 'latitude',

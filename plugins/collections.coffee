@@ -40,12 +40,12 @@ module.exports = (opts) ->
     for key, settings of opts
       if metadata[key]?.data
         collectionData = _.sortBy metadata[key]?.data, settings.sortBy or 'date'
-        if (settings.reverse) then collectionData.reverse() else null
+        if (settings.reverse) then collectionData.reverse()
 
         last = collectionData.length - 1
         collectionData.forEach (file, index) ->
-          file.prev = if (index > 0) then collectionData[index - 1] else null
-          file.next = if (index < last) then collectionData[index + 1] else null
+          file.prev = if (index > 0) then collectionData[index - 1]
+          file.next = if (index < last) then collectionData[index + 1]
 
         metadata[key].data = collectionData
       else

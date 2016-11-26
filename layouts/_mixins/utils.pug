@@ -29,6 +29,7 @@ mixin list-tags(tags, size)
       for tag in tagz.data
         if tags.indexOf(tag.name) > -1
           - var href = url_for(tag.path)
+
           li
             if size
               a(class='tag tag-#{size}', href=href, itemprop='articleSection')= tag.name

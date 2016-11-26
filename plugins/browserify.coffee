@@ -28,4 +28,4 @@ module.exports = (options) ->
     bundler.bundle (err, buf) ->
       dest = path.join options.destFolder, options.dest
       files[dest] = path: dest, contents: buf
-      done(err)
+      done err

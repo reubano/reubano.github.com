@@ -3,7 +3,7 @@ include _mixins/navbar
 doctype html
 html(lang=site.language, prefix='og: http://ogp.me/ns#')
   head
-    - var href = url_for('') + fingerprint['styles/main.css']
+    - var href = url_for(fingerprint['styles/main.css'])
     include _partials/site-meta
     include _partials/social-meta
     link(rel='stylesheet', href=href, type='text/css')
