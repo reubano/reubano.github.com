@@ -2,11 +2,11 @@ _ = require 'lodash'
 
 DEFAULTS =
   perPage: 10
-  noPageOne: false
-  first: 'index.html'
   maxPages: 5
 
-makePath = (options, num) -> options['path'].replace ':num', num
+makePath = (path, opts) ->
+  opts ?= {}
+  path.replace(/:num/g, opts.num).replace(/:tag/g, opts.slug)
 
 getPos = (pagePos, length, maxPages=10, pos=0) ->
   # show limited number of pages like Google
@@ -34,57 +34,49 @@ module.exports = (opts) ->
       if not collection
         done new TypeError "Collection '#{name}' not found!"
 
-      if not collection.data.length
+      if not collection.data?.length
         continue
 
-      collectionPath = "#{name}/index.html"
       options = _.assign DEFAULTS, settings
 
       if (!options.path)
         done new TypeError "The path '#{name}' is required"
 
-      if collection.data.length > options.perPage
-        _pages = []
-        toShow = (_.assign item, {index} for item, index in collection.data)
-        grouped = _.groupBy toShow, (item) ->
-          Math.ceil((item.index + 1) / options.perPage)
+      perPage = options.perPage or collection.data.length
 
-        length = (Object.keys grouped).length
+      if collection.data.length > perPage
+        collectionPath = "#{name}/index.html"
+        layout = options.layout
+        length = Math.ceil(collection.data.length / perPage)
+        pages = []
+        pagination = totalPages: length, pages: pages
 
-        pagination = totalPages: length, pages: _pages
-
-        for num, data of grouped
-          pageNum = parseInt num
-          pagePos = pageNum - 1
-          path = makePath options, pageNum
+        for pagePos in [0...length]
+          pageNum = pagePos + 1
+          data = collection.data.slice(pagePos * perPage, pageNum * perPage)
+          path = makePath options.path, {num: pageNum}
           [first, last] = getPos pagePos, length, options.maxPages
 
-          pageData = _.assign options.pageMetadata,
-            layout: options.layout
+          page = _.assign {}, options.pageMetadata,
+            layout: layout
             data: data
             num: pageNum
             index: pagePos
             first: num: first + 1, index: first
             last: num: last + 1, index: last
-            pagination: pagination
             collection: collection.name
+            pagination: pagination
 
-          if pagePos > 0
-            pageData.prev =
-              num: pagePos, index: pagePos - 1, path: makePath options, pagePos
+          if pagePos is 0
+            page.path = collectionPath
+          else
+            page.path = makePath options.path, {num: pageNum}
+            prev = pages[pagePos - 1]
+            prev.next = page
+            page.prev = prev
 
-          if pageNum < length
-            pageData.next =
-              num: pageNum + 1,
-              index: pageNum,
-              path: makePath options, pageNum + 1
-
-          page = _.assign {path: path}, pageData
-          _pages.push(page)
-          files[path] = page
-
-          if pageNum is 1 and files[collectionPath]
-            _.assign files[collectionPath], pageData
+          files[page.path] = page
+          pages.push(page)
 
         collection.pagination = pagination
 
