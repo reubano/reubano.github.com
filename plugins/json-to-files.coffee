@@ -29,12 +29,12 @@ module.exports = (options) ->
             console.log "Error fetching #{filepath}: #{error.code}"
             json = []
 
-          if options.exclude?[collection]
-            for filter in options.exclude[collection]
+          if options.filter?[collection]
+            for filter in options.filter[collection]
               if filter.op is 'is'
-                json = _.without json, [filter.field, filter.value]
+                json = _.filter json, [filter.field, filter.value]
               else if filter.op in ['contains', 'not in']
-                json = _.without json, (entry) ->
+                json = _.filter json, (entry) ->
                   contains = entry[filter.field].indexOf(filter.value) > -1
                   if filter.op is 'contains' then contains else not contains
 

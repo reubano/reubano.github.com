@@ -183,10 +183,10 @@ Metalsmith(__dirname)
   .use json2files
     source: 'data'
     enrich: projects: [{field: 'tags', func: enrichFunc}]
-    exclude:
+    filter:
       projects: [
-        {field: 'fork', op: 'is', value: true},
-        {field: 'description', op: 'contains', value: 'code.google.com'}]
+        {field: 'fork', op: 'is', value: false},
+        {field: 'description', op: 'not in', value: 'code.google.com'}]
 
     pick:
       projects: [
