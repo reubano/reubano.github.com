@@ -64,8 +64,6 @@ end = checkpoint 'require rest', end
 
 templateHelpers =
   url_for: helpers.urlFor
-  get_archives_url: (year, month) ->
-    "#{config.site.url}/archives/#{year}/#{month}/"
   get_last_page: helpers.getLastPage
   get_first_page: helpers.getFirstPage
   get_related: helpers.getRelated
@@ -75,13 +73,11 @@ templateHelpers =
   get_recent: helpers.getRecent
   get_random: helpers.getRandom
   min2read: helpers.min2read
-  # count_categories: helpers.countCategories
   find: _.find
   range: _.range
   format_date: helpers.formatDate
 
 collectionConfig =
-  all: '*.html'
   home: 'index.html'
   pages:
     sortBy: 'order'
@@ -119,18 +115,7 @@ collectionConfig =
       show: true
       count: 3
 
-archiveConfig =
-  collections: ['blog', 'gallery', 'projects']
-  perPage: 20
-  layout: 'archive.pug'
-  pageMetadata: title: 'archive', name: 'archive'
-
 paginationConfig =
-  'all':
-    perPage: 20
-    layout: 'archive.pug'
-    path: 'archives/page/:num/index.html'
-    pageMetadata: title: 'archive', 'name': 'archive'
   'blog':
     perPage: 6
     layout: 'blog.pug'
@@ -154,7 +139,7 @@ paginationConfig =
   'archive':
     perPage: 20
     layout: 'archive.pug'
-    path: 'archives/page/:num/index.html'
+    path: 'archive/page/:num/index.html'
     pageMetadata: title: 'archive', name: 'archive'
 
 end = checkpoint 'set config', end
@@ -242,6 +227,12 @@ Metalsmith(__dirname)
     sortBy: 'date'
     reverse: true
   .use time plugin: 'tags'
+  .use archive
+    groupByMonth: true
+    sortBy: 'date'
+    reverse: true
+    collections: ['projects', 'blog', 'gallery']
+  .use time plugin: 'archive'
   .use permalinks
     pattern: ':title'
     date: 'YYYY-MM-DD'
@@ -253,6 +244,7 @@ Metalsmith(__dirname)
       {match: {collection: 'gallery'}, pattern: 'gallery/:title'}
       {match: {collection: 'projects'}, pattern: 'projects/:title'}
       {match: {collection: 'tagz'}, pattern: 'tags/:title'}
+      {match: {collection: 'archive'}, pattern: 'archive/:title'}
     ]
   .use time plugin: 'permalinks'
   # .use lunr
@@ -263,8 +255,6 @@ Metalsmith(__dirname)
   .use time plugin: 'lunr'
   .use pagination paginationConfig
   .use time plugin: 'pagination'
-  # .use archive archiveConfig
-  # .use time plugin: 'archive'
   .use pug
     locals: templateHelpers
     filters: marked: marked

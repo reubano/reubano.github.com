@@ -55,6 +55,7 @@ module.exports =
       .replace('D', day)
       .replace('MMMM', monthNames[index])
       .replace('MMM', monthsAbrs[index])
+      .replace('MM', index + 1)
       .replace('YYYY', year)
       .replace('YY', year.toString().slice(2))
 

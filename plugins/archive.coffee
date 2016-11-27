@@ -1,83 +1,88 @@
-_ = require 'lodash'
-moment = require('moment')
+helpers = require('../helpers')
 
-isArray = _.isarray
-isEmpty = _.isempty
-remove = _.remove
-
-options =
-  pages: 'pages' # directory containing pages
-  articles: 'articles' # directory containing contents to paginate
-
-getArchives: (contents, type='all') ->
-  articles = _getArticles contents
-
-  if type in ['yearly', 'monthly']
-    archives = _.map articles, (item) ->
-      year = item.date.getFullYear()
-      switch type
-        when 'yearly' then year
-        when 'monthly' then "#{year}/#{item.date.getMonth() + 1}"
-
-    unique = _.uniq archives
-    unique.sort()
-    _.filter unique, (item) -> item
-  else
-    articles
-
-countArchives: (articles) ->
-  _.countBy articles, (item) -> moment(item.date).format 'YYYY/MM'
+_ = helpers._
+moment = helpers.moment
 
 module.exports = (options) ->
+  dataCache = []
   periodCache = {}
   options = options or {}
+  collections = options.collections
+  layout = options.layout or 'archive.pug'
   groupByMonth = options.groupByMonth
-  sortBy = options.sortBy or 'date'
-  reverse = options.reverse or false
   metadataKey = options.metadataKey or 'archive'
+  singular = options.singular or 'archive'
+  plural = options.metadataKey or 'archives'
+  sortBy = options.sortBy or 'date'
+  reverse = options.reverse
 
-  if (groupByMonth)
-    path = 'archive/:year/:month/index.html'
-  else
-    path = 'archive/:year/index.html'
+  if typeof sortBy is 'string'
+    sortBy = [sortBy]
 
-
-  if typeof collections is 'string'
-    collections = [collections]
+  monthPattern = "#{metadataKey}/:year/:month"
+  yearPattern = "#{metadataKey}/:year"
+  homePath = metadataKey
 
   (files, metalsmith, done) ->
     metadata = metalsmith.metadata()
-    defMetadata = data: [], name: metadataKey
+    defMetadata = {data: [], name: metadataKey, singular, plural}
     metadata[metadataKey] = metadata[metadataKey] or defMetadata
 
     for file, data of files
-      if not data?.date
+      if not (data?.date and data?.collection)
+        continue
+      else if collections and data.collection not in collections
         continue
 
-      if (groupByMonth)
-        period = moment(data.date).format('YYYY/MM')
-        [year, month] = period.split('/')
-      else
-        period = data.date.getFullYear()
-        [year, month] = [period, null]
+      year = data.date.getFullYear()
 
-      if period
-        if not periodCache[period]
-          periodCache[period] =
-            name: period
-            path: path.replace(/:year/g, year).replace(/:month/g, month)
+      if year
+        if not periodCache[year]
+          periodCache[year] =
+            layout: layout
+            blessed: true
+            name: year
+            year: year
             files: []
 
+          matched = helpers.getMatch periodCache[year], yearPattern
+          periodCache[year].path = "#{matched}.html"
+
+        periodCache[year].files.push(data)
+
+      if groupByMonth
+        period = moment(data.date).format('YYYY/MM')
+        month = parseInt period.split('/')[1]
+
+        if not periodCache[period]
+          periodCache[period] =
+            layout: layout
+            name: period
+            date: new Date(year, month - 1, 1, 0, 0, 0, 0)
+            year: year
+            month: month
+            files: []
+
+          matched = helpers.getMatch periodCache[period], monthPattern
+          periodCache[period].path = "#{matched}.html"
+
         periodCache[period].files.push(data)
-        data[metadataKey] = periodCache[period]
 
     if _.keys(periodCache).length
-      for period, data of periodCache
-        data.files.sort(sortBy)
-        if (reverse) then data.files.reverse()
-        metadata[metadataKey].data.push data
+      for key, period of periodCache
+        period.files = _.sortBy period.files, sortBy
+        if (reverse) then period.files.reverse()
+        dataCache.push period
+        files[period.path] = period
+        files[period.path].data = [_.pick period, ['year', 'month', 'files']]
 
+    data = _.sortBy dataCache, sortBy
+    if (reverse) then data.reverse()
+    files["#{homePath}.html"] =
+      layout: layout
+      data: _.filter data, 'blessed'
+      name: metadataKey
+
+    metadata[metadataKey].data = data
     metadata.collections.push metadata[metadataKey]
-    metalsmith.metadata(metadata)
     done()
-
