@@ -156,6 +156,30 @@ paginationConfig =
     pageMetadata: title: 'archive', name: 'archive'
     reverse: true
     filter: 'canonical'
+  archiveYear:
+    collection: 'archive'
+    perPage: 15
+    layout: 'archive.pug'
+    pick: ['year', 'path']
+    sortBy: ['date']
+    nest: true
+    firstPage: 'archive/:year/index.html'
+    path: 'archive/:year/page/:num/index.html'
+    pageMetadata: title: 'archive', name: 'archive'
+    reverse: true
+    filter: 'canonical'
+  archiveMonth:
+    collection: 'archive'
+    perPage: 15
+    layout: 'archive.pug'
+    pick: ['year', 'month', 'date', 'path']
+    sortBy: ['date']
+    nest: true
+    firstPage: 'archive/:year/:month/index.html'
+    path: 'archive/:year/:month/page/:num/index.html'
+    pageMetadata: title: 'archive', name: 'archive'
+    reverse: true
+    filter: 'month'
 
 end = checkpoint 'set config', end
 
