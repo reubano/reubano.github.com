@@ -1,4 +1,4 @@
-mixin get-link(post, size='sm', thumbnail)
+mixin get-link(post, size='sm', thumbnail, short)
   if post.datetaken
     - var srcset = get_srcset(post)
     - var _class = thumbnail ? 'thumb' : ''
@@ -18,7 +18,7 @@ mixin get-link(post, size='sm', thumbnail)
 
     a(href=url_for(post.path), class=_class)
       img.fit(sizes=img_sizes, srcset=srcset, src=src, alt=post.title)
-  else if post.description
+  else if post.description && !short
     a(href=url_for(post.path)) #{post.title}: #{post.description}
   else
     a(href=url_for(post.path))= post.title

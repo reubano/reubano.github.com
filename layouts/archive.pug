@@ -83,7 +83,7 @@ block content
                   small &nbsp;[#{post.collection}]
 
               li
-                a(href=url_for(post.path), title=post.title)= post.title
+                +get-link(post, 'sm', true, true)
 
               if post.tags
                 li.inline-tags
