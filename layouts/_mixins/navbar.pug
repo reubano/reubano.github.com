@@ -2,7 +2,7 @@ mixin navbar(cur)
   nav#topnav(role='navigation')
     #mobile-navbar.container
       h1
-        a(href=site.url)= site.name
+        a(href=site.url, class={active: cur == site.name})= site.name
 
       .mobile-nav
         button(class='hamburger hamburger--squeeze', type='button', aria-label='Menu', aria-controls='navigation')
@@ -12,7 +12,7 @@ mixin navbar(cur)
 
     div(id='navbar', class='container hidden-slow')
       h1
-        a(href=site.url)= site.name
+        a(href=site.url, class={active: cur == site.name})= site.name
 
       ul.nav-list
         each page in pages.data
