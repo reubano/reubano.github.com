@@ -1,3 +1,4 @@
+path = require 'path'
 helpers = require './helpers'
 
 _ = helpers._
@@ -16,10 +17,10 @@ lunr_ = require './node_modules/lunr'
 jeet = require './node_modules/jeet'
 axis = require './node_modules/axis'
 open = require './node_modules/open'
+chokidar = require 'chokidar'
 
 end = checkpoint 'require base', stamp
 
-watch = require 'metalsmith-watch'
 changed = require 'metalsmith-changed'
 permalinks = require 'metalsmith-permalinks'
 metallic = require 'metalsmith-metallic'
@@ -182,6 +183,7 @@ paginationConfig =
     filter: 'month'
 
 end = checkpoint 'set config', end
+DIR = __dirname
 
 enrichFunc = (entry) ->
   tags = if entry.language then [helpers.slug(entry.language)] else []
@@ -212,9 +214,9 @@ enrichFunc = (entry) ->
 
   tags
 
-Metalsmith(__dirname)
+app = new Metalsmith(DIR)
   .use time plugin: 'start', start: end
-  .clean false
+  .clean true
   .source config.paths.source
   .destination config.paths.dest
   .metadata config
@@ -240,8 +242,8 @@ Metalsmith(__dirname)
         'url_b', 'url_h', 'url_k', 'farm', 'server', 'secret', 'tags']
 
   .use time plugin: 'json2files'
-  .use changed force: true
-  .use time plugin: 'changed'
+  # .use changed force: true
+  # .use time plugin: 'changed'
   .use preempt()
   .use time plugin: 'preempt'
   .use ignore()
@@ -314,7 +316,6 @@ Metalsmith(__dirname)
   #   modifiedProperty: 'lastmod'
   #   urlProperty: 'canonical'
   # .use linkcheck timeout: 5, failWithoutNetwork: false
-  # .use(livereload({ debug: true }))
   # .use uncss
   #   css: ['app.css']
   #   output: 'uncss-app.css'
@@ -327,24 +328,43 @@ Metalsmith(__dirname)
   # .use htmlMinifier '*.html'
   # .use uglify sourceMap: true, removeOriginal: false
   # .use compress overwrite: false
-  .use watch
-    paths:
-      'layouts/**/*': '**/*'
-      'data/**/*': '**/*'
-      '**/*.coffee': true
-      '**/*.coffee': '**/*'
-  # .use livereload debug: true
-  .use serve()
-  .use time plugin: 'serve'
-  .build (err, files) ->
+
+build = ->
+  end = _.now()
+  app.build (err, files) ->
     if (err)
       throw err
-    else
-      for filename in _.keys(files)
-        console.log("built #{filename}")
 
-      time = (_.now() - stamp) / 1000
-      # checkpoint 'build', end
-      console.log("Successfully built site in #{time}s")
+    if _.keys(files).length
+      console.log "built #{_.keys(files).length} files"
+    # for filename, data of _files
+    #   console.log "built #{filename}"
+
+    endTime = (_.now() - stamp) / 1000
+    console.log "Successfully built site in #{endTime}s"
+
+build()
+app
+  .use serve()
+  .use time plugin: 'serve'
+  # .use livereload debug: false
+  # .use time plugin: 'livereload'
+
+modifiedFiles = []
+
+trigger = ->
+  if modifiedFiles.length
+    build()
+    modifiedFiles = []
+
+watcher = chokidar.watch ['data', 'layouts', 'plugins', 'source', '*.coffee']
+
+debounced = _.debounce(trigger, 100)
+
+watcher.on 'change', (file) ->
+  console.log "#{file} has changed!"
+  relativeFile = path.relative path.join(DIR, 'source'), file
+  modifiedFiles.push(relativeFile)
+  debounced()
 
 # open 'http://localhost:8080'
