@@ -172,13 +172,20 @@ aside
   margin-bottom $full-headspace
 
 #archives
-  .archives-group .bottom-tags
-    display block
-    padding-bottom $quarter-headspace
-    margin-bottom $half-headspace
-    border-bottom $border-weight solid $border-color
-    &:last-child
-      border-bottom none
+  .archives-group
+    .bottom-tags
+      display block
+      padding-bottom $quarter-headspace
+      margin-bottom $quarter-headspace
+      border-bottom $border-weight solid $border-color
+      &:last-child
+        border-bottom none
+
+    img
+      margin-bottom -0.5rem
+
+    li
+      vertical-align top
 
   .inline-tags
     display none
