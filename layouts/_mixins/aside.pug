@@ -39,27 +39,21 @@ mixin get-featured(category, count)
   +pluralize('featured', category, count)
     +truncate-posts(get_featured(category), count, category.name)
 
-mixin get-site(name, format='MMM &lsquo;YY')
-  if name == 'archives'
-    - var category = {singular: 'archive', plural: 'archives'}
-    +pluralize('site', category, 2)
+mixin get-site(collection, format='MMM &lsquo;YY')
+  if collection.name == 'archive'
+    +pluralize('site', collection, 2)
       ul.inline-list
-        for year_group in archive
-          - var year = year_group.year
-
-          for month_group in year_group.months
-            - var date = new Date(year, month_group.index, 1, 0, 0, 0, 0)
-            - var label = format_date(date, format)
-            - var month = month_group.index + 1
+        for period in collection.data
+          if period.date
+            - var label = format_date(period.date, format)
 
             li.archive-list-item
-              a.archive-list-link(href=get_archives_url(year, month)) !{label}
-                span.archive-list-count= month_group.data.length
-  else if name == 'tags'
-    - var category = {singular: 'tag', plural: 'tags'}
-    +pluralize('site', category, 2)
+              a.archive-list-link(href=url_for(period.path)) !{label}
+                span.archive-list-count= period.files.length
+  else if collection.name == 'tagz'
+    +pluralize('site', collection, 2)
       ul.inline-list
-        for tag in tagz
+        for tag in collection.data
           li.archive-list-item
             a.archive-list-link(href=url_for(tag.path))= tag.name
               span.archive-list-count= tag.files.length

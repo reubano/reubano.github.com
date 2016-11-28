@@ -1,4 +1,5 @@
-moment = require 'moment'
+helpers = require('../helpers')
+moment = helpers.moment
 
 parse = (date) ->
   if '/' in date
@@ -9,6 +10,12 @@ parse = (date) ->
     moment.utc(date).toDate()
 
 module.exports = (opts) ->
+  opts = opts or {}
+  locale = opts.locale or ''
+
+  if (locale)
+    moment.locale(locale)
+
   (files, metalsmith, done) ->
     for file, d of files
       date = d.date or d.datetaken or d.created or d.created_at or d.stats?.ctime

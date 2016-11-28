@@ -1,22 +1,13 @@
-_ = require('lodash')
-path = require('path')
-slug = require('slug-component')
+path = require 'path'
+helpers = require('../helpers')
 
-regex = /:([\w]+(\.[\w]+)*)/g
-
-getMatch = (entry, pattern) ->
-  match = regex.exec(pattern)
-
-  if match
-    getMatch entry, pattern.replace ":#{match[1]}", slug(entry[match[1]])
-  else
-    pattern
+_ = helpers._
 
 module.exports = (options) ->
   options = options or {}
   source = options.source or 'data'
   extension = options.extension or 'md'
-  def_omit = ['source', 'pattern', 'as_permalink']
+  def_omit = ['source', 'pattern']
 
   (files, metalsmith, done) ->
     for file, data of files
@@ -38,33 +29,33 @@ module.exports = (options) ->
             console.log "Error fetching #{filepath}: #{error.code}"
             json = []
 
-          if options.exclude?[collection]
-            for filter in options.exclude[collection]
+          if options.filter?[collection]
+            for filter in options.filter[collection]
               if filter.op is 'is'
                 json = _.filter json, [filter.field, filter.value]
               else if filter.op in ['contains', 'not in']
                 json = _.filter json, (entry) ->
-                  if filter.op is 'contains'
-                    filter.value in entry[filter.field]
-                  else
-                    entry[filter.field].indexOf(filter.value) is -1
+                  contains = entry[filter.field].indexOf(filter.value) > -1
+                  if filter.op is 'contains' then contains else not contains
 
           for entry in json
+            if options.enrich?[collection]
+              for enrich in options.enrich[collection]
+                entry[enrich.field] = enrich.func entry
+
             if options.pick?[collection]
               metadata = _.pick entry, options.pick[collection]
             else
               metadata = entry
 
             _.extend metadata, data.json_files
-            pattern = getMatch metadata, metadata.pattern
-            suffix = if metadata.as_permalink then '/index' else ''
-            new_filename = "#{pattern}#{suffix}.#{extension}"
+            matched = helpers.getMatch metadata, metadata.pattern
 
             if options.omit?[collection]
               metadata = _.omit metadata, options.omit[collection]
             else
               metadata = _.omit metadata, def_omit
 
-            files[new_filename] = metadata
+            files["#{matched}.#{extension}"] = metadata
 
     done()

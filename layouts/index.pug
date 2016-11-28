@@ -1,6 +1,9 @@
 extends base
 include _mixins/aside
 
+block nav
+  +navbar(site.name)
+
 block content
   #intro
     - var srcset = get_srcset('logo', 'png', false)

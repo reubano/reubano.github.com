@@ -1,5 +1,7 @@
-_ = require 'lodash'
-lunr = require 'lunr'
+lunr = require '../node_modules/lunr'
+
+helpers = require('../helpers')
+_ = helpers._
 
 createDocumentIndex = (fields, datum) ->
   index = path: datum.path

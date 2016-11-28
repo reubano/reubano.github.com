@@ -1,5 +1,7 @@
-extname = require('path').extname
-marked = require 'marked'
+path = require 'path'
+helpers = require('../helpers')
+
+marked = helpers.marked
 defaults = ext: 'html', regexp: /\s*<!--\s*more\s*-->/, cutoff: 30
 
 module.exports = (options) ->
@@ -15,7 +17,7 @@ module.exports = (options) ->
 
   (files, metalsmith, done) ->
     for file, data of files
-      if extname(file) is ext
+      if path.extname(file) is ext
         if data.open_issues?
           data.less = "#{data.name} is written in #{data.language}, has #{data.stargazers_count} stars, #{data.forks} forks, #{data.open_issues} open issues, and was last updated #{data.updatedFromNow}."
         else

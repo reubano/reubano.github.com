@@ -1,95 +1,68 @@
-_ = require 'lodash'
-slug = require('slug')
+helpers = require('../helpers')
+_ = helpers._
 
-module.exports = (opts) ->
+module.exports = (options) ->
   tagCache = {}
-  opts = opts or {}
-  opts.path = opts.path or 'tags/:tag/index.html'
-  opts.pathPage = opts.pathPage or 'tags/:tag/:num/index.html'
-  opts.layout = opts.layout or 'partials/tag.pug'
-  opts.handle = opts.handle or 'tags'
-  handleCollection = opts.handle + 'Collection'
-  opts.metadataKey = opts.metadataKey or 'tags'
-  opts.sortBy = opts.sortBy or 'title'
-  opts.reverse = opts.reverse or false
-  opts.perPage  = opts.perPage or 0
+  options = options or {}
+  layout = options.layout or 'tagged.pug'
+  pattern = options.pattern or 'tagged/:slug'
+  handle = options.handle or 'tags'
+  metadataKey = options.metadataKey or 'tags'
+  singular = options.singular or 'tag'
+  plural = options.plural or 'tags'
+  sortBy = options.sortBy or 'title'
+  reverse = options.reverse
+
+  past = pattern.split('/')[0]
+  homePath = metadataKey
+
+  if typeof sortBy is 'string'
+    sortBy = [sortBy]
 
   (files, metalsmith, done) ->
-    getFilePath = (path, opts) ->
-      opts ?= {}
-      path.replace(/:num/g, opts.num).replace(/:tag/g, opts.slug)
+    metadata = metalsmith.metadata()
+    defMetadata = {data: [], name: metadataKey, singular, plural, homePath, past}
+    metadata[metadataKey] = metadata[metadataKey] or defMetadata
 
     for file, data of files
-      if !data
+      if not data
         continue
 
-      tagsData = data[opts.handle]
+      tagsData = data[handle]
 
       if tagsData
         if typeof tagsData is 'string'
           tagsData = tagsData.split(',')
 
-        data[opts.handle] = []
-        data[handleCollection] = []
+        # reset original tag data so we can replace it with cleaned tags
+        data[handle] = []
 
         tagsData.forEach (rawTag) ->
           tag = String(rawTag).trim()
 
           if not tagCache[tag]
-            urlSafeTag = slug(tag, mode: 'rfc3986')
             tagCache[tag] =
+              layout: layout
               name: tag
-              slug: urlSafeTag
-              path: getFilePath(opts.path, slug: urlSafeTag)
+              slug: helpers.slug tag
               files: []
 
-          data[opts.handle].push(tag)
-          tagCache[tag].files.push(file)
-          data[handleCollection].push tagCache[tag]
+            matched = helpers.getMatch tagCache[tag], pattern
+            tagCache[tag].path = "#{matched}.html"
 
-    metadata = metalsmith.metadata()
-    metadata[opts.metadataKey] = metadata[opts.metadataKey] or []
+          data[handle].push(tag)
+          tagCache[tag].files.push(data)
 
-    for tag, tagData of tagCache
-      # Map the array of filesByTag names back to the actual data object.
-      posts = tagData.files.map((file) -> files[file]).sort(opts.sortBy)
+    if _.keys(tagCache).length
+      for key, tag of tagCache
+        tag.files = _.sortBy tag.files, sortBy
+        if (reverse) then tag.files.reverse()
+        metadata[metadataKey].data.push tag
+        files[tag.path] = tag
+        files[tag.path].data = [_.pick tag, ['name', 'slug', 'files']]
 
-      if (opts.reverse)
-        posts.reverse()
-
-      metadata[opts.metadataKey].push _.assign posts: posts, tagData
-      postsPerPage = if opts.perPage is 0 then posts.length else opts.perPage
-      numPages = Math.ceil(posts.length / postsPerPage)
-      pages = []
-
-      for i in [0...numPages]
-        pageFiles = posts.slice(i * postsPerPage, (i + 1) * postsPerPage)
-
-        page =
-          layout: opts.layout
-          contents: ''
-          tag: tag
-          pagination:
-            num: i + 1
-            pages: pages
-            tag: tag
-            files: pageFiles
-            slug: tagData.slug
-
-        # Render the non-first pages differently to the rest, when set.
-        if (i > 0 and opts.pathPage)
-          page.path = getFilePath(opts.pathPage, page.pagination)
-        else
-          page.path = getFilePath(opts.path, page.pagination)
-
-        files[page.path] = page
-        previousPage = pages[i - 1]
-
-        if (previousPage)
-          page.pagination.previous = previousPage
-          previousPage.pagination.next = page
-
-        pages.push(page)
-
-    metalsmith.metadata(metadata)
+    data = _.sortBy metadata[metadataKey].data, ['name']
+    files["#{homePath}.html"] = {layout, data, name: metadataKey}
+    metadata[metadataKey].data = data
+    metadata.collections.push metadata[metadataKey]
     done()

@@ -3,51 +3,87 @@ include _mixins/navbar
 include _mixins/aside
 include _mixins/utils
 
-block nav
-  +navbar('archives')
-
 block title
-  title archives | #{site.title}
+  title #{archive.name} | #{site.title}
+
+block nav
+  +navbar(archive.name)
 
 block content
   ul.breadcrumb
     li
       a(href=site.url)= site.title
 
-    if page.year
+    if page.pagination
       li
-        a(href=url_for('archives')) archives
+        a(href=url_for(archive.name))= archive.name
+
+      if page.year
+        - var href = archive.name + '/' + page.year
+
+        li
+          a(href=url_for(href))= page.year
+
+      if page.month
+        - var href = archive.name + '/' + page.year + '/' + page.month
+
+        li
+          a(href=url_for(href))= page.month
+
+      li page #{page.num} of #{page.pagination.totalPages}
     else
-      li archives
+      if page.year
+        li
+          a(href=url_for(archive.name))= archive.name
+      else
+        li= archive.name
 
-    if page.month
-      li
-        a(href=get_archives_url(page.year))= page.year
+      if page.month
+        li
+          - var href = archive.name + '/' + page.year
+          a(href=url_for(href))= page.year
 
-      li= page.month
-    else if page.year
-      li= page.year
+        li= page.month
+      else if page.year
+        li= page.year
 
   #archives
-    h1.archives-title archives
+    if page.month
+      - var date = format_date(page.date, 'MMM YYYY')
+      h1.archives-title #{archive.name} for #{date}
+    else if page.year
+      h1.archives-title #{archive.name} for #{page.year}
+    else
+      h1.archives-title= archive.name
 
     .archives
-      for group in archive
+      for period in page.data
         .archives-group
           ul.tl
             li
-              h2= group.year
+              - var href = archive.name + '/' + period.year
+              h2
+                a(href=url_for(href))= period.year
+
             li
               h2 title
             li.inline-tags
               h2 tags
 
-          for post in group.data
-            - var _date = format_date(post.date, 'MMM DD')
+          for post in period.files
+            - var date = format_date(post.date, 'MMM DD')
             ul.tl
-              li #{_date} <small>[#{post.collection}]</small>
+              if page.month
+                li #{date} <small>[#{post.collection}]</small>
+              else
+                - var month = format_date(post.date, 'MM')
+                - var href = archive.name + '/' + period.year + '/' + month
+                li
+                  a(href=url_for(href))= date
+                  small &nbsp;[#{post.collection}]
+
               li
-                a(href=url_for(post.path), title=post.title)= post.title
+                +get-link(post, 'sm', true, true)
 
               if post.tags
                 li.inline-tags
@@ -59,5 +95,8 @@ block content
 
 block aside
   aside
-    +get-site('archives')
-    +get-site('tags')
+    +get-site(tagz)
+    +get-site(archive)
+
+block paginator
+  include _partials/paginator
