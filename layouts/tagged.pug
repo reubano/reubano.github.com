@@ -16,28 +16,26 @@ block content
     li
       a(href=site.url)= site.title
 
-    if page.pagination
-      if page.slug
-        li
-          a(href=url_for(tagz.homePath))= tagz.past
+    if page.slug
+      li
+        a(href=url_for(tagz.homePath))= tagz.past
+
+      if page.pagination
+        - var href = tagz.past + '/' + page.slug
 
         li
-          a(href=url_for(tagz.homePath))= page.slug
+          a(href=url_for(href))= page.slug
 
         li page #{page.num} of #{page.pagination.totalPages}
       else
-        li
-          a(href=url_for(tagz.homePath))= tagz.homePath
-
-        li page #{page.num} of #{page.pagination.totalPages}
-    else
-      if page.slug
-        li
-          a(href=url_for(tagz.homePath))= tagz.past
-
         li= page.slug
-      else
-        li= tagz.homePath
+    else if page.pagination
+      li
+        a(href=url_for(tagz.homePath))= tagz.homePath
+
+      li page #{page.num} of #{page.pagination.totalPages}
+    else
+      li= tagz.homePath
 
   #category
     - var untagged = page.slug === 'untagged'
@@ -74,9 +72,3 @@ block aside
 
 block paginator
   include _partials/paginator
-
-//- block aside
-//-   aside
-//-     each category in collections
-//-       if category.show
-//-         +get-featured(category, category.count)

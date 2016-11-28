@@ -136,12 +136,21 @@ paginationConfig =
     layout: 'tagged.pug'
     pick: ['slug', 'path']
     path: 'tagz/page/:num/index.html'
-    pageMetadata: title: 'tags', name: 'tags'
-  archive:
-    perPage: 20
-    layout: 'archive.pug'
-    path: 'archive/page/:num/index.html'
-    pageMetadata: title: 'archive', name: 'archive'
+    pageMetadata: title: 'tagz', name: 'tagz'
+  tagged:
+    collection: 'tagz'
+    perPage: 30
+    layout: 'tagged.pug'
+    pick: ['slug', 'path']
+    nest: true
+    firstPage: 'tagged/:slug/index.html'
+    path: 'tagged/:slug/page/:num/index.html'
+    pageMetadata: title: 'tagged :slug', name: 'tagged :slug'
+  # archive:
+  #   perPage: 20
+  #   layout: 'archive.pug'
+  #   path: 'archive/page/:num/index.html'
+  #   pageMetadata: title: 'archive', name: 'archive'
 
 end = checkpoint 'set config', end
 

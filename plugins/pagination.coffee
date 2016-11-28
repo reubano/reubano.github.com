@@ -4,6 +4,8 @@ _ = helpers._
 DEFAULTS =
   perPage: 10
   maxPages: 5
+  firstPage: null
+  nest: false
   pick: []
 
 getPos = (pagePos, numPages, maxPages=10, pos=0) ->
@@ -27,10 +29,11 @@ module.exports = (opts) ->
     metadata = metalsmith.metadata()
 
     for name, settings of opts
-      collection = metadata[name]
+      colName = if settings.collection then settings.collection else name
+      collection = metadata[colName]
 
       if not collection
-        done new TypeError "Collection '#{name}' not found!"
+        done new TypeError "Collection '#{colName}' not found!"
 
       if not collection.data?.length
         continue
@@ -39,69 +42,76 @@ module.exports = (opts) ->
       pickEntry = (entry) -> _.pick entry, options.pick
 
       if (!options.path)
-        done new TypeError "The path '#{name}' is required"
+        done new TypeError "The path option is required"
 
+      firstPage = options.firstPage or "#{colName}/index.html"
       perPage = options.perPage or collection.data.length
 
       if collection.data[0].files
-        mapped = []
+        nested = []
 
         for entry in collection.data
-          mapped.push _.map entry.files, (file) ->
-            _.assign {parentName: entry.name}, file, pickEntry entry
+          nested.push _.map entry.files, (file) ->
+            fileObj = _.assign {parentName: entry.name}, file
+            fileObj.picked = pickEntry entry
+            fileObj
 
-        _files = _.sortBy _.flatten(mapped), ['parentName']
-        # _files = _.flatten (entry.files for entry in collection.data)
-        length = _files.length
+        if options.nest
+          colData = nested
+        else
+          colData = [_.sortBy _.flatten(nested), ['parentName']]
+
         hasFiles = true
       else
-        length = collection.data.length
+        colData = [collection.data]
         hasFiles = false
 
-      if length > perPage
-        collectionPath = "#{name}/index.html"
-        layout = options.layout
-        numPages = Math.ceil(length / perPage)
-        pages = []
-        pagination = totalPages: numPages, pages: pages
+      for datum in colData
+        if datum.length > perPage
+          layout = options.layout
+          numPages = Math.ceil(datum.length / perPage)
+          pages = []
+          pagination = totalPages: numPages, pages: pages
 
-        for pagePos in [0...numPages]
-          pageNum = pagePos + 1
+          for pagePos in [0...numPages]
+            pageNum = pagePos + 1
 
-          if hasFiles
-            data = []
-            sliced = _files.slice(pagePos * perPage, pageNum * perPage)
+            if hasFiles
+              data = []
+              sliced = datum.slice(pagePos * perPage, pageNum * perPage)
 
-            for name, group of _.groupBy sliced, 'parentName'
-              data.push _.assign {files: group}, pickEntry group[0]
+              for name, group of _.groupBy sliced, 'parentName'
+                data.push _.assign {files: group}, group[0].picked
 
-          else
-            data = collection.data.slice(pagePos * perPage, pageNum * perPage)
+            else
+              data = collection.data.slice(pagePos * perPage, pageNum * perPage)
 
-          [first, last] = getPos pagePos, numPages, options.maxPages
+            [first, last] = getPos pagePos, numPages, options.maxPages
 
-          page = _.assign {}, options.pageMetadata,
-            layout: layout
-            data: data
-            num: pageNum
-            index: pagePos
-            first: num: first + 1, index: first
-            last: num: last + 1, index: last
-            collection: collection.name
-            pagination: pagination
+            page = _.assign {}, options.pageMetadata,
+              layout: layout
+              data: data
+              num: pageNum
+              index: pagePos
+              first: num: first + 1, index: first
+              last: num: last + 1, index: last
+              collection: collection.name
+              pagination: pagination
 
-          if pagePos is 0
-            page.path = collectionPath
-          else
-            entry = _.assign {num: pageNum}, pickEntry data[0]
-            page.path = helpers.getMatch entry, options.path
-            prev = pages[pagePos - 1]
-            prev.next = page
-            page.prev = prev
+            matchData = _.assign {num: pageNum}, pickEntry data[0]
 
-          files[page.path] = page
-          pages.push(page)
+            if pagePos is 0
+              page.path = helpers.getMatch matchData, firstPage
+            else
+              page.path = helpers.getMatch matchData, options.path
+              prev = pages[pagePos - 1]
+              prev.next = page
+              page.prev = prev
 
-        collection.pagination = pagination
+            files[page.path] = page
+            pages.push(page)
+
+          if not options.nest
+            collection.pagination = pagination
 
     done()
