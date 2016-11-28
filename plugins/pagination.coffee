@@ -6,7 +6,10 @@ DEFAULTS =
   maxPages: 5
   firstPage: null
   nest: false
+  reverse: false
+  filter: false
   pick: []
+  sortBy: ['parentName']
 
 getPos = (pagePos, numPages, maxPages=10, pos=0) ->
   # show limited number of pages like Google
@@ -35,35 +38,45 @@ module.exports = (opts) ->
       if not collection
         done new TypeError "Collection '#{colName}' not found!"
 
-      if not collection.data?.length
-        continue
+      options = _.assign {}, DEFAULTS, settings
+      options.page = options.page or options.pick
 
-      options = _.assign DEFAULTS, settings
-      pickEntry = (entry) -> _.pick entry, options.pick
+      if options.filter
+        filtered = _.filter collection.data, options.filter
+      else
+        filtered = collection.data
+
+      if not filtered?.length
+        continue
 
       if (!options.path)
         done new TypeError "The path option is required"
 
       firstPage = options.firstPage or "#{colName}/index.html"
-      perPage = options.perPage or collection.data.length
+      perPage = options.perPage or filtered.length
 
-      if collection.data[0].files
+      if filtered[0].files
         nested = []
 
-        for entry in collection.data
+        for entry in filtered
           nested.push _.map entry.files, (file) ->
             fileObj = _.assign {parentName: entry.name}, file
-            fileObj.picked = pickEntry entry
+            fileObj.picked = _.pick entry, options.pick
             fileObj
 
         if options.nest
           colData = nested
         else
-          colData = [_.sortBy _.flatten(nested), ['parentName']]
+          sorted = _.sortBy _.flatten(nested), options.sortBy
+
+          if options.reverse
+            sorted.reverse()
+
+          colData = [sorted]
 
         hasFiles = true
       else
-        colData = [collection.data]
+        colData = [filtered]
         hasFiles = false
 
       for datum in colData
@@ -77,14 +90,23 @@ module.exports = (opts) ->
             pageNum = pagePos + 1
 
             if hasFiles
-              data = []
+              unsorted = []
               sliced = datum.slice(pagePos * perPage, pageNum * perPage)
 
               for name, group of _.groupBy sliced, 'parentName'
-                data.push _.assign {files: group}, group[0].picked
+                sortedGroup = _.sortBy group, options.sortBy
 
+                if options.reverse
+                  sortedGroup.reverse()
+
+                unsorted.push _.assign {files: sortedGroup}, group[0].picked
+
+              data = _.sortBy unsorted, options.sortBy
+
+              if options.reverse
+                data.reverse()
             else
-              data = collection.data.slice(pagePos * perPage, pageNum * perPage)
+              data = filtered.slice(pagePos * perPage, pageNum * perPage)
 
             [first, last] = getPos pagePos, numPages, options.maxPages
 
@@ -98,7 +120,10 @@ module.exports = (opts) ->
               collection: collection.name
               pagination: pagination
 
-            matchData = _.assign {num: pageNum}, pickEntry data[0]
+            if hasFiles and options.page.length
+              _.assign page, _.pick data[0], options.page
+
+            matchData = _.assign {num: pageNum}, _.pick data[0], options.pick
 
             if pagePos is 0
               page.path = helpers.getMatch matchData, firstPage

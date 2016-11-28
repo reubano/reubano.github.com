@@ -146,11 +146,16 @@ paginationConfig =
     firstPage: 'tagged/:slug/index.html'
     path: 'tagged/:slug/page/:num/index.html'
     pageMetadata: title: 'tagged :slug', name: 'tagged :slug'
-  # archive:
-  #   perPage: 20
-  #   layout: 'archive.pug'
-  #   path: 'archive/page/:num/index.html'
-  #   pageMetadata: title: 'archive', name: 'archive'
+  archive:
+    perPage: 15
+    layout: 'archive.pug'
+    pick: ['year', 'path']
+    sortBy: ['date']
+    page: []
+    path: 'archive/page/:num/index.html'
+    pageMetadata: title: 'archive', name: 'archive'
+    reverse: true
+    filter: 'canonical'
 
 end = checkpoint 'set config', end
 

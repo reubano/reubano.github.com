@@ -14,20 +14,38 @@ block content
     li
       a(href=site.url)= site.title
 
-    if page.year
+    if page.pagination
       li
         a(href=url_for(archive.name))= archive.name
-    else
-      li= archive.name
 
-    if page.month
-      li
+      if page.year
         - var href = archive.name + '/' + page.year
-        a(href=url_for(href))= page.year
 
-      li= page.month
-    else if page.year
-      li= page.year
+        li
+          a(href=url_for(href))= page.year
+
+      if page.month
+        - var href = archive.name + '/' + page.year + '/' + page.month
+
+        li
+          a(href=url_for(href))= page.month
+
+      li page #{page.num} of #{page.pagination.totalPages}
+    else
+      if page.year
+        li
+          a(href=url_for(archive.name))= archive.name
+      else
+        li= archive.name
+
+      if page.month
+        li
+          - var href = archive.name + '/' + page.year
+          a(href=url_for(href))= page.year
+
+        li= page.month
+      else if page.year
+        li= page.year
 
   #archives
     if page.month
@@ -79,3 +97,6 @@ block aside
   aside
     +get-site(tagz)
     +get-site(archive)
+
+block paginator
+  include _partials/paginator

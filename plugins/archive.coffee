@@ -40,7 +40,7 @@ module.exports = (options) ->
         if not periodCache[year]
           periodCache[year] =
             layout: layout
-            blessed: true
+            canonical: true
             name: year
             year: year
             files: []
@@ -80,7 +80,7 @@ module.exports = (options) ->
     if (reverse) then data.reverse()
     files["#{homePath}.html"] =
       layout: layout
-      data: _.filter data, 'blessed'
+      data: _.filter data, 'canonical'
       name: metadataKey
 
     metadata[metadataKey].data = data
