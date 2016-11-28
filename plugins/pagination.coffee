@@ -4,16 +4,13 @@ _ = helpers._
 DEFAULTS =
   perPage: 10
   maxPages: 5
+  pick: []
 
-makePath = (path, opts) ->
-  opts ?= {}
-  path.replace(/:num/g, opts.num).replace(/:tag/g, opts.slug)
-
-getPos = (pagePos, length, maxPages=10, pos=0) ->
+getPos = (pagePos, numPages, maxPages=10, pos=0) ->
   # show limited number of pages like Google
   minDist = maxPages // 2
-  notScrolled = length <= maxPages
-  numShownPages = Math.min(length, maxPages)
+  notScrolled = numPages <= maxPages
+  numShownPages = Math.min(numPages, maxPages)
 
   if (pagePos <= minDist + pos) or notScrolled
     newPos = pos
@@ -21,7 +18,7 @@ getPos = (pagePos, length, maxPages=10, pos=0) ->
     newPos = pagePos - minDist
 
   maxLastPos = newPos + numShownPages - 1
-  lastPos = Math.min(length - 1, maxLastPos)
+  lastPos = Math.min(numPages - 1, maxLastPos)
   firstPos = lastPos - numShownPages + 1
   [firstPos, lastPos]
 
@@ -39,24 +36,49 @@ module.exports = (opts) ->
         continue
 
       options = _.assign DEFAULTS, settings
+      pickEntry = (entry) -> _.pick entry, options.pick
 
       if (!options.path)
         done new TypeError "The path '#{name}' is required"
 
       perPage = options.perPage or collection.data.length
 
-      if collection.data.length > perPage
+      if collection.data[0].files
+        mapped = []
+
+        for entry in collection.data
+          mapped.push _.map entry.files, (file) ->
+            _.assign {parentName: entry.name}, file, pickEntry entry
+
+        _files = _.sortBy _.flatten(mapped), ['parentName']
+        # _files = _.flatten (entry.files for entry in collection.data)
+        length = _files.length
+        hasFiles = true
+      else
+        length = collection.data.length
+        hasFiles = false
+
+      if length > perPage
         collectionPath = "#{name}/index.html"
         layout = options.layout
-        length = Math.ceil(collection.data.length / perPage)
+        numPages = Math.ceil(length / perPage)
         pages = []
-        pagination = totalPages: length, pages: pages
+        pagination = totalPages: numPages, pages: pages
 
-        for pagePos in [0...length]
+        for pagePos in [0...numPages]
           pageNum = pagePos + 1
-          data = collection.data.slice(pagePos * perPage, pageNum * perPage)
-          path = makePath options.path, {num: pageNum}
-          [first, last] = getPos pagePos, length, options.maxPages
+
+          if hasFiles
+            data = []
+            sliced = _files.slice(pagePos * perPage, pageNum * perPage)
+
+            for name, group of _.groupBy sliced, 'parentName'
+              data.push _.assign {files: group}, pickEntry group[0]
+
+          else
+            data = collection.data.slice(pagePos * perPage, pageNum * perPage)
+
+          [first, last] = getPos pagePos, numPages, options.maxPages
 
           page = _.assign {}, options.pageMetadata,
             layout: layout
@@ -71,7 +93,8 @@ module.exports = (opts) ->
           if pagePos is 0
             page.path = collectionPath
           else
-            page.path = makePath options.path, {num: pageNum}
+            entry = _.assign {num: pageNum}, pickEntry data[0]
+            page.path = helpers.getMatch entry, options.path
             prev = pages[pagePos - 1]
             prev.next = page
             page.prev = prev
