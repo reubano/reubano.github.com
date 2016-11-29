@@ -2,7 +2,7 @@ path = require 'path'
 stylus = require '../node_modules/stylus'
 helpers = require('../helpers')
 
-minimatch = helpers.minimatch
+multimatch = helpers.multimatch
 
 absPath = (relative) ->
   cwd = process.cwd()
@@ -18,10 +18,8 @@ module.exports = (opts) ->
   (files, metalsmith, done) ->
     destination = metalsmith.destination()
     source = metalsmith.source()
-    styles = Object.keys(files)
-      .filter(minimatch.filter("*.+(styl|stylus)", matchBase: true))
-      .filter(minimatch.filter("!**/_*"))
-      .filter(minimatch.filter("!**/_*/**"))
+    matched = multimatch Object.keys(files), '*.+(styl|stylus)', matchBase: true
+    styles = multimatch matched, ['**/*', '!**/_*', '!**/_*/**']
 
     paths = styles.map (path) ->
       ret = path.split('/')
