@@ -26,17 +26,16 @@ permalinks = require 'metalsmith-permalinks'
 metallic = require 'metalsmith-metallic'
 serve = require 'metalsmith-serve'
 fingerprint = require 'metalsmith-fingerprint-ignore'
-# sitemap = require 'metalsmith-sitemap'
 # cleanCSS = require 'metalsmith-clean-css'
 # linkcheck = require 'metalsmith-linkcheck'
 # blc = require 'metalsmith-broken-link-checker'
+sitemap = require 'metalsmith-sitemap'
 # gist = require 'metalsmith-gist'
 # compress = require 'metalsmith-gzip'
 # htmlMinifier = require "metalsmith-html-minifier"
 # slug = require 'metalsmith-slug'
 # uglify = require 'metalsmith-uglify'
 # uncss = require 'metalsmith-uncss'
-# feed = require 'metalsmith-feed'
 # livereload = require 'metalsmith-livereload'
 
 end = checkpoint 'require metalsmith plugins', end
@@ -55,6 +54,7 @@ lunr = require './plugins/lunr'
 json2files = require './plugins/json-to-files'
 time = require './plugins/time'
 archive = require './plugins/archive'
+feed = require './plugins/feed'
 
 end = checkpoint 'require local plugins', end
 
@@ -306,16 +306,19 @@ app = new Metalsmith(DIR)
   .use time plugin: 'pug'
   # .use gist debug: true
   # .use slug patterns: ['*.md', '*.rst'], renameFiles: true, lower: true
-  # .use feed
-  #   collection: 'blog'
-  #   limit: 20
-  #   destination: config.social.rss.path
-  #   postDescription: (file) -> file.less or file.excerpt or file.contents
-  # .use sitemap
-  #   hostname: config.site.url
-  #   omitIndex: true
-  #   modifiedProperty: 'lastmod'
-  #   urlProperty: 'canonical'
+  .use feed
+    collection: 'blog'
+    limit: 20
+    destination: config.social.rss.path
+    postDescription: (file) -> file.less or file.excerpt or file.contents or ''
+  .use time plugin: 'feed'
+  .use sitemap
+    hostname: config.site.url
+    omitIndex: true
+    lastmod: new Date()
+    modifiedProperty: 'lastmod'
+    urlProperty: 'canonical'
+  .use time plugin: 'sitemap'
   # .use linkcheck timeout: 5, failWithoutNetwork: false
   # .use uncss
   #   css: ['app.css']

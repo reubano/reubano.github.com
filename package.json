@@ -26,7 +26,6 @@
     "metalsmith-changed": "^3.0.0",
     "metalsmith-clean": "^0.0.0",
     "metalsmith-clean-css": "^5.0.0",
-    "metalsmith-feed": "^0.2.0",
     "metalsmith-fingerprint-ignore": "^1.1.2",
     "metalsmith-gist": "^0.3.0",
     "metalsmith-gzip": "^1.1.0",
