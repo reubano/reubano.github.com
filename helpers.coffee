@@ -115,7 +115,7 @@ module.exports =
     base
 
   getMatch: getMatch
-  slug: (content) -> slug(content, mode: 'rfc3986')
+  slug: (content) -> slug(content, mode: 'rfc3986').toLowerCase()
   _: _
   moment: moment
   marked: marked

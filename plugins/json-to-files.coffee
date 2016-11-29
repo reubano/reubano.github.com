@@ -2,6 +2,7 @@ path = require 'path'
 helpers = require('../helpers')
 
 _ = helpers._
+getMatch = helpers.getMatch
 
 module.exports = (options) ->
   options = options or {}
@@ -49,7 +50,7 @@ module.exports = (options) ->
               metadata = entry
 
             _.extend metadata, data.json_files
-            matched = helpers.getMatch metadata, metadata.pattern
+            matched = getMatch(metadata, metadata.pattern).toLowerCase()
 
             if options.omit?[collection]
               metadata = _.omit metadata, options.omit[collection]
