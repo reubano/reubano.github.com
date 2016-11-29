@@ -31,8 +31,6 @@ sitemap = require 'metalsmith-sitemap'
 uglify = require 'metalsmith-uglify'
 htmlMinifier = require "metalsmith-html-minifier"
 # gist = require 'metalsmith-gist'
-# slug = require 'metalsmith-slug'
-# uncss = require 'metalsmith-uncss'
 # livereload = require 'metalsmith-livereload'
 
 end = checkpoint 'require metalsmith plugins', end
@@ -305,7 +303,6 @@ app = new Metalsmith(DIR)
     cache: true
   .use time plugin: 'pug'
   # .use gist debug: true
-  # .use slug patterns: ['*.md', '*.rst'], renameFiles: true, lower: true
   .use feed
     collection: 'blog'
     limit: 20
@@ -320,11 +317,6 @@ app = new Metalsmith(DIR)
     urlProperty: 'canonical'
   .use time plugin: 'sitemap'
   # .use linkcheck timeout: 5, failWithoutNetwork: false
-  # .use uncss
-  #   css: ['app.css']
-  #   output: 'uncss-app.css'
-  #   basepath: config.paths.css
-  #   removeOriginal: true
   .use cleanCSS
     files: "#{config.paths.css}/main*.css"
     rename: false
