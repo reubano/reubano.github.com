@@ -25,8 +25,6 @@ changed = require 'metalsmith-changed'
 permalinks = require 'metalsmith-permalinks'
 metallic = require 'metalsmith-metallic'
 fingerprint = require 'metalsmith-fingerprint-ignore'
-# linkcheck = require 'metalsmith-linkcheck'
-# blc = require 'metalsmith-broken-link-checker'
 sitemap = require 'metalsmith-sitemap'
 uglify = require 'metalsmith-uglify'
 htmlMinifier = require "metalsmith-html-minifier"
@@ -53,6 +51,7 @@ feed = require './plugins/feed'
 cleanCSS = require './plugins/clean-css'
 serve = require './plugins/serve'
 compress = require './plugins/compress'
+blc = require './plugins/blc'
 
 end = checkpoint 'require local plugins', end
 
@@ -251,7 +250,7 @@ app = new Metalsmith(DIR)
   .use time plugin: 'markdown'
   .use stylus compress: false, use: [axis(), jeet()]
   .use time plugin: 'stylus'
-  .use fingerprint pattern: "styles/main.css"
+  .use fingerprint pattern: "#{config.paths.css}/main.css"
   .use time plugin: 'fingerprint'
   .use metallic()
   .use time plugin: 'metallic'
@@ -316,14 +315,15 @@ app = new Metalsmith(DIR)
     modifiedProperty: 'lastmod'
     urlProperty: 'canonical'
   .use time plugin: 'sitemap'
-  # .use linkcheck timeout: 5, failWithoutNetwork: false
+  .use blc warn: true
+  .use time plugin: 'blc'
   .use cleanCSS
     files: "#{config.paths.css}/main*.css"
     rename: false
     sourceMap: false
     cleanCSS: rebase: true
   .use time plugin: 'cleanCSS'
-  .use uglify sourceMap: false, removeOriginal: true
+  .use uglify sourceMap: false
   .use time plugin: 'uglify'
   .use htmlMinifier()
   .use time plugin: 'htmlMinifier'

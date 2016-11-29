@@ -6,9 +6,9 @@ collection: pages
 ---
 ## Me
 
-Hi, I'm Reuben Cummings, a [data scientist](http://en.wikipedia.org/wiki/Data_scientist) and [software developer](https://en.wikipedia.org/wiki/Software_developer) based in in [Arusha, Tanzania](http://en.wikipedia.org/wiki/Arusha). I specialize in [data analysis](/tagged/data-analysis/), [visualization](/tagged/visualization), and [offline first](/tagged/offline/) technology.  When I'm not working with [databases](/tagged/database), [APIs](/tagged/api), or automating my life; I enjoy [taking photos](/gallery) and [traveling](/tagged/travel).
+Hi, I'm Reuben Cummings, a [data scientist](http://en.wikipedia.org/wiki/Data_scientist) and [software developer](https://en.wikipedia.org/wiki/Software_developer) based in in [Arusha, Tanzania](http://en.wikipedia.org/wiki/Arusha). I specialize in [data analysis](/tagged/data/), [visualization](/tagged/visualization/), and [offline first](/tagged/app/) technology.  When I'm not working with [databases](/tagged/data/), [APIs](/tagged/api/), or automating my life; I enjoy [taking photos](/gallery/) and [traveling](/tagged/travel/).
 
-While you're here, feel free to browse through [my project portfolio](/projects), check out [my blog](/blog), or learn more about [me and this site](/page/about). If you have any questions or would like to discuss a project engagement, please [contact me](/page/contact) for more info.<!-- more -->
+While you're here, feel free to browse through [my project portfolio](/projects/), check out [my blog](/blog/), or learn more about [me and this site](/about/). If you have any questions or would like to discuss a project engagement, please [contact me](/contact/) for more info.<!-- more -->
 
 ## My Life
 
@@ -20,7 +20,7 @@ reporting and analysis consulting company, and worked as a business consultant a
 Having lived in [Cambridge, MA](http://en.wikipedia.org/wiki/Cambridge,_Massachusetts) for ten years, I left in 2010 to work for [Global Cycle Solutions](http://www.gcstz.com/) (GCS) in [Arusha, Tanzania](http://en.wikipedia.org/wiki/Arusha). At GCS I worked on various projects including accounting and financial modeling; sales, marketing, and strategy; [CRM](http://en.wikipedia.org/wiki/CRM), reporting system, and inventory management system development; training design and facilitation; and recruitment.
 
 
-I left GCS in late 2012, but still live in Arusha developing [web and command line applications](/#portfolio).
+I left GCS in late 2012, but still live in Arusha developing [web and command line applications](/projects/).
 
 ## My Interests
 
@@ -40,7 +40,7 @@ I started investing at the end of 1999 at the age of 17. Unknown to me at the ti
 
 ### _Travel_
 
-I love to travel and have so far been to around 20 countries including 13 in Africa. I occasionally post pictures from my travels [here](/#gallery).
+I love to travel and have so far been to around 20 countries including 13 in Africa. I occasionally post pictures from my travels [here](/gallery/).
 
 ### _Other_
 

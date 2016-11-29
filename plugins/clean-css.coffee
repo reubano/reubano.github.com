@@ -13,6 +13,7 @@ module.exports = (options) ->
   hasSourceMap = options.sourceMap?
   hasRemoveOriginal = options.removeOriginal?
 
+  rename = if hasRename then options.rename else true
   removeOriginal = if hasRemoveOriginal then options.removeOriginal else true
   createSourceMap = if hasSourceMap then options.sourceMap else true
   sourceMapInlineSources = options.sourceMapInlineSources
@@ -28,9 +29,14 @@ module.exports = (options) ->
 
     asyncCb = (filepath, callback) ->
       file = files[filepath]
-      basepath = filepath.split('.css')[0]
+
+      if rename
+        basepath = filepath.split('.css')[0]
+        outputFilepath = "#{basepath}.min.css"
+      else
+        outputFilepath = filepath
+
       sourceMapFilepath = "#{filepath}.map"
-      outputFilepath = "#{basepath}.min.css"
       sourceMapFile = files[sourceMapFilepath] or contents: ''
       outputFile = files[outputFilepath] or contents: ''
       cleanCSSOpts = {}
@@ -53,7 +59,7 @@ module.exports = (options) ->
 
         files[outputFilepath] = outputFile
 
-        if removeOriginal
+        if removeOriginal and rename
           delete files[filepath]
 
         callback()

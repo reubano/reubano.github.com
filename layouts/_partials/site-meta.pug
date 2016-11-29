@@ -23,5 +23,5 @@ for size in ['196', '160', '96', '32', '16']
 
 link(rel='canonical', href=site.url)
 
-- var path = url_for(social.rss.path)
-link(rel='alternate', type='application/rss+xml', href=url_for('feed.xml'), title=site.description)
+- var rssURL = url_for(social.rss.path)
+link(rel='alternate', type='application/rss+xml', href=rssURL, title=site.description)
