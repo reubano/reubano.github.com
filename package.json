@@ -28,19 +28,18 @@
     "metalsmith-clean-css": "^5.0.0",
     "metalsmith-fingerprint-ignore": "^1.1.2",
     "metalsmith-gist": "^0.3.0",
-    "metalsmith-gzip": "^1.1.0",
     "metalsmith-html-minifier": "^2.1.0",
     "metalsmith-linkcheck": "^0.2.8",
     "metalsmith-livereload": "0.0.2",
     "metalsmith-metallic": "^1.0.0",
     "metalsmith-permalinks": "^0.5.0",
-    "metalsmith-serve": "0.0.7",
     "metalsmith-sitemap": "^1.1.0",
     "metalsmith-slug": "^0.2.0",
     "metalsmith-uglify": "^1.5.1",
     "metalsmith-uncss": "^0.2.0",
     "moment": "^2.14.1",
     "multimatch": "^2.1.0",
-    "open": "0.0.5"
+    "open": "0.0.5",
+    "winston": "^2.3.0"
   }
 }

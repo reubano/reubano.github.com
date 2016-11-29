@@ -24,14 +24,12 @@ end = checkpoint 'require base', stamp
 changed = require 'metalsmith-changed'
 permalinks = require 'metalsmith-permalinks'
 metallic = require 'metalsmith-metallic'
-serve = require 'metalsmith-serve'
 fingerprint = require 'metalsmith-fingerprint-ignore'
 # cleanCSS = require 'metalsmith-clean-css'
 # linkcheck = require 'metalsmith-linkcheck'
 # blc = require 'metalsmith-broken-link-checker'
 sitemap = require 'metalsmith-sitemap'
 # gist = require 'metalsmith-gist'
-# compress = require 'metalsmith-gzip'
 # htmlMinifier = require "metalsmith-html-minifier"
 # slug = require 'metalsmith-slug'
 # uglify = require 'metalsmith-uglify'
@@ -55,6 +53,8 @@ json2files = require './plugins/json-to-files'
 time = require './plugins/time'
 archive = require './plugins/archive'
 feed = require './plugins/feed'
+serve = require './plugins/serve'
+compress = require './plugins/compress'
 
 end = checkpoint 'require local plugins', end
 
@@ -331,7 +331,8 @@ app = new Metalsmith(DIR)
   #   cleanCSS: rebase: true
   # .use htmlMinifier '*.html'
   # .use uglify sourceMap: true, removeOriginal: false
-  # .use compress overwrite: false
+  .use compress overwrite: false
+  .use time plugin: 'compress'
 
 build = ->
   end = _.now()
@@ -349,7 +350,10 @@ build = ->
 
 build()
 app
-  .use serve()
+  .use serve
+    redirects: '/tagged': '/tagz'
+    gzip: true
+
   .use time plugin: 'serve'
   # .use livereload debug: false
   # .use time plugin: 'livereload'
