@@ -250,12 +250,12 @@ app = new Metalsmith(DIR)
   .use time plugin: 'markdown'
   .use stylus compress: false, use: [axis(), jeet()]
   .use time plugin: 'stylus'
-  .use fingerprint pattern: "#{config.paths.css}/main.css"
+  .use browserify destFolder: js
+  .use time plugin: 'browserify'
+  .use fingerprint pattern: ['**/*.css', '**/*.js']
   .use time plugin: 'fingerprint'
   .use metallic()
   .use time plugin: 'metallic'
-  .use browserify destFolder: js
-  .use time plugin: 'browserify'
   .use more()
   .use time plugin: 'more'
   .use collections collectionConfig
@@ -323,7 +323,7 @@ app = new Metalsmith(DIR)
     sourceMap: false
     cleanCSS: rebase: true
   .use time plugin: 'cleanCSS'
-  .use uglify sourceMap: false
+  .use uglify sourceMap: false, nameTemplate: '[name].[ext]'
   .use time plugin: 'uglify'
   .use htmlMinifier()
   .use time plugin: 'htmlMinifier'
