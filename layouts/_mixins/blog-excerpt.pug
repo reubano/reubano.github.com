@@ -4,7 +4,7 @@ mixin blog-excerpt(post)
   - var readtime = min2read(post.markdown)
   - var postdate = format_date(post.date, 'MMM D, YYYY')
   - var month = format_date(post.date, 'MM')
-  - var href = archive.name + '/' + post.date.getFullYear() + '/' + month
+  - var archiveURL = archive.name + '/' + post.date.getFullYear() + '/' + month
 
   article(itemscope itemtype='http://schema.org/Article')
     h2(itemprop='name')
@@ -12,7 +12,7 @@ mixin blog-excerpt(post)
 
     p.small(itemprop='datePublished', content=post.date.toISOString())
       | written by #{site.author} on&nbsp;
-      a(href=url_for(href))= postdate
+      a(href=url_for(archiveURL))= postdate
       |&nbsp;~ #{readtime} minute read ~&nbsp;
       a(href=url_for(post.path)) view full post...
 
