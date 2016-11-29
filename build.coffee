@@ -25,14 +25,13 @@ changed = require 'metalsmith-changed'
 permalinks = require 'metalsmith-permalinks'
 metallic = require 'metalsmith-metallic'
 fingerprint = require 'metalsmith-fingerprint-ignore'
-# cleanCSS = require 'metalsmith-clean-css'
 # linkcheck = require 'metalsmith-linkcheck'
 # blc = require 'metalsmith-broken-link-checker'
 sitemap = require 'metalsmith-sitemap'
+uglify = require 'metalsmith-uglify'
+htmlMinifier = require "metalsmith-html-minifier"
 # gist = require 'metalsmith-gist'
-# htmlMinifier = require "metalsmith-html-minifier"
 # slug = require 'metalsmith-slug'
-# uglify = require 'metalsmith-uglify'
 # uncss = require 'metalsmith-uncss'
 # livereload = require 'metalsmith-livereload'
 
@@ -53,6 +52,7 @@ json2files = require './plugins/json-to-files'
 time = require './plugins/time'
 archive = require './plugins/archive'
 feed = require './plugins/feed'
+cleanCSS = require './plugins/clean-css'
 serve = require './plugins/serve'
 compress = require './plugins/compress'
 
@@ -325,12 +325,16 @@ app = new Metalsmith(DIR)
   #   output: 'uncss-app.css'
   #   basepath: config.paths.css
   #   removeOriginal: true
-  # .use cleanCSS
-  #   files: "#{config.paths.source}/**/*.css"
-  #   sourceMap: false
-  #   cleanCSS: rebase: true
-  # .use htmlMinifier '*.html'
-  # .use uglify sourceMap: true, removeOriginal: false
+  .use cleanCSS
+    files: "#{config.paths.css}/main*.css"
+    rename: false
+    sourceMap: false
+    cleanCSS: rebase: true
+  .use time plugin: 'cleanCSS'
+  .use uglify sourceMap: false, removeOriginal: true
+  .use time plugin: 'uglify'
+  .use htmlMinifier()
+  .use time plugin: 'htmlMinifier'
   .use compress overwrite: false
   .use time plugin: 'compress'
 

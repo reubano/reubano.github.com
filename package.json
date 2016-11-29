@@ -25,7 +25,6 @@
     "metalsmith": "^2.1.0",
     "metalsmith-changed": "^3.0.0",
     "metalsmith-clean": "^0.0.0",
-    "metalsmith-clean-css": "^5.0.0",
     "metalsmith-fingerprint-ignore": "^1.1.2",
     "metalsmith-gist": "^0.3.0",
     "metalsmith-html-minifier": "^2.1.0",
