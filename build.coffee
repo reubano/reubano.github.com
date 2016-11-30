@@ -368,21 +368,21 @@ app
   # .use livereload debug: false
   # .use time plugin: 'livereload'
 
-modifiedFiles = []
+# modifiedFiles = []
 
-trigger = ->
-  if modifiedFiles.length
-    build()
-    modifiedFiles = []
+# trigger = ->
+#   if modifiedFiles.length
+#     build()
+#     modifiedFiles = []
 
-watcher = chokidar.watch ['data', 'layouts', 'plugins', 'source', '*.coffee']
+# watcher = chokidar.watch ['data', 'layouts', 'plugins', 'source', '*.coffee']
 
-debounced = _.debounce(trigger, 100)
+# debounced = _.debounce(trigger, 100)
 
-watcher.on 'change', (file) ->
-  console.log "#{file} has changed!"
-  relativeFile = path.relative path.join(DIR, 'source'), file
-  modifiedFiles.push(relativeFile)
-  debounced()
+# watcher.on 'change', (file) ->
+#   console.log "#{file} has changed!"
+#   relativeFile = path.relative path.join(DIR, 'source'), file
+#   modifiedFiles.push(relativeFile)
+#   debounced()
 
 # open 'http://localhost:8080'
