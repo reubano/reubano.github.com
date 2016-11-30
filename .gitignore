@@ -2,6 +2,5 @@ node_modules/
 build/
 bower_components/
 logo.sketch/
-public/
 server.log
 npm-debug.log
