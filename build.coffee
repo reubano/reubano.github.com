@@ -376,7 +376,6 @@ app
 #     modifiedFiles = []
 
 # watcher = chokidar.watch ['data', 'layouts', 'plugins', 'source', '*.coffee']
-
 # debounced = _.debounce(trigger, 100)
 
 # watcher.on 'change', (file) ->
