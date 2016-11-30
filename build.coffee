@@ -282,8 +282,8 @@ app = new Metalsmith(DIR)
       {match: {collection: 'blog'}, pattern: 'blog/:title'}
       {match: {collection: 'gallery'}, pattern: 'gallery/:title'}
       {match: {collection: 'projects'}, pattern: 'projects/:title'}
-      {match: {collection: 'tagz'}, pattern: 'tags/:title'}
-      {match: {collection: 'archive'}, pattern: 'archive/:title'}
+      {match: {collection: 'tagz'}, pattern: 'tagged/:slug'}
+      {match: {collection: 'archive'}, pattern: 'archive/:year'}
     ]
   .use time plugin: 'permalinks'
   # .use lunr
