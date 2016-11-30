@@ -136,6 +136,7 @@ paginationConfig =
     perPage: 30
     layout: 'tagged.pug'
     pick: ['slug', 'path']
+    page: []
     path: 'tagz/page/:num/index.html'
     pageMetadata: title: 'tagz', name: 'tagz'
   tagged:
