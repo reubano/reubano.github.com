@@ -1,4 +1,4 @@
-helpers = require('../helpers')
+helpers = require '../helpers'
 _ = helpers._
 
 module.exports = (options) ->

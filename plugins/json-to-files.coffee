@@ -1,5 +1,5 @@
 path = require 'path'
-helpers = require('../helpers')
+helpers = require '../helpers'
 
 _ = helpers._
 getMatch = helpers.getMatch
@@ -49,7 +49,7 @@ module.exports = (options) ->
             else
               metadata = entry
 
-            _.extend metadata, data.json_files
+            _.assign metadata, data.json_files
             matched = getMatch(metadata, metadata.pattern).toLowerCase()
 
             if options.omit?[collection]

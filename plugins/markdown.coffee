@@ -1,5 +1,5 @@
 path = require 'path'
-helpers = require('../helpers')
+helpers = require '../helpers'
 
 marked = helpers.marked
 

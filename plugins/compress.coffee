@@ -1,6 +1,5 @@
 zlib = require 'zlib'
-
-helpers = require('../helpers')
+helpers = require '../helpers'
 each = require('../node_modules/async').each
 
 _ = helpers._
