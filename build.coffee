@@ -361,7 +361,7 @@ build true
 
 app
   .use serve
-    redirects: '/tagged': '/tagz'
+    redirects: '/tagged': '/tagz/', '/tagged/': '/tagz/'
     gzip: true
 
   .use time plugin: 'serve'
