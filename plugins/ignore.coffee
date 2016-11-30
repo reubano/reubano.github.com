@@ -1,21 +1,16 @@
 helpers = require('../helpers')
 
-minimatch = helpers.minimatch
+_ = helpers._
+multimatch = helpers.multimatch
+
 now = new Date()
 
-module.exports = (opts) ->
-  if (typeof opts is 'string')
-    opts = [opts]
-  else if (opts instanceof Array)
-    opts = patterns: opts
-
-  opts = opts or {}
-  patterns = opts.patterns or ['**/_*', '**/_*/**', '**/.DS_Store']
+module.exports = (patterns) ->
+  values = patterns or ['!**/_*', '!**/_*/**', '!**/.DS_Store']
+  patterns = _.concat ['**/*'], values
 
   (files, metalsmith, done) ->
-    filenames = Object.keys(files)
-    for pattern in patterns
-      filenames = filenames.filter minimatch.filter "!#{pattern}"
+    filenames = multimatch Object.keys(files), patterns
 
     for file, data of files
       future = if data.date then data.date >= now else false

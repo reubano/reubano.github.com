@@ -28,13 +28,13 @@ mixin list-tags(tags, size)
     ul(class='inline-list tag-list')
       for tag in tagz.data
         if tags.indexOf(tag.name) > -1
-          - var href = url_for(tag.path)
+          - var tagURL = url_for(tag.path)
 
           li
             if size
-              a(class='tag tag-#{size}', href=href, itemprop='articleSection')= tag.name
+              a(class='tag tag-#{size}', href=tagURL, itemprop='articleSection')= tag.name
             else
-              a.tag(href=href, itemprop='articleSection')= tag.name
+              a.tag(href=tagURL, itemprop='articleSection')= tag.name
 
 mixin pluralize(type, category, count)
   if count && count > 1

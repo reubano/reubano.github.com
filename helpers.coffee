@@ -4,7 +4,7 @@ _ = require './node_modules/lodash'
 slug = require './node_modules/slug'
 moment = require './node_modules/moment'
 marked = require './node_modules/marked'
-minimatch = require './node_modules/minimatch'
+multimatch = require './node_modules/multimatch'
 config = require './config'
 
 sizes = [
@@ -115,8 +115,8 @@ module.exports =
     base
 
   getMatch: getMatch
-  slug: (content) -> slug(content, mode: 'rfc3986')
+  slug: (content) -> slug(content, mode: 'rfc3986').toLowerCase()
   _: _
   moment: moment
   marked: marked
-  minimatch: minimatch
+  multimatch: multimatch

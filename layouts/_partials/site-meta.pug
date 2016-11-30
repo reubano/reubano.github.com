@@ -8,7 +8,7 @@ meta(content='telephone=no', name='format-detection')
 meta(content='yes', name='apple-mobile-web-app-capable')
 meta(content='black-translucent', name='apple-mobile-web-app-status-bar-style')
 
-link(rel='shortcut icon', type='image/x-icon', href=url_for('icons/favicon.ico'))
+link(rel='shortcut icon', type='image/x-icon', href=url_for('favicon.ico'))
 link(rel='icon', type='image/svg+xml', href=url_for('icons/favicon.svg'))
 link(rel='mask-icon', href=url_for('icons/favicon.svg'), color='white')
 
@@ -23,5 +23,5 @@ for size in ['196', '160', '96', '32', '16']
 
 link(rel='canonical', href=site.url)
 
-- var path = url_for(social.rss.path)
-link(rel='alternate', type='application/rss+xml', href=url_for('feed.xml'), title=site.description)
+- var rssURL = url_for(social.rss.path)
+link(rel='alternate', type='application/rss+xml', href=rssURL, title=site.description)

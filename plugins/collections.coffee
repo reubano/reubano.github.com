@@ -1,21 +1,13 @@
 helpers = require('../helpers')
 
 _ = helpers._
-Matcher = helpers.minimatch.Minimatch
+multimatch = helpers.multimatch
 
-module.exports = (opts) ->
-  keys = Object.keys(opts)
+module.exports = (options) ->
+  keys = _.keys options
 
-  match = (file, data) ->
-    matches = []
-    if data.collection
-      matches.push(data.collection)
-
-    for key, val of opts
-      if val and (typeof val is 'string') and (new Matcher(val)).match(file)
-        matches.push(key)
-
-    _.uniq(matches)
+  match = (file, val) ->
+    val and (typeof val is 'string') and multimatch([file], val).length
 
   (files, metalsmith, done) ->
     metadata = metalsmith.metadata()
@@ -27,17 +19,23 @@ module.exports = (opts) ->
     metadata.collections = []
 
     for file, data of files
-      match(file, data).forEach (collection) ->
+      collections = if data.collection then [data.collection] else []
+
+      for key, val of options
+        if match(file, val)
+          collections.push key
+
+      for collection in _.uniq collections
         if (collection in keys) and collection not in _.keys metadata
-          collectionMetadata = opts[collection].metadata ? {}
+          collectionMetadata = options[collection].metadata ? {}
           defMetadata = {data: [], name: collection}
-          metadata[collection] = _.assign defMetadata, collectionMetadata
+          metadata[collection] = _.defaults collectionMetadata, defMetadata
 
         data.path = file
         data.collection = collection
         metadata[collection].data.push(data)
 
-    for key, settings of opts
+    for key, settings of options
       if metadata[key]?.data
         collectionData = _.sortBy metadata[key]?.data, settings.sortBy or 'date'
         if (settings.reverse) then collectionData.reverse()

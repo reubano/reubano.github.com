@@ -16,14 +16,14 @@ mixin navbar(cur)
 
       ul.nav-list
         each page in pages.data
-          - var href = url_for(page.name)
+          - var pageURL = url_for(page.name)
           li
-            a(href=href, class={active: cur == page.name})= page.name
+            a(href=pageURL, class={active: cur == page.name})= page.name
 
         each category in collections
           if category.show
-            - var href = url_for(category.name)
+            - var catURL = url_for(category.name)
             li
-              a(href=href, class={active: cur == category.name})= category.name
+              a(href=catURL, class={active: cur == category.name})= category.name
 
     //input#search-input(type='search', placeholder='Search...')

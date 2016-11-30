@@ -17,26 +17,19 @@ lunr_ = require './node_modules/lunr'
 jeet = require './node_modules/jeet'
 axis = require './node_modules/axis'
 open = require './node_modules/open'
-chokidar = require 'chokidar'
+chokidar = require './node_modules/chokidar'
+rm = require './node_modules/rimraf'
 
 end = checkpoint 'require base', stamp
 
 changed = require 'metalsmith-changed'
 permalinks = require 'metalsmith-permalinks'
 metallic = require 'metalsmith-metallic'
-serve = require 'metalsmith-serve'
 fingerprint = require 'metalsmith-fingerprint-ignore'
-# sitemap = require 'metalsmith-sitemap'
-# cleanCSS = require 'metalsmith-clean-css'
-# linkcheck = require 'metalsmith-linkcheck'
-# blc = require 'metalsmith-broken-link-checker'
+sitemap = require 'metalsmith-sitemap'
+uglify = require 'metalsmith-uglify'
+htmlMinifier = require "metalsmith-html-minifier"
 # gist = require 'metalsmith-gist'
-# compress = require 'metalsmith-gzip'
-# htmlMinifier = require "metalsmith-html-minifier"
-# slug = require 'metalsmith-slug'
-# uglify = require 'metalsmith-uglify'
-# uncss = require 'metalsmith-uncss'
-# feed = require 'metalsmith-feed'
 # livereload = require 'metalsmith-livereload'
 
 end = checkpoint 'require metalsmith plugins', end
@@ -55,6 +48,11 @@ lunr = require './plugins/lunr'
 json2files = require './plugins/json-to-files'
 time = require './plugins/time'
 archive = require './plugins/archive'
+feed = require './plugins/feed'
+cleanCSS = require './plugins/clean-css'
+serve = require './plugins/serve'
+compress = require './plugins/compress'
+blc = require './plugins/blc'
 
 end = checkpoint 'require local plugins', end
 
@@ -133,14 +131,15 @@ paginationConfig =
     path: 'projects/page/:num/index.html'
     pageMetadata: title: 'projects', name: 'projects'
   tagz:
-    perPage: 30
+    perPage: 12
     layout: 'tagged.pug'
     pick: ['slug', 'path']
+    page: []
     path: 'tagz/page/:num/index.html'
     pageMetadata: title: 'tagz', name: 'tagz'
   tagged:
     collection: 'tagz'
-    perPage: 30
+    perPage: 12
     layout: 'tagged.pug'
     pick: ['slug', 'path']
     nest: true
@@ -216,7 +215,6 @@ enrichFunc = (entry) ->
 
 app = new Metalsmith(DIR)
   .use time plugin: 'start', start: end
-  .clean true
   .source config.paths.source
   .destination config.paths.dest
   .metadata config
@@ -252,12 +250,12 @@ app = new Metalsmith(DIR)
   .use time plugin: 'markdown'
   .use stylus compress: false, use: [axis(), jeet()]
   .use time plugin: 'stylus'
-  .use fingerprint pattern: "styles/main.css"
+  .use browserify destFolder: js
+  .use time plugin: 'browserify'
+  .use fingerprint pattern: ['**/*.css', '**/*.js']
   .use time plugin: 'fingerprint'
   .use metallic()
   .use time plugin: 'metallic'
-  .use browserify destFolder: js
-  .use time plugin: 'browserify'
   .use more()
   .use time plugin: 'more'
   .use collections collectionConfig
@@ -284,8 +282,8 @@ app = new Metalsmith(DIR)
       {match: {collection: 'blog'}, pattern: 'blog/:title'}
       {match: {collection: 'gallery'}, pattern: 'gallery/:title'}
       {match: {collection: 'projects'}, pattern: 'projects/:title'}
-      {match: {collection: 'tagz'}, pattern: 'tags/:title'}
-      {match: {collection: 'archive'}, pattern: 'archive/:title'}
+      {match: {collection: 'tagz'}, pattern: 'tagged/:slug'}
+      {match: {collection: 'archive'}, pattern: 'archive/:year'}
     ]
   .use time plugin: 'permalinks'
   # .use lunr
@@ -304,67 +302,86 @@ app = new Metalsmith(DIR)
     cache: true
   .use time plugin: 'pug'
   # .use gist debug: true
-  # .use slug patterns: ['*.md', '*.rst'], renameFiles: true, lower: true
-  # .use feed
-  #   collection: 'blog'
-  #   limit: 20
-  #   destination: config.social.rss.path
-  #   postDescription: (file) -> file.less or file.excerpt or file.contents
-  # .use sitemap
-  #   hostname: config.site.url
-  #   omitIndex: true
-  #   modifiedProperty: 'lastmod'
-  #   urlProperty: 'canonical'
-  # .use linkcheck timeout: 5, failWithoutNetwork: false
-  # .use uncss
-  #   css: ['app.css']
-  #   output: 'uncss-app.css'
-  #   basepath: config.paths.css
-  #   removeOriginal: true
-  # .use cleanCSS
-  #   files: "#{config.paths.source}/**/*.css"
-  #   sourceMap: false
-  #   cleanCSS: rebase: true
-  # .use htmlMinifier '*.html'
-  # .use uglify sourceMap: true, removeOriginal: false
-  # .use compress overwrite: false
+  .use feed
+    collection: 'blog'
+    limit: 20
+    destination: config.social.rss.path
+    postDescription: (file) -> file.less or file.excerpt or file.contents or ''
+  .use time plugin: 'feed'
+  .use sitemap
+    hostname: config.site.url
+    omitIndex: true
+    lastmod: new Date()
+    modifiedProperty: 'lastmod'
+    urlProperty: 'canonical'
+  .use time plugin: 'sitemap'
+  .use blc warn: true
+  .use time plugin: 'blc'
+  .use cleanCSS
+    files: "#{config.paths.css}/main*.css"
+    rename: false
+    sourceMap: false
+    cleanCSS: rebase: true
+  .use time plugin: 'cleanCSS'
+  .use uglify sourceMap: false, nameTemplate: '[name].[ext]'
+  .use time plugin: 'uglify'
+  .use htmlMinifier()
+  .use time plugin: 'htmlMinifier'
+  .use compress overwrite: false
+  .use time plugin: 'compress'
 
-build = ->
-  end = _.now()
-  app.build (err, files) ->
-    if (err)
-      throw err
+build = (clean) ->
+  afterProcess = (err, files) ->
+    if err
+      console.log "process error: #{err.message}"
+    else
+      app.write files, (err) ->
+        endTime = (_.now() - stamp) / 1000
 
-    if _.keys(files).length
-      console.log "built #{_.keys(files).length} files"
-    # for filename, data of _files
-    #   console.log "built #{filename}"
+        if err
+          console.log "write error: #{err.message} "
+        else
+          _.keys(files).length
+          console.log "Successfully built #{_.keys(files).length} files"
+        # for filename, data of _files
+        #   console.log "built #{filename}"
 
-    endTime = (_.now() - stamp) / 1000
-    console.log "Successfully built site in #{endTime}s"
+        console.log "built site in #{endTime}s "
 
-build()
+  if clean
+    rm path.join(app.destination(), '*'), (err) ->
+      if err
+        console.log "rimraf error: #{err.message}"
+      else
+        app.process afterProcess
+  else
+    app.process afterProcess
+
+build true
+
 app
-  .use serve()
+  .use serve
+    redirects: '/tagged': '/tagz/', '/tagged/': '/tagz/'
+    gzip: true
+
   .use time plugin: 'serve'
   # .use livereload debug: false
   # .use time plugin: 'livereload'
 
-modifiedFiles = []
+# modifiedFiles = []
 
-trigger = ->
-  if modifiedFiles.length
-    build()
-    modifiedFiles = []
+# trigger = ->
+#   if modifiedFiles.length
+#     build()
+#     modifiedFiles = []
 
-watcher = chokidar.watch ['data', 'layouts', 'plugins', 'source', '*.coffee']
+# watcher = chokidar.watch ['data', 'layouts', 'plugins', 'source', '*.coffee']
+# debounced = _.debounce(trigger, 100)
 
-debounced = _.debounce(trigger, 100)
-
-watcher.on 'change', (file) ->
-  console.log "#{file} has changed!"
-  relativeFile = path.relative path.join(DIR, 'source'), file
-  modifiedFiles.push(relativeFile)
-  debounced()
+# watcher.on 'change', (file) ->
+#   console.log "#{file} has changed!"
+#   relativeFile = path.relative path.join(DIR, 'source'), file
+#   modifiedFiles.push(relativeFile)
+#   debounced()
 
 # open 'http://localhost:8080'

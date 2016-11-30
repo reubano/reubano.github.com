@@ -38,7 +38,7 @@ module.exports = (opts) ->
       if not collection
         done new TypeError "Collection '#{colName}' not found!"
 
-      options = _.assign {}, DEFAULTS, settings
+      options = _.defaults settings, DEFAULTS
       options.page = options.page or options.pick
 
       if options.filter
