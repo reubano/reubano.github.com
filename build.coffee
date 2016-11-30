@@ -17,7 +17,7 @@ lunr_ = require './node_modules/lunr'
 jeet = require './node_modules/jeet'
 axis = require './node_modules/axis'
 open = require './node_modules/open'
-chokidar = require 'chokidar'
+chokidar = require './node_modules/chokidar'
 rm = require './node_modules/rimraf'
 
 end = checkpoint 'require base', stamp
