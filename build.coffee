@@ -208,6 +208,7 @@ enrichFunc = (entry) ->
     tags.push 'app'
 
   dataList = ['csv', 'json', 'data', 'analysis', 'processing']
+
   if _.intersection(dataList, description).length
     tags.push 'data'
 
