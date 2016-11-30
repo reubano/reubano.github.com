@@ -18,6 +18,7 @@ jeet = require './node_modules/jeet'
 axis = require './node_modules/axis'
 open = require './node_modules/open'
 chokidar = require 'chokidar'
+rm = require './node_modules/rimraf'
 
 end = checkpoint 'require base', stamp
 
@@ -214,8 +215,6 @@ enrichFunc = (entry) ->
 
 app = new Metalsmith(DIR)
   .use time plugin: 'start', start: end
-  .clean true
-  .use time plugin: 'clean'
   .source config.paths.source
   .destination config.paths.dest
   .metadata config
@@ -331,21 +330,35 @@ app = new Metalsmith(DIR)
   .use compress overwrite: false
   .use time plugin: 'compress'
 
-build = ->
-  end = _.now()
-  app.build (err, files) ->
-    if (err)
-      throw err
+build = (clean) ->
+  afterProcess = (err, files) ->
+    if err
+      console.log "process error: #{err.message}"
+    else
+      app.write files, (err) ->
+        endTime = (_.now() - stamp) / 1000
 
-    if _.keys(files).length
-      console.log "built #{_.keys(files).length} files"
-    # for filename, data of _files
-    #   console.log "built #{filename}"
+        if err
+          console.log "write error: #{err.message} "
+        else
+          _.keys(files).length
+          console.log "Successfully built #{_.keys(files).length} files"
+        # for filename, data of _files
+        #   console.log "built #{filename}"
 
-    endTime = (_.now() - stamp) / 1000
-    console.log "Successfully built site in #{endTime}s"
+        console.log "built site in #{endTime}s "
 
-build()
+  if clean
+    rm path.join(app.destination(), '*'), (err) ->
+      if err
+        console.log "rimraf error: #{err.message}"
+      else
+        app.process afterProcess
+  else
+    app.process afterProcess
+
+build true
+
 app
   .use serve
     redirects: '/tagged': '/tagz'
