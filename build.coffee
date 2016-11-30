@@ -131,7 +131,7 @@ paginationConfig =
     path: 'projects/page/:num/index.html'
     pageMetadata: title: 'projects', name: 'projects'
   tagz:
-    perPage: 30
+    perPage: 12
     layout: 'tagged.pug'
     pick: ['slug', 'path']
     page: []
@@ -139,7 +139,7 @@ paginationConfig =
     pageMetadata: title: 'tagz', name: 'tagz'
   tagged:
     collection: 'tagz'
-    perPage: 30
+    perPage: 12
     layout: 'tagged.pug'
     pick: ['slug', 'path']
     nest: true
