@@ -215,6 +215,7 @@ enrichFunc = (entry) ->
 app = new Metalsmith(DIR)
   .use time plugin: 'start', start: end
   .clean true
+  .use time plugin: 'clean'
   .source config.paths.source
   .destination config.paths.dest
   .metadata config
