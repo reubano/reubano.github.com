@@ -1,6 +1,8 @@
-RSS = require 'rss'
-extend = require 'extend'
-url = require 'url'
+helpers = require '../helpers'
+url = require '../node_modules/url'
+RSS = require '../node_modules/rss'
+
+_ = helpers._
 
 module.exports = (options) ->
   options = options or {}
@@ -23,7 +25,7 @@ module.exports = (options) ->
 
     collection = metadata[collectionName].data
 
-    feedOptions = extend {}, metadata.site, options,
+    feedOptions = _.assign {}, metadata.site, options,
       site_url: metadata.site?.url
       generator: 'metalsmith-feed'
 
@@ -39,7 +41,7 @@ module.exports = (options) ->
       collection = collection[...limit]
 
     for file in collection
-      itemData = extend {}, file,
+      itemData = _.assign {}, file,
         description: postDescription(file)
 
       if postCustomElements

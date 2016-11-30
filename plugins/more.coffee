@@ -1,5 +1,5 @@
 path = require 'path'
-helpers = require('../helpers')
+helpers = require '../helpers'
 
 marked = helpers.marked
 defaults = ext: 'html', regexp: /\s*<!--\s*more\s*-->/, cutoff: 30

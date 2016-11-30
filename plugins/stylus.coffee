@@ -1,6 +1,6 @@
 path = require 'path'
+helpers = require '../helpers'
 stylus = require '../node_modules/stylus'
-helpers = require('../helpers')
 
 multimatch = helpers.multimatch
 

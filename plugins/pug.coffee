@@ -1,8 +1,8 @@
 path = require 'path'
 fs = require 'fs'
-pug = require 'pug'
+helpers = require '../helpers'
+pug = require '../node_modules/pug'
 
-helpers = require('../helpers')
 _ = helpers._
 
 module.exports =  (opts) ->
