@@ -34,8 +34,49 @@ getMatch = (entry, pattern) ->
     pattern
 
 
-_filterData = (data) -> _.filter data, (item) -> item.featured
-filterData = _.memoize _filterData
+_getFeatured = (category, filterby) ->
+  item = category.data[0]
+
+  if item.views?
+    ranked = _.sortBy category.data, (item) -> -item.views
+  else if item.stargazers_count?
+    ranked = _.sortBy category.data, (item) -> -item.stargazers_count
+  else if item.comments?
+    ranked = _.sortBy category.data, (item) -> -item.comments
+  else if item.featured?
+    ranked = _.sortBy category.data, (item) -> -item.featured
+  else
+    ranked = _.sortBy category.data, (item) -> -item.updated
+
+  _.shuffle if filterby then _.filter(ranked[...10], filterby) else ranked[...6]
+
+getFeatured = _.memoize _getFeatured
+
+getHeadings = (items) ->
+  names = _.map items, 'name'
+  titles = _.map items, 'title'
+  _.uniq _.filter _.flatten [names, titles]
+
+filterByHeading = (items, headings) ->
+  _.filter items, (item) -> (item.name or item.title) not in headings
+
+_getRecent = (category, filterby) ->
+  featured = getFeatured(category, filterby)
+  headings = getHeadings featured
+  items = filterByHeading category.data, headings
+  filtered = if filterby then _.filter(items, filterby) else items
+  _.sortBy filtered, (item) -> -item.updated
+
+getRecent = _.memoize _getRecent
+
+_getRandom = (category, filterby) ->
+  featured = getFeatured(category, filterby)
+  recent = getRecent(category, filterby)[...5]
+  headings = _.flatten [getHeadings(featured), getHeadings(recent)]
+  items = filterByHeading category.data, headings
+  _.shuffle if filterby then _.filter(items, filterby) else items
+
+getRandom = _.memoize _getRandom
 
 pad = (num, size) -> if num then ('000000000' + num).substr(-size) else num
 monthsAbrs = [
@@ -74,27 +115,9 @@ module.exports =
 
     sorted.filter (item) -> item.title isnt article.title
 
-  getFeatured: (category, filterby) ->
-    if filterby
-      filtered = _.filter (filterData category.data), filterby
-    else
-      filtered = filterData category.data
-
-    _.sortBy filtered, (item) -> -item.updated
-
-  getRecent: (category, filterby) ->
-    if filterby
-      filtered = _.filter category.data, filterby
-    else
-      filtered = category.data
-
-    _.sortBy filtered, (item) -> -item.date
-
-  getRandom: (category, filterby) ->
-    if filterby
-      _.shuffle _.filter category.data, filterby
-    else
-      _.shuffle category.data
+  getFeatured: getFeatured
+  getRecent: getRecent
+  getRandom: getRandom
 
   # css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/
   # sitepoint.com/how-to-build-responsive-images-with-srcset/
