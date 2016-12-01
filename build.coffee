@@ -307,7 +307,7 @@ app = new Metalsmith(DIR)
   .use feed
     collection: 'blog'
     limit: 20
-    destination: config.social.rss.path
+    destination: config.laicos.rss.path
     postDescription: (file) -> file.less or file.excerpt or file.contents or ''
   .use time plugin: 'feed'
   .use sitemap
@@ -324,13 +324,13 @@ app = new Metalsmith(DIR)
     rename: false
     sourceMap: false
     cleanCSS: rebase: true
-  .use time plugin: 'cleanCSS'
+  .use msIf config.prod, time plugin: 'cleanCSS'
   .use msIf config.prod, uglify sourceMap: false, nameTemplate: '[name].[ext]'
-  .use time plugin: 'uglify'
+  .use msIf config.prod, time plugin: 'uglify'
   .use msIf config.prod, htmlMinifier()
-  .use time plugin: 'htmlMinifier'
+  .use msIf config.prod, time plugin: 'htmlMinifier'
   .use msIf config.prod, compress overwrite: false
-  .use time plugin: 'compress'
+  .use msIf config.prod, time plugin: 'compress'
 
 build = (clean) ->
   afterProcess = (err, files) ->
@@ -362,11 +362,11 @@ build = (clean) ->
 build true
 
 app
-  .use serve
+  .use msIf config.serve, serve
     redirects: '/tagged': '/tagz/', '/tagged/': '/tagz/'
     gzip: true
 
-  .use time plugin: 'serve'
+  .use msIf config.serve, time plugin: 'serve'
   # .use livereload debug: false
   # .use time plugin: 'livereload'
 

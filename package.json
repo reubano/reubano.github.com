@@ -1,10 +1,13 @@
 {
   "name": "reubano",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Reuben's website",
   "repository": {
     "type": "git",
     "url": "https://github.com/reubano/reubano.github.com"
+  },
+  "engines": {
+    "node": ">=6.9.1,<7.0.0"
   },
   "gh-pages-deploy": {
     "staticpath": "public",
@@ -15,11 +18,17 @@
     ],
     "noprompt": false
   },
+  "config": {
+    "site": "local",
+    "serve": true
+  },
   "scripts": {
     "deploy": "gh-pages-deploy",
     "clean": "rimraf README.md source plugins layouts data package.json *.coffee",
-    "start": "NODE_ENV=developmentcoffee build.coffee",
-    "start:prod": "NODE_ENV=production coffee build.coffee",
+    "start": "SITE=$npm_package_config_site SERVE=$npm_package_config_serve coffee build.coffee",
+    "start:local": "npm run start --reubano:site=local",
+    "start:gh": "NODE_ENV=production npm run start --reubano:site=gh",
+    "start:netlify": "NODE_ENV=production npm run start --reubano:site=netlify --reubano:serve=false",
     "lint": "coffeelint **/*.coffee *.coffee",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

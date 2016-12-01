@@ -1,6 +1,7 @@
-prod_url = 'https://reubano.github.io'
-dev_url = 'http://localhost:8080'
-prod = process.env.NODE_ENV is 'production'
+URLS =
+  gh: 'https://reubano.github.io'
+  netlify: 'https://reubano.netlify.com/'
+  local: 'http://localhost:8080'
 
 tags = [
   'programming', 'data', 'finance', 'technology', 'photography',  'travel',
@@ -11,14 +12,15 @@ tags = [
 
 module.exports =
   mode: process.env.NODE_ENV
-  prod: prod
+  prod: process.env.NODE_ENV is 'production'
+  serve: process.env.SERVE
   site:
     name: 'reubano'
     author: 'Reuben Cummings'
     email: 'reubano@gmail.com'
     title: 'Reuben on Data'
     subtitle: 'musings of a data wrangler'
-    url: if prod then prod_url else dev_url
+    url: URLS[process.env.SITE]
     version: '0.0.4'
 
     description: """
@@ -35,7 +37,7 @@ module.exports =
     source: 'source'
     dest: 'public'
 
-  social:
+  laicos:
     facebook:
       id: 700036
     github:

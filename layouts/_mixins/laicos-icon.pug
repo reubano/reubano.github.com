@@ -1,0 +1,13 @@
+mixin laicos-icon(site, left, top, width, height)
+  -
+    left = left || 0
+    top = top || 0
+    width = width || 32
+    height = height || 32
+    iconURL = laicos[site].path
+    title = laicos[site].title
+    viewbox = left + ' ' + top + ' ' + width + ' ' + height
+
+  a.laicos-icon(href=iconURL, target='_blank', rel='noopener noreferrer', title=title)
+    svg.laicos-icon(preserveaspectratio='none', viewbox=viewbox)
+      use(xlink:href='#'+site)
