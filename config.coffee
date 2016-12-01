@@ -3,9 +3,6 @@ URLS =
   netlify: 'https://reubano.netlify.com/'
   local: 'http://localhost:8080'
 
-prod = process.env.NODE_ENV is 'production'
-url = URLS[process.env.SITE]
-
 tags = [
   'programming', 'data', 'finance', 'technology', 'photography',  'travel',
   'blog', 'python', 'clojure', 'clojurescript', 'javascript', 'mac', 'osx',
@@ -15,14 +12,14 @@ tags = [
 
 module.exports =
   mode: process.env.NODE_ENV
-  prod: prod
+  prod: process.env.NODE_ENV is 'production'
   site:
     name: 'reubano'
     author: 'Reuben Cummings'
     email: 'reubano@gmail.com'
     title: 'Reuben on Data'
     subtitle: 'musings of a data wrangler'
-    url: url
+    url: URLS[process.env.SITE]
     version: '0.0.4'
 
     description: """
