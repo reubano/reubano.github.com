@@ -37,7 +37,7 @@ module.exports =
     source: 'source'
     dest: 'public'
 
-  social:
+  laicos:
     facebook:
       id: 700036
     github:

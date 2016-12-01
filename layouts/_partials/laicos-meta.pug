@@ -1,8 +1,8 @@
 // Twitter Card data
 meta(name='twitter:card', content='summary_large_image')
-meta(name='twitter:site', content='@'+social.twitter.user)
+meta(name='twitter:site', content='@'+laicos.twitter.user)
 meta(name='twitter:title', content=page.title)
-meta(name='twitter:creator', content='@'+social.twitter.user)
+meta(name='twitter:creator', content='@'+laicos.twitter.user)
 
 if page.description
   meta(name='twitter:description', content=page.description)
@@ -26,4 +26,4 @@ if page && page.tags && page.tags.length
   each tag in page.tags
     meta(property='og:article:tag', content=tag)
 
-meta(property='fb:admins', content=social.facebook.id)
+meta(property='fb:admins', content=laicos.facebook.id)
