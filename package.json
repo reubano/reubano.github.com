@@ -1,14 +1,26 @@
 {
   "name": "reubano",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Reuben's website",
   "repository": {
     "type": "git",
-    "url": "https://github.com/reubano/reubano"
+    "url": "https://github.com/reubano/reubano.github.com"
+  },
+  "gh-pages-deploy": {
+    "staticpath": "public",
+    "cname": "",
+    "prep": [],
+    "post": [
+      "clean"
+    ],
+    "noprompt": false
   },
   "scripts": {
-    "start": "coffee build.coffee",
-    "lint": "standard \"helpers/**/*.coffee\" \"build.coffee\"",
+    "deploy": "gh-pages-deploy",
+    "clean": "rimraf README.md source plugins layouts data package.json *.coffee",
+    "start": "NODE_ENV=developmentcoffee build.coffee",
+    "start:prod": "NODE_ENV=production coffee build.coffee",
+    "lint": "coffeelint **/*.coffee *.coffee",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "MIT",
@@ -33,6 +45,7 @@
     "metalsmith-fingerprint-ignore": "^1.1.2",
     "metalsmith-gist": "^0.3.0",
     "metalsmith-html-minifier": "^2.1.0",
+    "metalsmith-if": "^0.1.1",
     "metalsmith-linkcheck": "^0.2.8",
     "metalsmith-livereload": "0.0.2",
     "metalsmith-metallic": "^1.0.0",
@@ -51,5 +64,9 @@
     "urijs": "^1.17.0",
     "url": "^0.11.0",
     "winston": "^2.3.0"
+  },
+  "devDependencies": {
+    "gh-pages-deploy": "^0.4.2",
+    "coffeelint": "^1.16.0"
   }
 }
