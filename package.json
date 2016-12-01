@@ -18,11 +18,16 @@
     ],
     "noprompt": false
   },
+  "config": {
+    "site": "local"
+  },
   "scripts": {
     "deploy": "gh-pages-deploy",
     "clean": "rimraf README.md source plugins layouts data package.json *.coffee",
-    "start": "NODE_ENV=developmentcoffee build.coffee",
-    "start:prod": "NODE_ENV=production coffee build.coffee",
+    "start": "SITE=$npm_package_config_site coffee build.coffee",
+    "start:local": "npm run start --reubano:site=local",
+    "start:gh": "NODE_ENV=production npm run start --reubano:site=gh",
+    "start:netlify": "NODE_ENV=production npm run start --reubano:site=netlify",
     "lint": "coffeelint **/*.coffee *.coffee",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

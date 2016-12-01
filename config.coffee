@@ -1,6 +1,10 @@
-prod_url = 'https://reubano.github.io'
-dev_url = 'http://localhost:8080'
+URLS =
+  gh: 'https://reubano.github.io'
+  netlify: 'https://reubano.netlify.com/'
+  local: 'http://localhost:8080'
+
 prod = process.env.NODE_ENV is 'production'
+url = URLS[process.env.SITE]
 
 tags = [
   'programming', 'data', 'finance', 'technology', 'photography',  'travel',
@@ -18,7 +22,7 @@ module.exports =
     email: 'reubano@gmail.com'
     title: 'Reuben on Data'
     subtitle: 'musings of a data wrangler'
-    url: if prod then prod_url else dev_url
+    url: url
     version: '0.0.4'
 
     description: """
