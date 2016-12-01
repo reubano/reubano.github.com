@@ -27,4 +27,4 @@ html(lang=site.language, prefix='og: http://ogp.me/ns#')
     block paginator
     include _partials/laicos-icons
     include _partials/footer
-    script(src=url_for(fingerprint[paths.js + '/bundle.js']))
+    script(async src=url_for(fingerprint[paths.js + '/bundle.js']))
