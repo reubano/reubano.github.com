@@ -1,11 +1,11 @@
-helpers = require('../helpers')
+helpers = require '../helpers'
 _ = helpers._
 
-module.exports = (opts) ->
+module.exports = (options) ->
   (files, metalsmith, done) ->
     metadata = metalsmith.metadata()
-    start = metadata.prevEndTime or opts.start
+    start = metadata.prevEndTime or options.start
     metadata.prevEndTime = _.now()
     time = (metadata.prevEndTime - start) / 1000
-    console.log("#{opts.plugin} +#{time}s")
+    console.log("#{options.plugin} +#{time}s")
     done()

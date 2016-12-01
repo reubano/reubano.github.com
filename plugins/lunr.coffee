@@ -1,6 +1,6 @@
+helpers = require '../helpers'
 lunr = require '../node_modules/lunr'
 
-helpers = require('../helpers')
 _ = helpers._
 
 createDocumentIndex = (fields, datum) ->

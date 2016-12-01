@@ -13,7 +13,7 @@ checkpoint = (name, start) ->
   end
 
 Metalsmith = require './node_modules/metalsmith'
-lunr_ = require './node_modules/lunr'
+_lunr = require './node_modules/lunr'
 jeet = require './node_modules/jeet'
 axis = require './node_modules/axis'
 open = require './node_modules/open'
@@ -208,6 +208,7 @@ enrichFunc = (entry) ->
     tags.push 'app'
 
   dataList = ['csv', 'json', 'data', 'analysis', 'processing']
+
   if _.intersection(dataList, description).length
     tags.push 'data'
 
@@ -290,8 +291,8 @@ app = new Metalsmith(DIR)
   #   collection: 'blog'
   #   indexPath: 'searchIndex.json'
   #   fields: tags: 5, title: 2, markdown: 1
-  #   pipelineFunctions: [lunr_.trimmer]
-  .use time plugin: 'lunr'
+  #   pipelineFunctions: [_lunr.trimmer]
+  # .use time plugin: 'lunr'
   .use pagination paginationConfig
   .use time plugin: 'pagination'
   .use pug

@@ -1,8 +1,7 @@
 path = require 'path'
-URI = require 'urijs'
-cheerio = require 'cheerio'
-
-helpers = require('../helpers')
+helpers = require '../helpers'
+URI = require '../node_modules/urijs'
+cheerio = require '../node_modules/cheerio'
 
 _ = helpers._
 

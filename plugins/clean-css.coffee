@@ -1,6 +1,6 @@
-helpers = require('../helpers')
-CleanCSS = require('../node_modules/clean-css')
-async = require('../node_modules/async')
+helpers = require '../helpers'
+CleanCSS = require '../node_modules/clean-css'
+async = require '../node_modules/async'
 
 multimatch = helpers.multimatch
 _ = helpers._
