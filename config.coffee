@@ -13,6 +13,7 @@ tags = [
 module.exports =
   mode: process.env.NODE_ENV
   prod: process.env.NODE_ENV is 'production'
+  serve: process.env.SERVE
   site:
     name: 'reubano'
     author: 'Reuben Cummings'

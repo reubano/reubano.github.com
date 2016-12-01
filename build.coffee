@@ -362,11 +362,11 @@ build = (clean) ->
 build true
 
 app
-  .use serve
+  .use msIf config.serve, serve
     redirects: '/tagged': '/tagz/', '/tagged/': '/tagz/'
     gzip: true
 
-  .use time plugin: 'serve'
+  .use msIf config.serve, time plugin: 'serve'
   # .use livereload debug: false
   # .use time plugin: 'livereload'
 
