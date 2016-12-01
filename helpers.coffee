@@ -110,7 +110,7 @@ module.exports =
       ("#{url}/#{photo}#{s.query}.#{ext} #{s.width}w" for s in sizes).join(', ')
 
   buildFlickrURL: (photo, query='', ext='jpg') ->
-    base = "https://farm#{photo.farm}.staticflickr.com/"
+    base = "//farm#{photo.farm}.staticflickr.com/"
     base +="#{photo.server}/#{photo.id}_#{photo.secret}#{query}.#{ext}"
     base
 

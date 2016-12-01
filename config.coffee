@@ -40,19 +40,19 @@ module.exports =
       id: 700036
     github:
       api_token: process.env.GITHUB_ACCOUNT_KEY
-      path: 'https://github.com/reubano'
+      path: '//github.com/reubano'
       user: 'reubano'
       title: 'GitHub'
     twitter:
-      path: 'https://twitter.com/reubano'
+      path: '//twitter.com/reubano'
       api_token: process.env.TWITTER_ACCOUNT_KEY
       user: 'reubano'
       title: 'Twitter'
     linkedin:
-      path: 'https://www.linkedin.com/in/reubano'
+      path: '//www.linkedin.com/in/reubano'
       title: 'LinkedIn'
     angellist:
-      path: 'https://angel.co/reubano'
+      path: '//angel.co/reubano'
       title: 'AngelList'
     rss:
       path: '/feed.xml'
