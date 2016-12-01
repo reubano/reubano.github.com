@@ -22,15 +22,15 @@ rm = require './node_modules/rimraf'
 
 end = checkpoint 'require base', stamp
 
-changed = require 'metalsmith-changed'
-permalinks = require 'metalsmith-permalinks'
-metallic = require 'metalsmith-metallic'
-fingerprint = require 'metalsmith-fingerprint-ignore'
-sitemap = require 'metalsmith-sitemap'
-uglify = require 'metalsmith-uglify'
-htmlMinifier = require "metalsmith-html-minifier"
-# gist = require 'metalsmith-gist'
-# livereload = require 'metalsmith-livereload'
+changed = require './node_modules/metalsmith-changed'
+permalinks = require './node_modules/metalsmith-permalinks'
+metallic = require './node_modules/metalsmith-metallic'
+fingerprint = require './node_modules/metalsmith-fingerprint-ignore'
+sitemap = require './node_modules/metalsmith-sitemap'
+uglify = require './node_modules/metalsmith-uglify'
+htmlMinifier = require './node_modules/metalsmith-html-minifier'
+# gist = require './node_modules/metalsmith-gist'
+# livereload = require './node_modules/metalsmith-livereload'
 
 end = checkpoint 'require metalsmith plugins', end
 
