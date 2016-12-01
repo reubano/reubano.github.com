@@ -324,13 +324,13 @@ app = new Metalsmith(DIR)
     rename: false
     sourceMap: false
     cleanCSS: rebase: true
-  .use time plugin: 'cleanCSS'
+  .use msIf config.prod, time plugin: 'cleanCSS'
   .use msIf config.prod, uglify sourceMap: false, nameTemplate: '[name].[ext]'
-  .use time plugin: 'uglify'
+  .use msIf config.prod, time plugin: 'uglify'
   .use msIf config.prod, htmlMinifier()
-  .use time plugin: 'htmlMinifier'
+  .use msIf config.prod, time plugin: 'htmlMinifier'
   .use msIf config.prod, compress overwrite: false
-  .use time plugin: 'compress'
+  .use msIf config.prod, time plugin: 'compress'
 
 build = (clean) ->
   afterProcess = (err, files) ->
