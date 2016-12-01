@@ -1,6 +1,6 @@
-prod_url = 'https://reubano.com'
+prod_url = 'https://reubano.github.io'
 dev_url = 'http://localhost:8080'
-mode = process.env.NODE_ENV
+prod = process.env.NODE_ENV is 'production'
 
 tags = [
   'programming', 'data', 'finance', 'technology', 'photography',  'travel',
@@ -10,13 +10,15 @@ tags = [
   'restful api', 'flask', 'node', 'coffeescript']
 
 module.exports =
+  mode: process.env.NODE_ENV
+  prod: prod
   site:
     name: 'reubano'
     author: 'Reuben Cummings'
     email: 'reubano@gmail.com'
     title: 'Reuben on Data'
     subtitle: 'musings of a data wrangler'
-    url: if mode is 'production' then prod_url else dev_url
+    url: if prod then prod_url else dev_url
     version: '0.0.4'
 
     description: """

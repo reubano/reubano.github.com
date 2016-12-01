@@ -16,7 +16,8 @@
   "scripts": {
     "deploy": "gh-pages-deploy",
     "clean": "rimraf README.md source plugins layouts data package.json *.coffee",
-    "start": "coffee build.coffee",
+    "start": "NODE_ENV=developmentcoffee build.coffee",
+    "start:prod": "NODE_ENV=production coffee build.coffee",
     "lint": "coffeelint **/*.coffee *.coffee",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
