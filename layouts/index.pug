@@ -25,13 +25,17 @@ block content
 
   #categories
     each category in collections
+      - var blog = category.name === 'blog'
+
       if category.show
         div(class='category category-' + category.name)
           h2
             a(href=url_for(category.name))= category.name
 
           +get-featured(category)
-          +get-recent(category, category.count, category.filterby)
+
+          unless blog
+            +get-recent(category, category.count, category.filterby)
 
     div(class='category category-about')
       include _partials/about
