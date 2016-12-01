@@ -6,11 +6,13 @@
     "type": "git",
     "url": "https://github.com/reubano/reubano.github.com"
   },
-   "gh-pages-deploy": {
+  "gh-pages-deploy": {
     "staticpath": "public",
     "cname": "",
     "prep": [],
-    "post": ["clean"],
+    "post": [
+      "clean"
+    ],
     "noprompt": false
   },
   "scripts": {
@@ -43,6 +45,7 @@
     "metalsmith-fingerprint-ignore": "^1.1.2",
     "metalsmith-gist": "^0.3.0",
     "metalsmith-html-minifier": "^2.1.0",
+    "metalsmith-if": "^0.1.1",
     "metalsmith-linkcheck": "^0.2.8",
     "metalsmith-livereload": "0.0.2",
     "metalsmith-metallic": "^1.0.0",
