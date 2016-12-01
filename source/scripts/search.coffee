@@ -1,5 +1,5 @@
 utils = require './utils'
-fromPairs = require 'lodash/frompairs'
+fromPairs = require 'lodash/fp/fromPairs'
 lunr = require 'lunr'
 
 elements = document.getElementsByClassName('plugin')
