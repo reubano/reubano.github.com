@@ -2,6 +2,6 @@ node_modules/
 build/
 bower_components/
 logo.sketch/
-server.log
-npm-debug.log
+public
+*.log
 *.gz

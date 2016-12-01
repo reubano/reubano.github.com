@@ -31,7 +31,7 @@ module.exports =
     css: 'styles'
     js: 'scripts'
     source: 'source'
-    dest: 'docs'
+    dest: 'public'
 
   social:
     facebook:
