@@ -6,6 +6,9 @@
     "type": "git",
     "url": "https://github.com/reubano/reubano.github.com"
   },
+  "engines": {
+    "node": ">=6.9.1,<7.0.0"
+  },
   "gh-pages-deploy": {
     "staticpath": "public",
     "cname": "",
