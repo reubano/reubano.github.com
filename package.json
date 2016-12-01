@@ -4,11 +4,20 @@
   "description": "Reuben's website",
   "repository": {
     "type": "git",
-    "url": "https://github.com/reubano/reubano"
+    "url": "https://github.com/reubano/reubano.github.com"
+  },
+   "gh-pages-deploy": {
+    "staticpath": "public",
+    "cname": "",
+    "prep": [],
+    "post": ["clean"],
+    "noprompt": false
   },
   "scripts": {
+    "deploy": "gh-pages-deploy",
+    "clean": "rimraf README.md source plugins layouts data package.json *.coffee",
     "start": "coffee build.coffee",
-    "lint": "standard \"helpers/**/*.coffee\" \"build.coffee\"",
+    "lint": "coffeelint **/*.coffee *.coffee",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "MIT",
@@ -51,5 +60,9 @@
     "urijs": "^1.17.0",
     "url": "^0.11.0",
     "winston": "^2.3.0"
+  },
+  "devDependencies": {
+    "gh-pages-deploy": "^0.4.2",
+    "coffeelint": "^1.16.0"
   }
 }
