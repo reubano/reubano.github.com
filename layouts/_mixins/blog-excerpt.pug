@@ -18,6 +18,7 @@ mixin blog-excerpt(post)
 
     p.excerpt(itemprop='articleBody')
       | !{post.less.toString()}
+      a.link(href=url_for(post.path)) read full post
 
     footer.excerpt-footer
       if post.tags
