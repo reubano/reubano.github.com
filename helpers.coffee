@@ -7,22 +7,25 @@ marked = require './node_modules/marked'
 multimatch = require './node_modules/multimatch'
 config = require './config'
 
-sizes = [
-  {width: 75, query: '_s', key: 'url_sq'}
-  {width: 100, query: '_t', key: 'url_t'}
-  {width: 150, query: '_q', key: 'url_q'}
-  {width: 240, query: '_m', key: 'url_s'}
-  {width: 320, query: '_n', key: 'url_n'}
-  {width: 500, query: '', key: 'url_m'}
-  {width: 500, query: '', key: 'url_e'}
-  {width: 640, query: '_z', key: 'url_z'}
-  {width: 800, query: '_c', key: 'url_c'}
-  {width: 1024, query: '_b', key: 'url_l'}
-  {width: 1600, query: '_h', key: 'url_h'}
-  {width: 2048, query: '_k', key: 'url_k'}
-  {width: 2048, query: '_o', key: 'url_o'}
+_sizes = [
+  {query: '_s', key: 'url_sq', widthKey: 'width_sq'}
+  {query: '_t', key: 'url_t', widthKey: 'width_t'}
+  {query: '_q', key: 'url_q', widthKey: 'width_q'}
+  {query: '_m', key: 'url_s', widthKey: 'width_s'}
+  {query: '_n', key: 'url_n', widthKey: 'width_n'}
+  {query: '', key: 'url_m', widthKey: 'width_m'}
+  # {query: '', key: 'url_e', widthKey: 'width_e'}
+  {query: '', key: 'url_e', widthKey: 'width_m'}
+  {query: '_z', key: 'url_z', widthKey: 'width_z'}
+  {query: '_c', key: 'url_c', widthKey: 'width_c'}
+  {query: '_b', key: 'url_l', widthKey: 'width_l'}
+  {query: '_h', key: 'url_h', widthKey: 'width_h'}
+  {query: '_k', key: 'url_k', widthKey: 'width_k'}
+  {query: '_o', key: 'url_o', widthKey: 'width_o'}
 ]
 
+landSizes = [75, 100, 150, 240, 320, 500, 500, 640, 800, 1024, 1600, 2048, 2048]
+portSizes = [75, 75, 150, 180, 240, 375, 375, 480, 600, 768, 1200, 1536, 1536]
 REGEX = /:([\w]+(\.[\w]+)*)/g
 
 getMatch = (entry, pattern) ->
@@ -124,11 +127,13 @@ module.exports =
   # webdesignerdepot.com/2015/08/the-state-of-responsive-images/
   # stackoverflow.com/a/12158668/408556
   # developer.telerik.com/featured/lazy-loading-images-on-the-web/
-  getSrcset: (photo, ext='jpg', flickr=true) ->
+  getSrcset: (photo, ext='jpg', flickr=true, portrait) ->
     if flickr
-      filtered = _.filter sizes, (s) -> photo[s.key]
-      ("#{photo[s.key]} #{s.width}w" for s in filtered).join(', ')
+      filtered = _.filter _sizes, (s) -> photo[s.key]
+      ("#{photo[f.key]} #{photo[f.widthKey]}w" for f in filtered).join(', ')
     else
+      refSizes = if portrait then portSizes else landSizes
+      sizes = (_.defaults(s, width: refSizes[i]) for s, i in _sizes)
       url = "#{config.site.url}/#{config.paths.images}"
       ("#{url}/#{photo}#{s.query}.#{ext} #{s.width}w" for s in sizes).join(', ')
 

@@ -237,9 +237,11 @@ app = new Metalsmith(DIR)
 
       gallery: [
         'id', 'title', 'views', 'license', 'datetaken', 'latitude',
-        'longitude', 'name', 'created', 'updated', 'featured', 'url_s',
-        'url_t', 'url_q','url_m', 'url_n', 'url_', 'url_z', 'url_c',
-        'url_b', 'url_h', 'url_k', 'farm', 'server', 'secret', 'tags']
+        'longitude', 'name', 'created', 'updated', 'featured', 'url_sq',
+        'url_t', 'url_q', 'url_s','url_n', 'url_m', 'url_e', 'url_z', 'url_c',
+        'url_l', 'url_h', 'url_k', 'url_o', 'farm', 'server', 'secret', 'tags',
+        'width_sq', 'width_t', 'width_q', 'width_s','width_n', 'width_m', 'width_e',
+        'width_z', 'width_c', 'width_l', 'width_h', 'width_k', 'width_o']
 
   .use time plugin: 'json2files'
   # .use changed force: true
