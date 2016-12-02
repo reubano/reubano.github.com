@@ -3,9 +3,13 @@ ul.breadcrumb
     a(href=site.url)= site.title
 
   if page.pagination
-    li
-      - var collection = find(collections, {'name': page.collection})
-      a(href=url_for(collection.name))= collection.title
+    - var collection = find(collections, {'name': page.collection})
+
+    if page.num == 1
+      li= collection.title
+    else
+      li
+        a(href=url_for(collection.name))= collection.title
 
     li page #{page.num} of #{page.pagination.totalPages}
   else

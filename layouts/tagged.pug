@@ -23,15 +23,21 @@ block content
       if page.pagination
         - var href = tagz.past + '/' + page.slug
 
-        li
-          a(href=url_for(href))= page.slug
+        if page.num == 1
+          li= page.slug
+        else
+          li
+            a(href=url_for(href))= page.slug
 
         li page #{page.num} of #{page.pagination.totalPages}
       else
         li= page.slug
     else if page.pagination
-      li
-        a(href=url_for(tagz.homePath))= tagz.homePath
+      if page.num == 1
+        li= tagz.homePath
+      else
+        li
+          a(href=url_for(tagz.homePath))= tagz.homePath
 
       li page #{page.num} of #{page.pagination.totalPages}
     else
