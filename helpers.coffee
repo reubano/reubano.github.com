@@ -49,7 +49,7 @@ _getFeatured = (category, filterby) ->
   else if item.featured?
     ranked = _.sortBy category.data, (item) -> -item.featured
   else
-    ranked = _.sortBy category.data, (item) -> -item.updated
+    ranked = _.sortBy category.data, (item) -> -item.date
 
   _.shuffle if filterby then _.filter(ranked[...10], filterby) else ranked[...6]
 
