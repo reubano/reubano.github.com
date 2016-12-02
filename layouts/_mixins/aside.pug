@@ -2,12 +2,13 @@ include utils
 
 mixin truncate-posts(posts, count, name)
   - var truncated = posts.slice(0, count)
+  - var gtOne = truncated.length && count && count > 1
 
-  if truncated.length && count && count > 1 && name == 'gallery'
+  if  gtOne && name == 'gallery'
     .gallery
       each post in truncated
         +get-link(post, 'sm', true)
-  else if truncated.length && count && count > 1
+  else if gtOne
     ul.bordered-count
       each post in truncated
         li
