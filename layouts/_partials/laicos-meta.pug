@@ -1,4 +1,5 @@
-- var pageTitle = page.title || page.name || site.name
+- var _pageTitle = page.title || page.name || site.name
+- var pageTitle = _pageTitle == 'home' ? site.title : _pageTitle
 - var pageURL = page.path ? url_for(page.path) : site.url
 - var pageTags = page.tags || site.tags
 - var pageDesc = page.description || site.description
@@ -27,6 +28,8 @@ meta(property='og:type', content=pageContentType)
 meta(property='og:url', content=pageURL)
 meta(property='og:site_name', content=site.title)
 meta(property='og:image', content=pageImage)
+meta(property='og:image:width', content=500)
+meta(property='og:image:height', content=439)
 meta(property='og:description', content=pageDesc)
 
 if pageTags && pageTags.length
