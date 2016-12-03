@@ -1,8 +1,8 @@
 .meta
   ul.tl
     li= page.language || 'n/a'
-    li= page.stargazers_count || 0
-    li= page.forks || 0
+    li.non-mobile= page.stargazers_count || 0
+    li.non-mobile= page.forks || 0
     // li= page.version || '0.0.0'
     li
       a(href=page.html_url, target='_blank', rel='noopener noreferrer') github
@@ -10,9 +10,10 @@
       li
         a(href=page.homepage, target='_blank', rel='noopener noreferrer') view
   ul.tl
-    li language
-    li stars
-    li forks
+    li.mobile lang
+    li.non-mobile language
+    li.non-mobile stars
+    li.non-mobile forks
     // li version
     li source
     if page.homepage
