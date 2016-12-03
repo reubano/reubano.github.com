@@ -23,10 +23,8 @@ module.exports =
     url: URLS[process.env.SITE]
     version: '0.0.4'
 
-    description: """
-      My personal website covering programming, data, finance, technology,
-      photography, and travel
-      """
+    description: 'My personal website covering programming, data, finance,' +
+                 ' technology, photography, and travel'
     tags: tags
     keywords: tags.join ', '
 
