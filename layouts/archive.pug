@@ -11,7 +11,7 @@ block nav
 
 block content
   ul.breadcrumb
-    li
+    li.non-mobile
       a(href=site.url)= site.title
 
     if page.pagination
@@ -54,13 +54,14 @@ block content
         li= page.year
 
   #archives
-    if page.month
-      - var date = format_date(page.date, 'MMM YYYY')
-      h1.archives-title #{archive.name} for #{date}
-    else if page.year
-      h1.archives-title #{archive.name} for #{page.year}
-    else
-      h1.archives-title= archive.name
+    .non-mobile
+      if page.month
+        - var date = format_date(page.date, 'MMM YYYY')
+        h1.archives-title #{archive.name} for #{date}
+      else if page.year
+        h1.archives-title #{archive.name} for #{page.year}
+      else
+        h1.archives-title= archive.name
 
     .archives
       for period in page.data
@@ -84,9 +85,7 @@ block content
               else
                 - var month = format_date(post.date, 'MM')
                 - var href = archive.name + '/' + period.year + '/' + month
-                li
-                  a(href=url_for(href))= date
-                  small &nbsp;[#{post.collection}]
+                li <a href=#{url_for(href)}>#{date}</a> <small>[#{post.collection}]</small>
 
               li
                 +get-link(post, 'sm', true)
