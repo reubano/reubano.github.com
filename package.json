@@ -45,6 +45,7 @@
     "http-status": "^0.2.3",
     "jeet": "^6.1.2",
     "lodash": "^4.15.0",
+    "lodash.frompairs": "^4.0.1",
     "lunr": "^0.7.1",
     "marked": "^0.3.6",
     "metalsmith": "^2.1.0",
