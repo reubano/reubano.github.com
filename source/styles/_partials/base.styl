@@ -71,12 +71,21 @@ blockquote
   blockquote($base-color)
 
 pullquote
-  blockquote($base-color)
-  display block
-  margin $quarter-headspace 0 $quarter-headspace $full-gutter
-  padding-left $half-gutter
-  float right
-  width $pull-quote-width
+  @media $mobile
+    border-left none
+    display block
+    margin 0
+    padding-left 0
+    width 100%
+
+  @media $non-mobile
+    blockquote($base-color)
+    display block
+    margin $quarter-headspace 0 $quarter-headspace $full-gutter
+    padding-left $half-gutter
+    float right
+    width $pull-quote-width
+
   font-size 125%
 
 strong, bold, b
