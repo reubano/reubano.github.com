@@ -1,0 +1,19 @@
+.mobile
+  @media $mobile
+    display block
+  @media $non-mobile
+    display none !important
+
+.non-mobile
+  @media $mobile
+    display none !important
+  @media $non-mobile
+    display block
+
+.desktop
+  @media $mobile
+    display none !important
+  @media $tablet
+    display none !important
+  @media $desktop
+    display block

@@ -14,9 +14,9 @@ block content
   include _partials/collection-breadcrumb
 
   #category
-    h1.category-title= page.title
+    h1(class='category-title non-mobile')= page.title
     .excerpts
-      .category-tags
+      div(class='category-tags non-mobile')
         +list-tags(tags_by_collection(blog))
 
       .category-items
@@ -29,7 +29,7 @@ block content
 
 block aside
   aside
-    +get-featured(blog, 5)
+    +get-featured(blog, blog.count)
 
 block paginator
   include _partials/paginator

@@ -3,11 +3,15 @@
   text-align center
   color $alt-font-color
   padding $half-headspace 0
+
   background $alt-bg-color
   border-top $border-weight solid $border-color
   overflow hidden
   a, span
-    padding 0 $full-gutter
+    @media $mobile
+      padding 0 $half-gutter
+    @media $non-mobile
+      padding 0 $full-gutter
     display inline-block
   a
     link($alt-link-color, 'glow')

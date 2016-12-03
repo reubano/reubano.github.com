@@ -5,8 +5,6 @@ layout: page.pug
 collection: pages
 ---
 
-## Contacting
-
 You can contact or connect with me via the following:
 
 * email: [personal](mailto:reubano@gmail.com), [business](mailto:rcummings@nerevu.com)

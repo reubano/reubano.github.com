@@ -1,9 +1,15 @@
 .blog-excerpt
-  border-radius $border-radius
-  border $border-weight solid $border-color
-  padding 0 $quarter-headspace $half-gutter
+  @media $mobile
+    border none
+    padding 0
+    background $bg-color
+  @media $non-mobile
+    border-radius $border-radius
+    border $border-weight solid $border-color
+    padding 0 $quarter-headspace $half-gutter
+    background $alt-bg-color
+
   margin-bottom $half-headspace
-  background $alt-bg-color
   color $alt-font-color
   &:last-child
     margin-bottom 0
@@ -12,10 +18,12 @@
     link($alt-link-color, 'glow')
 
   .excerpt
-    padding $quarter-headspace 0
+    @media $mobile
+      padding 0
+    @media $non-mobile
+      padding $quarter-headspace 0
 
     p
-      margin 0 $half-gutter 0 0
       overflow hidden
       clear both
       word-wrap break-word

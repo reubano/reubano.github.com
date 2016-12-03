@@ -62,15 +62,6 @@
           font-size 110%
         @media $tablet
           font-size 115%
-    .about
-      @media $mobile
-        display none
-      @media $tablet
-        display none
-      @media $desktop
-        display none
-      @media $hd
-        display block
 
 #categories
   .recent-photos
@@ -86,6 +77,17 @@
     @media $hd
       display none
 
+#intro
+  .about
+    @media $mobile
+      display none
+    @media $tablet
+      display none
+    @media $desktop
+      display none
+    @media $hd
+      display block
+
 .about-home
   @media $mobile
     display none
@@ -96,6 +98,7 @@
   @media $hd
     display none
 
+.category-about, .about-home, #intro .about
   h2
     display none
     &:first-child

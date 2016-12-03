@@ -13,10 +13,9 @@ block content
   include _partials/collection-breadcrumb
 
   #category
-    h1.category-title= page.title
-
+    h1(class='category-title non-mobile')= page.title
     .gallery
-      .category-tags
+      div(class='category-tags non-mobile')
         +list-tags(tags_by_collection(gallery))
 
       .category-items
@@ -29,9 +28,9 @@ block content
 
 block aside
   aside
-    +get-featured(gallery, 6, 'datetaken')
-    +get-recent(gallery, 6, 'datetaken')
-    +get-random(gallery, 6, 'datetaken')
+    +get-featured(gallery, gallery.count, 'datetaken')
+    +get-recent(gallery, gallery.count, 'datetaken')
+    +get-random(gallery, gallery.count, 'datetaken')
 
 block paginator
   include _partials/paginator

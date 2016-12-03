@@ -15,7 +15,7 @@ block content
   - var href = archive.name + '/' + page.date.getFullYear() + '/' + month
 
   ul.breadcrumb
-    li
+    li.non-mobile
       a(href=site.url)= site.title
 
     li
@@ -26,7 +26,7 @@ block content
   article.article(itemscope itemtype='http://schema.org/Article')
     - var readtime = min2read(page.markdown)
 
-    h2(itemprop='name')= page.title
+    h2.non-mobile(itemprop='name')= page.title
     p.small(itemprop='datePublished', content=page.date.toISOString())
       | written by #{site.author} on&nbsp;
       a(href=url_for(href))= postdate
@@ -47,6 +47,5 @@ block content
 
 block aside
   aside
-    +get-related(5)
-    +get-featured(blog, 5)
-    +get-recent(blog, 5)
+    +get-related(blog.count)
+    +get-featured(blog, blog.count)
