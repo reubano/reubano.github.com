@@ -17,13 +17,13 @@ You can contact or connect with me via the following:
 
 I am available for consulting on data, analytics, visualization, and web application projects. 
 
-If you would like to hire me for a project engagement, please [email me](mailto:rcummings@nerevu.com?subject=Consulting inquiry) with what you want to accomplish.
+If you would like to hire me for a project engagement, please [email me](mailto:rcummings@nerevu.com?subject=Consulting inquiry) with details on what you want to accomplish.
 
 ## Speaking/Training
 
 I've [spoken](//lanyrd.com/profile/reubano/) at tech conferences and meetups in South Africa, Tanzania, and Kenya. Topics I have presented on include [static site generators](//speakerdeck.com/reubano/static-sites-and-generators-ftw), [data mining](//www.youtube.com/watch?v=05C_E1wyT1I), and [functional programming](//speakerdeck.com/reubano/intro-to-functional-programming). 
 
-If you would like me to speak at your event or lead a training session, please [email me](mailto:rcummings@nerevu.com?subject=Speaking inquiry) with the event date(s), desired topic, and speaking format (training, tutorial, workshop, talk, keynote, etc.).
+If you would like me to speak at your event or lead a training session, please [email me](mailto:rcummings@nerevu.com?subject=Speaking inquiry) with: the event date(s), desired topic, and speaking format (training, tutorial, workshop, talk, keynote, etc.).
 
 I can usually accommodate non-profit events for free, provided that my travel (flights and transportation), accommodation (hotel/host), and conference ticket are covered.
 

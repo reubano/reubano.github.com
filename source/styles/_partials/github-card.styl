@@ -37,6 +37,9 @@
       clear both
       word-wrap break-word
 
+  .tag-list
+    margin $quarter-headspace 0 0
+
   .footer
     border-top $border-weight solid $border-color
 
@@ -60,9 +63,3 @@
   @media $hd
     stack()
     col(1/3, cycle: 3)
-
-
-.github-card .tag-list
-  margin $quarter-headspace 0 0
-  .tag
-    button($alt-button-color, 'medium', $alt-button-font-color)
