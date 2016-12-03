@@ -34,6 +34,7 @@ module.exports =
     js: 'scripts'
     source: 'source'
     dest: 'public'
+    rss: 'feed.xml'
 
   laicos:
     facebook:
