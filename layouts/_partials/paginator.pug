@@ -5,7 +5,8 @@ if page.pagination
   nav.page-navigator
     if page.prev
       - var prevPageURL = url_for(page.prev.path)
-      a(class="extend prev" rel="prev" href=prevPageURL) Prev
+      a(class="extend prev mobile laquo" rel="prev" href=prevPageURL)
+      a(class="extend prev non-mobile" rel="prev" href=prevPageURL) Prev
 
       for p in _pages.slice(page.first.index, page.index)
         a.page-number(href=url_for(p.path))= p.num
@@ -17,4 +18,5 @@ if page.pagination
         a.page-number(href=url_for(p.path))= p.num
 
       - var nextPageURL = url_for(page.next.path)
-      a(class="extend next" rel="next" href=nextPageURL) Next
+      a(class="extend next mobile raquo" rel="next" href=nextPageURL)
+      a(class="extend next non-mobile" rel="next" href=nextPageURL) Next

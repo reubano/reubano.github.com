@@ -19,7 +19,10 @@ block content
   article.article(itemscope itemtype='http://schema.org/Article')
     h1(itemprop='name')= page.title
 
-    .content(itemprop='articleBody')
+    div(class='content one-col', itemprop='articleBody')
+      != page.html
+
+    div(class='content two-cols', itemprop='articleBody')
       != page.html
 
 block aside

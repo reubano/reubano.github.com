@@ -9,10 +9,19 @@ footer.inverse
     else
       p.center &copy; #{site.year} &ndash; #{year} #{site.author}
 
-  .laicos-links
+  div(class='laicos-links non-mobile')
     // +laicos-icon(site, move left, move up, width, height)
     +laicos-icon('twitter', 3, 1, 26, 26)
     +laicos-icon('linkedin', -7, -8, 40, 40)
+    +laicos-icon('github', -6, -7, 42, 42)
+    +laicos-icon('angellist', -6, -7, 67, 67)
+    +laicos-icon('rss', 56, 43, 400, 400)
+
+  div(class='laicos-links mobile')
+    +laicos-icon('twitter', 3, 1, 26, 26)
+    +laicos-icon('linkedin', -7, -8, 40, 40)
+
+  div(class='laicos-links mobile')
     +laicos-icon('github', -6, -7, 42, 42)
     +laicos-icon('angellist', -6, -7, 67, 67)
     +laicos-icon('rss', 56, 43, 400, 400)

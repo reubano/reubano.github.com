@@ -11,11 +11,12 @@ block title
 
 block content
   - var postdate = format_date(page.date, 'MMM D, YYYY')
+  - var postISO = page.date.toISOString()
   - var month = format_date(page.date, 'MM')
   - var href = archive.name + '/' + page.date.getFullYear() + '/' + month
 
   ul.breadcrumb
-    li
+    li.non-mobile
       a(href=site.url)= site.title
 
     li
@@ -24,8 +25,8 @@ block content
     li= page.title
 
   article.article(itemscope itemtype='http://schema.org/Article')
-    h2(itemprop='name')= page.title
-    p.small(itemprop='datePublished', content=page.date.toISOString())
+    h2.non-mobile(itemprop='name')= page.title
+    p(class='small non-mobile', itemprop='datePublished', content=postISO)
       | taken by #{site.author} on&nbsp;
       a(href=url_for(href))= postdate
       if page.location
@@ -34,6 +35,12 @@ block content
     .photo
       +get-link(page, 'lg')
       figcaption= page.description
+
+    p(class='small mobile', itemprop='datePublished', content=postISO)
+      | taken by #{site.author} on&nbsp;
+      a(href=url_for(href))= postdate
+      if page.location
+        |&nbsp;in #{page.location}
 
     include _partials/photo-meta
 
