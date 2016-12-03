@@ -30,6 +30,9 @@ module.exports = (options) ->
             console.log "Error fetching #{filepath}: #{error.code}"
             json = []
 
+          if options.extract?[collection]
+            json = _.get json, options.extract[collection]
+
           if options.filter?[collection]
             for filter in options.filter[collection]
               if filter.op is 'is'
@@ -40,6 +43,8 @@ module.exports = (options) ->
                   if filter.op is 'contains' then contains else not contains
 
           for entry in json
+            entry.source = source_file.split('-')[0]
+
             if options.enrich?[collection]
               for enrich in options.enrich[collection]
                 entry[enrich.field] = enrich.func entry

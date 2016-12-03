@@ -1,25 +1,32 @@
 - var user = page.user || laicos.flickr.user
 - var source = '//www.flickr.com/photos/' + user + '/' + page.id
+- var latlon = page.latitude + ',' + page.longitude
+- var gMapURL = 'https://www.google.com/maps/place/'
 
 .meta
   ul.tl
-    if page.city
-      li= page.city
-    if page.state
-      li= page.state
-    if page.country
-      li= page.country
-    li ƒ/#{page.aperture || 0}
-    li= page.exposure || 0
+    if page.latitude && page.longitude
+      - var locURL = gMapURL + latlon + '/@' + latlon + ',6z/'
+      - var location = page.location || latlon
+
+      li
+        a(href=locURL, target='_blank', rel='noopener noreferrer')= location
+    else if page.location
+      li= page.location
+
+    if page.aperture
+      li ƒ/#{page.aperture}
+    if page.exposure
+      li= page.exposure
+    li= page.views
     li
       a(href=source, target='_blank', rel='noopener noreferrer') flickr
   ul.tl
-    if page.city
-      li city
-    if page.state
-      li state
-    if page.country
-      li country
-    li aperture
-    li exposure
+    if page.location || (page.latitude && page.longitude)
+      li location
+    if page.aperture
+      li aperture
+    if page.exposure
+      li exposure
+    li views
     li source

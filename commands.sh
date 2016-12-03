@@ -1,0 +1,61 @@
+curl https://api.github.com/users/nerevu/repos -o data/nerevu-repos.json
+curl https://api.github.com/users/reubano/repos -o data/reubano-repos.json
+
+curl -d "method=flickr.photosets.getList" \
+     -d "api_key=76ca8dd185de46fdd0d24c24f6e4d0ea" \
+     -d "user_id=47144176@N00" \
+     -d "format=json" \
+     -d "nojsoncallback=1" \
+    https://api.flickr.com/services/rest \
+     -o data/galleries.json
+
+curl -d "method=flickr.photosets.getPhotos" \
+     -d "api_key=76ca8dd185de46fdd0d24c24f6e4d0ea" \
+     -d "user_id=47144176@N00" \
+     -d "extras=date_upload,date_taken,original_format,last_update,geo,tags,o_dims,views,media,path_alias,url_sq,url_t,url_s,url_m,url_o,url_q,url_n,url_e,url_z,url_c,url_l,url_h,url_k" \
+     -d "format=json" \
+     -d "nojsoncallback=1" \
+     -d "photoset_id=72157623891823165" \
+     https://api.flickr.com/services/rest \
+     -o data/travel-gallery.json
+
+
+curl -d "method=flickr.photosets.getPhotos" \
+     -d "api_key=76ca8dd185de46fdd0d24c24f6e4d0ea" \
+     -d "user_id=47144176@N00" \
+     -d "extras=date_upload,date_taken,original_format,last_update,geo,tags,o_dims,views,media,path_alias,url_sq,url_t,url_s,url_m,url_o,url_q,url_n,url_e,url_z,url_c,url_l,url_h,url_k" \
+     -d "format=json" \
+     -d "nojsoncallback=1" \
+     -d "photoset_id=72157623888340443" \
+     https://api.flickr.com/services/rest \
+     -o data/misc-gallery.json
+
+curl -d "method=flickr.photosets.getPhotos" \
+     -d "api_key=76ca8dd185de46fdd0d24c24f6e4d0ea" \
+     -d "user_id=47144176@N00" \
+     -d "extras=date_upload,date_taken,original_format,last_update,geo,tags,o_dims,views,media,path_alias,url_sq,url_t,url_s,url_m,url_o,url_q,url_n,url_e,url_z,url_c,url_l,url_h,url_k" \
+     -d "format=json" \
+     -d "nojsoncallback=1" \
+     -d "photoset_id=72157623733101806" \
+     https://api.flickr.com/services/rest \
+     -o data/gcs-gallery.json
+
+curl -d "method=flickr.photosets.getPhotos" \
+     -d "api_key=76ca8dd185de46fdd0d24c24f6e4d0ea" \
+     -d "user_id=47144176@N00" \
+     -d "extras=date_upload,date_taken,original_format,last_update,geo,tags,o_dims,views,media,path_alias,url_sq,url_t,url_s,url_m,url_o,url_q,url_n,url_e,url_z,url_c,url_l,url_h,url_k" \
+     -d "format=json" \
+     -d "nojsoncallback=1" \
+     -d "photoset_id=72157623678762653" \
+     https://api.flickr.com/services/rest \
+     -o data/arusha-gallery.json
+
+curl -d "method=flickr.photosets.getPhotos" \
+     -d "api_key=76ca8dd185de46fdd0d24c24f6e4d0ea" \
+     -d "user_id=47144176@N00" \
+     -d "extras=date_upload,date_taken,original_format,last_update,geo,tags,o_dims,views,media,path_alias,url_sq,url_t,url_s,url_m,url_o,url_q,url_n,url_e,url_z,url_c,url_l,url_h,url_k" \
+     -d "format=json" \
+     -d "nojsoncallback=1" \
+     -d "photoset_id=72157663394312666" \
+     https://api.flickr.com/services/rest \
+     -o data/nahla-gallery.json
