@@ -47,6 +47,6 @@ block content
 
 block aside
   aside
-    +get-related(5)
-    +get-featured(blog, 5)
-    +get-recent(blog, 5)
+    +get-related(blog.count)
+    +get-featured(blog, blog.count)
+    +get-recent(blog, blog.count)

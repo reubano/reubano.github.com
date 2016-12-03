@@ -29,9 +29,9 @@ block content
 
 block aside
   aside
-    +get-featured(projects, 3)
-    +get-recent(projects, 3)
-    +get-random(projects, 3)
+    +get-featured(projects, projects.count)
+    +get-recent(projects, projects.count)
+    +get-random(projects, projects.count)
 
 block paginator
   include _partials/paginator

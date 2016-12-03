@@ -48,6 +48,6 @@ block content
 
 block aside
   aside
-    +get-related(3)
-    +get-featured(projects, 3)
-    +get-recent(projects, 3)
+    +get-related(projects.count)
+    +get-featured(projects, projects.count)
+    +get-recent(projects, projects.count)

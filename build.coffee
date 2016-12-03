@@ -114,7 +114,7 @@ collectionConfig =
       plural: 'projects'
       title: 'projects'
       show: true
-      count: 3
+      count: 5
 
 paginationConfig =
   blog:
