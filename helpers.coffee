@@ -120,6 +120,7 @@ module.exports =
 
     sorted.filter (item) -> item.title isnt article.title
 
+  tagsByCollection: (category) -> _.uniq _.flatMap category.data, 'tags'
   getFeatured: getFeatured
   getRecent: getRecent
   getRandom: getRandom

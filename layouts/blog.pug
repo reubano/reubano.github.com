@@ -16,12 +16,16 @@ block content
   #category
     h1.category-title= page.title
     .excerpts
-      if blog.pagination
-        for post in page.data
-          +blog-excerpt(post)
-      else
-        for post in blog.data
-          +blog-excerpt(post)
+      .category-tags
+        +list-tags(tags_by_collection(blog))
+
+      .category-items
+        if blog.pagination
+          for post in page.data
+            +blog-excerpt(post)
+        else
+          for post in blog.data
+            +blog-excerpt(post)
 
 block aside
   aside

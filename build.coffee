@@ -76,6 +76,7 @@ templateHelpers =
   find: _.find
   range: _.range
   format_date: helpers.formatDate
+  tags_by_collection: helpers.tagsByCollection
 
 collectionConfig =
   home: 'index.html'

@@ -14,13 +14,18 @@ block content
 
   #category
     h1.category-title= page.title
+
     .gallery
-      if gallery.pagination
-        for post in page.data
-          +get-link(post, 'lg', true)
-      else
-        for post in gallery.data
-          +get-link(post, 'lg', true)
+      .category-tags
+        +list-tags(tags_by_collection(gallery))
+
+      .category-items
+        if gallery.pagination
+          for post in page.data
+            +get-link(post, 'lg', true)
+        else
+          for post in gallery.data
+            +get-link(post, 'lg', true)
 
 block aside
   aside
