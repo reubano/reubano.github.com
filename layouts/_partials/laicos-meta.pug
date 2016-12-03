@@ -1,29 +1,36 @@
-// Twitter Card data
+- var pageTitle = page.title || page.name || site.name
+- var pageURL = page.path ? url_for(page.path) : site.url
+- var pageTags = page.tags || site.tags
+- var pageDesc = page.description || site.description
+- var pageImage = url_for(page.image || 'images/logo.png')
+- var pageContentType = page.contentType || 'article'
+
+//- https://moz.com/blog/meta-data-templates-123
+
+//- Google data
+meta(itemprop='name', content=pageTitle)
+meta(itemprop='description' content=pageDesc)
+meta(itemprop='image' content=pageImage)
+
+//- Twitter Card data
 meta(name='twitter:card', content='summary_large_image')
 meta(name='twitter:site', content='@'+laicos.twitter.user)
-meta(name='twitter:title', content=page.title)
+meta(name='twitter:title', content=pageTitle)
 meta(name='twitter:creator', content='@'+laicos.twitter.user)
+meta(name='twitter:image', content=pageImage)
+meta(name='twitter:description', content=pageDesc)
+meta(name='twitter:image:src', content=pageImage)
 
-if page.description
-  meta(name='twitter:description', content=page.description)
+//- Open Graph data
+meta(property='og:title', content=pageTitle)
+meta(property='og:type', content=pageContentType)
+meta(property='og:url', content=pageURL)
+meta(property='og:site_name', content=site.title)
+meta(property='og:image', content=pageImage)
+meta(property='og:description', content=pageDesc)
 
-if page.image
-  meta(name='twitter:image:src', content=page.image)
-
-// Open Graph data
-meta(property='og:title', content=page.title)
-meta(property='og:type', content='article')
-meta(property='og:url', content=page.url)
-meta(property='og:site_name', content=site.name)
-
-if page.description
-  meta(property='og:description', content=page.description)
-
-if page.image
-  meta(property='og:image', content=page.image)
-
-if page && page.tags && page.tags.length
-  each tag in page.tags
+if pageTags && pageTags.length
+  each tag in pageTags
     meta(property='og:article:tag', content=tag)
 
 meta(property='fb:admins', content=laicos.facebook.id)
