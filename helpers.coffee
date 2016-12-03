@@ -28,11 +28,13 @@ landSizes = [75, 100, 150, 240, 320, 500, 500, 640, 800, 1024, 1600, 2048, 2048]
 portSizes = [75, 75, 150, 180, 240, 375, 375, 480, 600, 768, 1200, 1536, 1536]
 REGEX = /:([\w]+(\.[\w]+)*)/g
 
+slugOpts = {lower: true}
+
 getMatch = (entry, pattern) ->
   match = REGEX.exec(pattern)
 
   if match
-    getMatch entry, pattern.replace ":#{match[1]}", slug(entry[match[1]])
+    getMatch entry, pattern.replace ":#{match[1]}", slug(entry[match[1]], slugOpts)
   else
     pattern
 
@@ -143,7 +145,7 @@ module.exports =
     base
 
   getMatch: getMatch
-  slug: (content) -> slug(content, mode: 'rfc3986').toLowerCase()
+  slug: (content) -> slug(content, slugOpts)
   _: _
   moment: moment
   marked: marked

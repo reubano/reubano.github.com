@@ -105,6 +105,7 @@ article
 .tag-list
   li
     margin-right $quarter-gutter
+    padding-bottom $quarter-headspace
 
   .tag
     button($alt-button-color, 'large', $alt-button-font-color)
@@ -181,9 +182,6 @@ aside
       &:last-child
         border-bottom none
 
-    img
-      margin-bottom -0.5rem
-
     li
       vertical-align top
 
@@ -199,8 +197,11 @@ aside
       padding-bottom 0
       margin-bottom 0
 
-.gallery, .projects
+.excerpts, .gallery, .projects, .tag-content
   margin-top $full-headspace
+
+.tag-content .github-card
+  clearfix()
 
 .aside .gallery
   margin-top $half-headspace

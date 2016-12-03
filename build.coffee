@@ -328,7 +328,7 @@ app = new Metalsmith(DIR)
     groupByMonth: true
     sortBy: 'date'
     reverse: true
-    collections: ['projects', 'blog', 'gallery']
+    collections: ['projects', 'blog']
   .use time plugin: 'archive'
   .use permalinks
     pattern: ':title'

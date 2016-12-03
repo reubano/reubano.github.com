@@ -6,7 +6,7 @@ mixin github-card(project)
       strong.name
         a(href=url_for(project.path))= project.title
         sup.language= project.language || 'n/a'
-      a.button(href=project.html_url) ★ Star
+      a.button(href=project.html_url, target='_blank', rel='noopener noreferrer') ★ Star
 
     .content
       if project.description
