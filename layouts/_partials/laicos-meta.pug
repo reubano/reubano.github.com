@@ -1,12 +1,15 @@
 - var _pageTitle = page.title || page.name || site.name
 - var pageTitle = _pageTitle == 'home' ? site.title : _pageTitle
 - var pageURL = page.path ? url_for(page.path) : site.url
-- var pageTags = page.tags || site.tags
+- var pageTags = page.tags || site.tags || []
 - var pageDesc = page.description || site.description
 - var pageImage = url_for(page.image || 'images/logo.png')
 - var pageContentType = page.contentType || 'article'
+- var fnf = (pageTags.indexOf('friends') >= 0) || (pageTags.indexOf('family') >= 0)
+- var robotValue = fnf ? 'none' : 'index,follow'
 
 //- https://moz.com/blog/meta-data-templates-123
+meta(name='robots', content=robotValue)
 
 //- Google data
 meta(itemprop='name', content=pageTitle)
