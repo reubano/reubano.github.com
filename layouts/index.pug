@@ -31,7 +31,9 @@ block content
             a(href=url_for(category.name))= category.name
 
           +get-featured(category)
-          +get-recent(category, category.count, category.filterby)
+
+          unless category.name === 'blog'
+            +get-recent(category, category.count, category.filterby)
 
     div(class='category category-about')
       include _partials/about

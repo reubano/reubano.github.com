@@ -2,7 +2,7 @@ path = require 'path'
 helpers = require '../helpers'
 
 marked = helpers.marked
-defaults = ext: 'html', regexp: /\s*<!--\s*more\s*-->/, cutoff: 30
+defaults = ext: 'html', regexp: /\s*<!--\s*more\s*-->/, cutoff: 256
 
 module.exports = (options) ->
   options = options or {}

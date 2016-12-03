@@ -75,9 +75,6 @@ article
     li
       margin-right $half-gutter
 
-.tag-content h2
-  border-bottom none
-
 .aside
   margin-bottom $full-headspace
 
@@ -105,6 +102,7 @@ article
 .tag-list
   li
     margin-right $quarter-gutter
+    padding-bottom $quarter-headspace
 
   .tag
     button($alt-button-color, 'large', $alt-button-font-color)
@@ -181,9 +179,6 @@ aside
       &:last-child
         border-bottom none
 
-    img
-      margin-bottom -0.5rem
-
     li
       vertical-align top
 
@@ -199,8 +194,11 @@ aside
       padding-bottom 0
       margin-bottom 0
 
-.gallery, .projects
+.excerpts, .gallery, .projects, .tag-content
   margin-top $full-headspace
+
+.tag-content .blog-excerpt, .tag-content .github-card
+  clearfix()
 
 .aside .gallery
   margin-top $half-headspace
@@ -208,27 +206,8 @@ aside
 .excerpts h2, .archives h2, .article h2
   margin-bottom 0
 
-.excerpt
-  &:not(:last-child)
-    margin-bottom $half-headspace
-
 .category-title, .archives-title, .tag-title
   margin 0
-
-.excerpts
-  .excerpt-footer
-    margin 0
-    padding 0
-    border-top none
-
-  article
-    unstack()
-    col(1)
-    margin-bottom $half-headspace
-
-    @media $hd
-      stack()
-      col(1/2, cycle: 2)
 
 // .post-content
 //   text-align: justify

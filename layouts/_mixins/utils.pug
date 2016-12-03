@@ -4,17 +4,21 @@ mixin get-link(post, size='sm', thumbnail, short)
     - var _class = thumbnail ? 'thumb' : ''
 
     if thumbnail && size == 'lg'
+      //- large thumbnail 240px
       - var img_sizes = '(min-width: 1024px) 21vw, 33vw'
       - var src = build_flickr_url(post, '_m')
     else if thumbnail
+      //- small thumbnail 150px
       - var img_sizes = '(min-width: 640px) 13vw, 33vw'
       - var src = build_flickr_url(post, '_q')
     else if size == 'lg'
+      //- large image 1024px
       - var img_sizes = '(min-width: 1024px) 66vw, 100vw'
       - var src = build_flickr_url(post, '_b')
     else
+      //- small image 640px
       - var img_sizes = '(min-width: 640px) 50vw, 100vw'
-      - var src = build_flickr_url(post, '_z.jpg')
+      - var src = build_flickr_url(post, '_z')
 
     a(href=url_for(post.path), class=_class)
       img.fit(sizes=img_sizes, srcset=srcset, src=src, alt=post.title)

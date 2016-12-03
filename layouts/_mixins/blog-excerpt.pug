@@ -6,19 +6,21 @@ mixin blog-excerpt(post)
   - var month = format_date(post.date, 'MM')
   - var archiveURL = archive.name + '/' + post.date.getFullYear() + '/' + month
 
-  article(itemscope itemtype='http://schema.org/Article')
-    h2(itemprop='name')
-      a(href=url_for(post.path))= post.title
+  article.blog-excerpt(itemscope itemtype='http://schema.org/Article')
+    .header
+      h2(itemprop='name')
+        a(href=url_for(post.path))= post.title
 
-    p.small(itemprop='datePublished', content=post.date.toISOString())
-      | written by #{site.author} on&nbsp;
-      a(href=url_for(archiveURL))= postdate
-      |&nbsp;~ #{readtime} minute read ~&nbsp;
-      a(href=url_for(post.path)) view full post...
+      p.small(itemprop='datePublished', content=post.date.toISOString())
+        | written by #{site.author} on&nbsp;
+        a(href=url_for(archiveURL))= postdate
+        |&nbsp;~ #{readtime} minute read ~&nbsp;
+        a(href=url_for(post.path)) full post
 
-    p.excerpt(itemprop='articleBody')
+    .excerpt(itemprop='articleBody')
       | !{post.less.toString()}
-
-    footer.excerpt-footer
       if post.tags
         +list-tags(post.tags)
+
+    .excerpt-footer
+      a.link(href=url_for(post.path)) read full post

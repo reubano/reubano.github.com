@@ -7,35 +7,81 @@ marked = require './node_modules/marked'
 multimatch = require './node_modules/multimatch'
 config = require './config'
 
-sizes = [
-  {width: 75, query: '_s', key: 'url_sq'}
-  {width: 100, query: '_t', key: 'url_t'}
-  {width: 150, query: '_q', key: 'url_q'}
-  {width: 240, query: '_m', key: 'url_s'}
-  {width: 320, query: '_n', key: 'url_n'}
-  {width: 500, query: '', key: 'url_m'}
-  {width: 500, query: '', key: 'url_e'}
-  {width: 640, query: '_z', key: 'url_z'}
-  {width: 800, query: '_c', key: 'url_c'}
-  {width: 1024, query: '_b', key: 'url_l'}
-  {width: 1600, query: '_h', key: 'url_h'}
-  {width: 2048, query: '_k', key: 'url_k'}
-  {width: 2048, query: '_o', key: 'url_o'}
+_sizes = [
+  {query: '_s', key: 'url_sq', widthKey: 'width_sq'}
+  {query: '_t', key: 'url_t', widthKey: 'width_t'}
+  {query: '_q', key: 'url_q', widthKey: 'width_q'}
+  {query: '_m', key: 'url_s', widthKey: 'width_s'}
+  {query: '_n', key: 'url_n', widthKey: 'width_n'}
+  {query: '', key: 'url_m', widthKey: 'width_m'}
+  # {query: '', key: 'url_e', widthKey: 'width_e'}
+  {query: '', key: 'url_e', widthKey: 'width_m'}
+  {query: '_z', key: 'url_z', widthKey: 'width_z'}
+  {query: '_c', key: 'url_c', widthKey: 'width_c'}
+  {query: '_b', key: 'url_l', widthKey: 'width_l'}
+  {query: '_h', key: 'url_h', widthKey: 'width_h'}
+  {query: '_k', key: 'url_k', widthKey: 'width_k'}
+  {query: '_o', key: 'url_o', widthKey: 'width_o'}
 ]
 
+landSizes = [75, 100, 150, 240, 320, 500, 500, 640, 800, 1024, 1600, 2048, 2048]
+portSizes = [75, 75, 150, 180, 240, 375, 375, 480, 600, 768, 1200, 1536, 1536]
 REGEX = /:([\w]+(\.[\w]+)*)/g
+
+slugOpts = {lower: true}
 
 getMatch = (entry, pattern) ->
   match = REGEX.exec(pattern)
 
   if match
-    getMatch entry, pattern.replace ":#{match[1]}", slug(entry[match[1]])
+    getMatch entry, pattern.replace ":#{match[1]}", slug(entry[match[1]], slugOpts)
   else
     pattern
 
 
-_filterData = (data) -> _.filter data, (item) -> item.featured
-filterData = _.memoize _filterData
+_getFeatured = (category, filterby) ->
+  item = category.data[0]
+
+  if item.views?
+    ranked = _.sortBy category.data, (item) -> -item.views
+  else if item.stargazers_count?
+    ranked = _.sortBy category.data, (item) -> -item.stargazers_count
+  else if item.comments?
+    ranked = _.sortBy category.data, (item) -> -item.comments
+  else if item.featured?
+    ranked = _.sortBy category.data, (item) -> -item.featured
+  else
+    ranked = _.sortBy category.data, (item) -> -item.date
+
+  _.shuffle if filterby then _.filter(ranked[...10], filterby) else ranked[...6]
+
+getFeatured = _.memoize _getFeatured
+
+getHeadings = (items) ->
+  names = _.map items, 'name'
+  titles = _.map items, 'title'
+  _.uniq _.filter _.flatten [names, titles]
+
+filterByHeading = (items, headings) ->
+  _.filter items, (item) -> (item.name or item.title) not in headings
+
+_getRecent = (category, filterby) ->
+  featured = getFeatured(category, filterby)
+  headings = getHeadings featured
+  items = filterByHeading category.data, headings
+  filtered = if filterby then _.filter(items, filterby) else items
+  _.sortBy filtered, (item) -> -item.updated
+
+getRecent = _.memoize _getRecent
+
+_getRandom = (category, filterby) ->
+  featured = getFeatured(category, filterby)
+  recent = getRecent(category, filterby)[...5]
+  headings = _.flatten [getHeadings(featured), getHeadings(recent)]
+  items = filterByHeading category.data, headings
+  _.shuffle if filterby then _.filter(items, filterby) else items
+
+getRandom = _.memoize _getRandom
 
 pad = (num, size) -> if num then ('000000000' + num).substr(-size) else num
 monthsAbrs = [
@@ -74,38 +120,23 @@ module.exports =
 
     sorted.filter (item) -> item.title isnt article.title
 
-  getFeatured: (category, filterby) ->
-    if filterby
-      filtered = _.filter (filterData category.data), filterby
-    else
-      filtered = filterData category.data
-
-    _.sortBy filtered, (item) -> -item.updated
-
-  getRecent: (category, filterby) ->
-    if filterby
-      filtered = _.filter category.data, filterby
-    else
-      filtered = category.data
-
-    _.sortBy filtered, (item) -> -item.date
-
-  getRandom: (category, filterby) ->
-    if filterby
-      _.shuffle _.filter category.data, filterby
-    else
-      _.shuffle category.data
+  tagsByCollection: (category) -> _.uniq _.flatMap category.data, 'tags'
+  getFeatured: getFeatured
+  getRecent: getRecent
+  getRandom: getRandom
 
   # css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/
   # sitepoint.com/how-to-build-responsive-images-with-srcset/
   # webdesignerdepot.com/2015/08/the-state-of-responsive-images/
   # stackoverflow.com/a/12158668/408556
   # developer.telerik.com/featured/lazy-loading-images-on-the-web/
-  getSrcset: (photo, ext='jpg', flickr=true) ->
+  getSrcset: (photo, ext='jpg', flickr=true, portrait) ->
     if flickr
-      filtered = _.filter sizes, (s) -> photo[s.key]
-      ("#{photo[s.key]} #{s.width}w" for s in filtered).join(', ')
+      filtered = _.filter _sizes, (s) -> photo[s.key]
+      ("#{photo[f.key]} #{photo[f.widthKey]}w" for f in filtered).join(', ')
     else
+      refSizes = if portrait then portSizes else landSizes
+      sizes = (_.defaults(s, width: refSizes[i]) for s, i in _sizes)
       url = "#{config.site.url}/#{config.paths.images}"
       ("#{url}/#{photo}#{s.query}.#{ext} #{s.width}w" for s in sizes).join(', ')
 
@@ -115,7 +146,7 @@ module.exports =
     base
 
   getMatch: getMatch
-  slug: (content) -> slug(content, mode: 'rfc3986').toLowerCase()
+  slug: (content) -> slug(content, slugOpts)
   _: _
   moment: moment
   marked: marked

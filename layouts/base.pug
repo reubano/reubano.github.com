@@ -7,6 +7,7 @@ html(lang=site.language, prefix='og: http://ogp.me/ns#')
     include _partials/site-meta
     include _partials/laicos-meta
     link(rel='stylesheet', href=cssURL, type='text/css')
+    link(rel='author' href=url_for('humans.txt'))
 
     block title
       if site.subtitle

@@ -7,19 +7,18 @@ parse = (date) ->
   else if '-' in date
     moment.utc(date, 'YYYY-MM-DD').toDate()
   else
-    moment.utc(date).toDate()
+    new Date date * 1000
 
 module.exports = (opts) ->
   opts = opts or {}
-  locale = opts.locale or ''
 
-  if (locale)
-    moment.locale(locale)
+  if (opts.locale)
+    moment.locale(opts.locale)
 
   (files, metalsmith, done) ->
     for file, d of files
       date = d.date or d.datetaken or d.created or d.created_at or d.stats?.ctime
-      updated = d.updated or d.updated_at or d.stats?.mtime or d.date
+      updated = d.updated or d.updated_at or d.lastupdate or d.stats?.mtime or d.date
       d.date = if typeof date is 'string' then parse(date) else date
       d.updated = if typeof updated is 'string' then parse(updated) else updated
       d.dateFromNow = moment(d.date).fromNow()

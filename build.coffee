@@ -76,6 +76,7 @@ templateHelpers =
   find: _.find
   range: _.range
   format_date: helpers.formatDate
+  tags_by_collection: helpers.tagsByCollection
 
 collectionConfig =
   home: 'index.html'
@@ -185,7 +186,7 @@ paginationConfig =
 end = checkpoint 'set config', end
 DIR = __dirname
 
-enrichFunc = (entry) ->
+projEnrichFunc = (entry) ->
   tags = if entry.language then [helpers.slug(entry.language)] else []
   description = entry.description.toLowerCase().split(' ')
 
@@ -215,6 +216,49 @@ enrichFunc = (entry) ->
 
   tags
 
+gallEnrichFunc = (entry) ->
+  tags = _.filter entry.tags.split(' '), (tag) ->
+    tag not in ['facebook', 'iphotorating5']
+
+  tags = if tags[0] is '' then [] else tags
+
+  if entry.source is 'nahla'
+    tags.push 'family'
+  else if entry.source is 'gcs'
+    tags.push 'gcs'
+  else if entry.source is 'travel'
+    tags.push 'travel'
+  else if entry.source is 'misc'
+    tags.push 'friends'
+
+  if entry.country
+    tags.push entry.country.toLowerCase()
+
+  if entry.latitude and entry.longitude
+    tags.push 'geocoded'
+  else
+    tags.push 'uncoded'
+
+  tags
+
+geocodes =
+  '-1,37': city: 'Nairobi', country: 'Kenya', location: 'Nairobi, Kenya'
+  '-10,34': city: 'Kyela', country: 'Tanzania', location: 'Kyela, Tanzania'
+  '-3,37': city: 'Arusha', country: 'Tanzania', location: 'Arusha, Tanzania'
+  '-30,29': city: 'Sanipass', country: 'South Africa', location: 'Sanipass, South Africa'
+  '-6,39': city: 'Zanzibar', country: 'Tanzania', location: 'Zanzibar, Tanzania'
+  '-6,40': city: 'Zanzibar', country: 'Tanzania', location: 'Zanzibar, Tanzania'
+  '-9,33': city: 'Mbeya', country: 'Tanzania', location: 'Mbeya, Tanzania'
+  '42,-71': city: 'Boston', state: 'MA', country: 'USA', location: 'Boston, MA'
+  '9,39': city: 'Addis Ababa', country: 'Ethiopia', location: 'Addis Ababa, Ethiopia'
+
+reverseGeoCode = (entry, cb) ->
+  if entry.latitude and entry.longitude
+    key = "#{Math.round(entry.latitude)},#{Math.round(entry.longitude)}"
+    defValue = city: 'Unknown', country: 'Unknown', location: 'Unknown'
+    _.get geocodes, key, defValue
+  else
+    {}
 app = new Metalsmith(DIR)
   .use time plugin: 'start', start: end
   .source config.paths.source
@@ -223,7 +267,17 @@ app = new Metalsmith(DIR)
   .use time plugin: 'metadata'
   .use json2files
     source: 'data'
-    enrich: projects: [{field: 'tags', func: enrichFunc}]
+    extract: gallery: 'photoset.photo'
+    enrich:
+      projects: [{field: 'tags', func: projEnrichFunc}]
+      gallery: [
+        {field: 'location', func: (entry) -> reverseGeoCode(entry).location}
+        {field: 'country', func: (entry) -> reverseGeoCode(entry).country}
+        {field: 'tags', func: gallEnrichFunc}
+        {field: 'title', func: (entry) -> entry.title or entry.id}
+        {field: 'name', func: (entry) -> entry.title}
+        {field: 'description', func: (entry) -> ''}]
+
     filter:
       projects: [
         {field: 'fork', op: 'is', value: false},
@@ -233,13 +287,16 @@ app = new Metalsmith(DIR)
       projects: [
         'id', 'name', 'html_url', 'description', 'fork', 'homepage',
         'size', 'watchers', 'forks', 'created_at', 'updated_at', 'language',
-        'stargazers_count', 'featured', 'open_issues', 'tags']
+        'stargazers_count', 'open_issues', 'tags']
 
       gallery: [
-        'id', 'title', 'views', 'license', 'datetaken', 'latitude',
-        'longitude', 'name', 'created', 'updated', 'featured', 'url_s',
-        'url_t', 'url_q','url_m', 'url_n', 'url_', 'url_z', 'url_c',
-        'url_b', 'url_h', 'url_k', 'farm', 'server', 'secret', 'tags']
+        'id', 'title', 'views', 'datetaken', 'latitude', 'longitude', 'url_sq',
+        'url_t', 'url_q', 'url_s','url_n', 'url_m', 'url_e', 'url_z', 'url_c',
+        'url_l', 'url_h', 'url_k', 'url_o', 'farm', 'server', 'secret', 'tags',
+        'width_sq', 'width_t', 'width_q', 'width_s','width_n', 'width_m',
+        'width_e', 'width_z', 'width_c', 'width_l', 'width_h', 'width_k',
+        'width_o', 'place_id', 'woeid', 'lastupdate', 'location', 'country',
+        'name', 'description']
 
   .use time plugin: 'json2files'
   # .use changed force: true
@@ -272,7 +329,7 @@ app = new Metalsmith(DIR)
     groupByMonth: true
     sortBy: 'date'
     reverse: true
-    collections: ['projects', 'blog', 'gallery']
+    collections: ['projects', 'blog']
   .use time plugin: 'archive'
   .use permalinks
     pattern: ':title'
