@@ -1,5 +1,5 @@
-curl https://api.github.com/users/nerevu/repos -o data/nerevu-repos.json
-curl https://api.github.com/users/reubano/repos -o data/reubano-repos.json
+curl https://api.github.com/users/nerevu/repos?per_page=100 -o data/nerevu-repos.json
+curl https://api.github.com/users/reubano/repos?per_page=100 -o data/reubano-repos.json
 
 curl -d "method=flickr.photosets.getList" \
      -d "api_key=76ca8dd185de46fdd0d24c24f6e4d0ea" \

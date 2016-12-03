@@ -1,6 +1,6 @@
 utils = require './utils'
-fromPairs = require 'lodash/fp/fromPairs'
-lunr = require 'lunr'
+fromPairs = require 'lodash.frompairs'
+# lunr = require 'lunr'
 
 elements = document.getElementsByClassName('plugin')
 pl_count = document.getElementById('plugin-list-count')
