@@ -1,6 +1,6 @@
 URLS =
-  gh: 'https://reubano.github.io'
-  netlify: 'https://reubano.netlify.com'
+  gh: 'https://reubano.xyz'
+  netlify: 'https://reubano.xyz'
   local: 'http://localhost:8080'
 
 tags = [
