@@ -107,7 +107,7 @@ collectionConfig =
       show: true
       count: 6
   projects:
-    sortBy: 'date'
+    sortBy: 'updated'
     reverse: true
     metadata:
       singular: 'project'
