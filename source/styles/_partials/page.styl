@@ -75,9 +75,6 @@ article
     li
       margin-right $half-gutter
 
-.tag-content h2
-  border-bottom none
-
 .aside
   margin-bottom $full-headspace
 
@@ -200,7 +197,7 @@ aside
 .excerpts, .gallery, .projects, .tag-content
   margin-top $full-headspace
 
-.tag-content .github-card
+.tag-content .blog-excerpt, .tag-content .github-card
   clearfix()
 
 .aside .gallery
@@ -209,27 +206,8 @@ aside
 .excerpts h2, .archives h2, .article h2
   margin-bottom 0
 
-.excerpt
-  &:not(:last-child)
-    margin-bottom $half-headspace
-
 .category-title, .archives-title, .tag-title
   margin 0
-
-.excerpts
-  .excerpt-footer
-    margin 0
-    padding 0
-    border-top none
-
-  article
-    unstack()
-    col(1)
-    margin-bottom $half-headspace
-
-    @media $hd
-      stack()
-      col(1/2, cycle: 2)
 
 // .post-content
 //   text-align: justify

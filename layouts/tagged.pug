@@ -64,8 +64,7 @@ block content
           for post in tag.files
             case post.collection
               when 'blog'
-                .excerpts
-                  +blog-excerpt(post)
+                +blog-excerpt(post)
               when 'projects'
                 +github-card(post)
               when 'gallery'
