@@ -36,6 +36,7 @@ module.exports =
     source: 'source'
     dest: 'public'
     rss: 'feed.xml'
+    optimize: '//res.cloudinary.com/reubano/image/fetch/f_auto,q_auto'
 
   laicos:
     facebook:

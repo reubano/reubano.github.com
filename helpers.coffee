@@ -130,18 +130,25 @@ module.exports =
   # webdesignerdepot.com/2015/08/the-state-of-responsive-images/
   # stackoverflow.com/a/12158668/408556
   # developer.telerik.com/featured/lazy-loading-images-on-the-web/
-  getSrcset: (photo, ext='jpg', flickr=true, portrait) ->
+  getSrcset: (photo, ext='jpg', flickr=true, portrait=false, optimize=true) ->
     if flickr
+      srcset = []
+      base = if optimize then "#{config.paths.optimize}/" else ''
       filtered = _.filter _sizes, (s) -> photo[s.key]
-      ("#{photo[f.key]} #{photo[f.widthKey]}w" for f in filtered).join(', ')
+
+      for f in filtered
+        srcset.push "#{base}#{photo[f.key]} #{photo[f.widthKey]}w"
+
+      srcset.join(', ')
     else
       refSizes = if portrait then portSizes else landSizes
       sizes = (_.defaults(s, width: refSizes[i]) for s, i in _sizes)
       url = "#{config.site.url}/#{config.paths.images}"
       ("#{url}/#{photo}#{s.query}.#{ext} #{s.width}w" for s in sizes).join(', ')
 
-  buildFlickrURL: (photo, query='', ext='jpg') ->
-    base = "//farm#{photo.farm}.staticflickr.com/"
+  buildFlickrURL: (photo, query='', ext='jpg', optimize=true) ->
+    base = if optimize then "#{config.paths.optimize}/https:" else ''
+    base += "//farm#{photo.farm}.staticflickr.com/"
     base +="#{photo.server}/#{photo.id}_#{photo.secret}#{query}.#{ext}"
     base
 
