@@ -252,13 +252,14 @@ geocodes =
   '42,-71': city: 'Boston', state: 'MA', country: 'USA', location: 'Boston, MA'
   '9,39': city: 'Addis Ababa', country: 'Ethiopia', location: 'Addis Ababa, Ethiopia'
 
-reverseGeoCode = (entry, cb) ->
+reverseGeoCode = (entry) ->
   if entry.latitude and entry.longitude
     key = "#{Math.round(entry.latitude)},#{Math.round(entry.longitude)}"
     defValue = city: 'Unknown', country: 'Unknown', location: 'Unknown'
     _.get geocodes, key, defValue
   else
     {}
+
 app = new Metalsmith(DIR)
   .use time plugin: 'start', start: end
   .source config.paths.source
