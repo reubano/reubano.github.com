@@ -34,10 +34,10 @@ getMatch = (entry, pattern) ->
   match = REGEX.exec(pattern)
 
   if match
-    getMatch entry, pattern.replace ":#{match[1]}", slug(entry[match[1]], slugOpts)
+    val = entry[match[1]]
+    getMatch entry, pattern.replace ":#{match[1]}", slug(val, slugOpts)
   else
     pattern
-
 
 _getFeatured = (category, filterby) ->
   item = category.data[0]

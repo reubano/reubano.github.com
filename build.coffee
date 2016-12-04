@@ -346,14 +346,14 @@ app = new Metalsmith(DIR)
       {match: {collection: 'archive'}, pattern: 'archive/:year'}
     ]
   .use time plugin: 'permalinks'
+  .use pagination paginationConfig
+  .use time plugin: 'pagination'
   # .use lunr
   #   collection: 'blog'
   #   indexPath: 'searchIndex.json'
   #   fields: tags: 5, title: 2, markdown: 1
   #   pipelineFunctions: [_lunr.trimmer]
   # .use time plugin: 'lunr'
-  .use pagination paginationConfig
-  .use time plugin: 'pagination'
   .use pug
     locals: templateHelpers
     filters: marked: marked
