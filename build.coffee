@@ -97,7 +97,7 @@ collectionConfig =
       show: true
       count: 5
   gallery:
-    sortBy: 'date'
+    sortBy: 'datetaken'
     reverse: true
     metadata:
       singular: 'photo'
