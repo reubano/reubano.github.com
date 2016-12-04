@@ -222,13 +222,13 @@ gallEnrichFunc = (entry) ->
 
   tags = if tags[0] is '' then [] else tags
 
-  if entry.source is 'nahla'
+  if entry.source in ['nahla', 'arusha']
     tags.push 'family'
   else if entry.source is 'gcs'
     tags.push 'gcs'
   else if entry.source is 'travel'
     tags.push 'travel'
-  else if entry.source is 'misc'
+  else if entry.source in ['misc', 'arusha']
     tags.push 'friends'
 
   if entry.country
