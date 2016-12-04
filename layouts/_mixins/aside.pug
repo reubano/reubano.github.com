@@ -4,7 +4,7 @@ mixin truncate-posts(posts, count, name)
   - var truncated = posts.slice(0, count)
   - var gtOne = truncated.length && count && count > 1
 
-  if  gtOne && name == 'gallery'
+  if gtOne && ['gallery', 'friends', 'family'].indexOf(name) > -1
     .gallery
       each post in truncated
         +get-link(post, 'sm', true)
@@ -58,9 +58,12 @@ mixin get-site(collection, format='MMM &lsquo;YY')
     +pluralize('site', collection, 2)
       ul.inline-list
         for tag in collection.data
-          li.archive-list-item
-            a.archive-list-link(href=url_for(tag.path))= tag.name
-              span.archive-list-count= tag.files.length
+          - var isHidden = hidden.indexOf(tag.name) > -1
+
+          if !isHidden
+            li.archive-list-item
+              a.archive-list-link(href=url_for(tag.path))= tag.name
+                span.archive-list-count= tag.files.length
   else
     +pluralize('site', blog, 2)
       ul.inline-list

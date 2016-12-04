@@ -78,6 +78,8 @@ templateHelpers =
   format_date: helpers.formatDate
   tags_by_collection: helpers.tagsByCollection
 
+fafFilter = (item) -> not _.intersection(item.tags, config.hidden).length
+
 collectionConfig =
   home: 'index.html'
   pages:
@@ -96,9 +98,32 @@ collectionConfig =
       title: 'blog'
       show: true
       count: 5
+  friends:
+    collection: 'gallery'
+    sortBy: 'datetaken'
+    reverse: true
+    filter: (item) -> 'friends' in item.tags
+    metadata:
+      singular: 'photo'
+      filterby: 'datetaken'
+      plural: 'photos'
+      title: 'friends'
+      count: 6
+  family:
+    collection: 'gallery'
+    sortBy: 'datetaken'
+    reverse: true
+    filter: (item) -> 'family' in item.tags
+    metadata:
+      singular: 'photo'
+      filterby: 'datetaken'
+      plural: 'photos'
+      title: 'family'
+      count: 6
   gallery:
     sortBy: 'datetaken'
     reverse: true
+    filter: fafFilter
     metadata:
       singular: 'photo'
       filterby: 'datetaken'
@@ -122,6 +147,16 @@ paginationConfig =
     layout: 'blog.pug'
     path: 'blog/page/:num/index.html'
     pageMetadata: title: 'blog', name: 'blog'
+  family:
+    perPage: 12
+    layout: 'gallery.pug'
+    path: 'family/page/:num/index.html'
+    pageMetadata: title: 'family', name: 'family'
+  friends:
+    perPage: 12
+    layout: 'gallery.pug'
+    path: 'friends/page/:num/index.html'
+    pageMetadata: title: 'friends', name: 'friends'
   gallery:
     perPage: 12
     layout: 'gallery.pug'
@@ -139,6 +174,7 @@ paginationConfig =
     page: []
     path: 'tagz/page/:num/index.html'
     pageMetadata: title: 'tagz', name: 'tagz'
+    fileFilter: fafFilter
   tagged:
     collection: 'tagz'
     perPage: 12
@@ -148,6 +184,7 @@ paginationConfig =
     firstPage: 'tagged/:slug/index.html'
     path: 'tagged/:slug/page/:num/index.html'
     pageMetadata: title: 'tagged :slug', name: 'tagged :slug'
+    fileFilter: fafFilter
   archive:
     perPage: 15
     layout: 'archive.pug'
@@ -226,10 +263,12 @@ gallEnrichFunc = (entry) ->
     tags.push 'family'
   else if entry.source is 'gcs'
     tags.push 'gcs'
-  else if entry.source is 'travel'
-    tags.push 'travel'
   else if entry.source in ['misc', 'arusha']
     tags.push 'friends'
+  else if _.intersection(tags, config.hidden).length
+    false
+  else if entry.source is 'travel'
+    tags.push 'travel'
 
   if entry.country
     tags.push entry.country.toLowerCase()
@@ -341,6 +380,8 @@ app = new Metalsmith(DIR)
       {match: {collection: 'pages'}, pattern: ':title'}
       {match: {collection: 'blog'}, pattern: 'blog/:title'}
       {match: {collection: 'gallery'}, pattern: 'gallery/:title'}
+      {match: {collection: 'family'}, pattern: 'family/:title'}
+      {match: {collection: 'friends'}, pattern: 'friends/:title'}
       {match: {collection: 'projects'}, pattern: 'projects/:title'}
       {match: {collection: 'tagz'}, pattern: 'tagged/:slug'}
       {match: {collection: 'archive'}, pattern: 'archive/:year'}

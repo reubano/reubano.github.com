@@ -8,6 +8,7 @@ DEFAULTS =
   nest: false
   reverse: false
   filter: false
+  fileFilter: false
   pick: []
   sortBy: ['parentName']
 
@@ -57,9 +58,17 @@ module.exports = (opts) ->
 
       if filtered[0].files
         nested = []
+        empty = []
 
         for entry in filtered
-          nested.push _.map entry.files, (file) ->
+          empty.push _.pick entry, options.pick
+
+          if options.fileFilter
+            entryFiles = _.filter entry.files, options.fileFilter
+          else
+            entryFiles = entry.files
+
+          nested.push _.map entryFiles, (file) ->
             fileObj = _.assign {parentName: entry.name}, file
             fileObj.picked = _.pick entry, options.pick
             fileObj
@@ -79,13 +88,13 @@ module.exports = (opts) ->
         colData = [filtered]
         hasFiles = false
 
-      for datum in colData
-        if datum.length > perPage
-          layout = options.layout
-          numPages = Math.ceil(datum.length / perPage)
-          pages = []
-          pagination = totalPages: numPages, pages: pages
+      for datum, index in colData
+        layout = options.layout
+        numPages = Math.ceil(datum.length / perPage)
+        pages = []
+        pagination = totalPages: numPages, pages: pages
 
+        if datum.length > perPage
           for pagePos in [0...numPages]
             pageNum = pagePos + 1
 
@@ -138,5 +147,9 @@ module.exports = (opts) ->
 
           if not options.nest
             collection.pagination = pagination
+        else if not numPages
+          matchData = empty[index]
+          path = helpers.getMatch matchData, firstPage
+          files[path] = _.assign {layout, path, data: []}, matchData
 
     done()

@@ -11,6 +11,7 @@ module.exports = (options) ->
   singular = options.singular or 'tag'
   plural = options.plural or 'tags'
   sortBy = options.sortBy or 'title'
+  filter = options.filter
   reverse = options.reverse
 
   past = pattern.split('/')[0]
@@ -33,6 +34,9 @@ module.exports = (options) ->
       if tagsData
         if typeof tagsData is 'string'
           tagsData = tagsData.split(',')
+
+        if filter and not filter tagsData
+          continue
 
         # reset original tag data so we can replace it with cleaned tags
         data[handle] = []
