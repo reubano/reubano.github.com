@@ -187,7 +187,7 @@ end = checkpoint 'set config', end
 DIR = __dirname
 
 projEnrichFunc = (entry) ->
-  tags = if entry.language then [helpers.slug(entry.language)] else []
+  tags = if entry.language then [entry.language.toLowerCase()] else []
   description = entry.description.toLowerCase().split(' ')
 
   vizList = [
@@ -198,7 +198,7 @@ projEnrichFunc = (entry) ->
     tags.push 'visualization'
 
   if _.intersection(['hdx', 'ckan'], description).length
-    tags.push 'open-data'
+    tags.push 'open data'
 
   if _.intersection(['api'], description).length
     tags.push 'api'
