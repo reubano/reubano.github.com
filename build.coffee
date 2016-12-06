@@ -261,8 +261,6 @@ gallEnrichFunc = (entry) ->
 
   if entry.source in ['nahla', 'arusha']
     tags.push 'family'
-  else if entry.source is 'gcs'
-    tags.push 'gcs'
   else if entry.source in ['misc', 'arusha']
     tags.push 'friends'
   else if _.intersection(tags, config.hidden).length

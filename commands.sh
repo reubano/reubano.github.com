@@ -36,16 +36,6 @@ curl -d "method=flickr.photosets.getPhotos" \
      -d "extras=date_upload,date_taken,original_format,last_update,geo,tags,o_dims,views,media,path_alias,url_sq,url_t,url_s,url_m,url_o,url_q,url_n,url_e,url_z,url_c,url_l,url_h,url_k" \
      -d "format=json" \
      -d "nojsoncallback=1" \
-     -d "photoset_id=72157623733101806" \
-     https://api.flickr.com/services/rest \
-     -o data/gcs-gallery.json
-
-curl -d "method=flickr.photosets.getPhotos" \
-     -d "api_key=76ca8dd185de46fdd0d24c24f6e4d0ea" \
-     -d "user_id=47144176@N00" \
-     -d "extras=date_upload,date_taken,original_format,last_update,geo,tags,o_dims,views,media,path_alias,url_sq,url_t,url_s,url_m,url_o,url_q,url_n,url_e,url_z,url_c,url_l,url_h,url_k" \
-     -d "format=json" \
-     -d "nojsoncallback=1" \
      -d "photoset_id=72157623678762653" \
      https://api.flickr.com/services/rest \
      -o data/arusha-gallery.json
