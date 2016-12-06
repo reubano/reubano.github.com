@@ -5,3 +5,4 @@ logo.sketch/
 public
 *.log
 *.gz
+!favicon.ico.gz
