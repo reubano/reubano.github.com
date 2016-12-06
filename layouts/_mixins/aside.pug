@@ -43,12 +43,12 @@ mixin get-featured(category, count)
   +pluralize('featured', category, count)
     +truncate-posts(get_featured(category), count, category.name)
 
-mixin get-site(collection, format='MMM &lsquo;YY')
+mixin get-site(collection, minCount=1, format='MMM &lsquo;YY')
   if collection.name == 'archive'
     +pluralize('site', collection, 2)
       ul.inline-list
         for period in collection.data
-          if period.date
+          if period.date && period.files.length >= minCount
             - var label = format_date(period.date, format)
 
             li.archive-list-item
@@ -60,7 +60,7 @@ mixin get-site(collection, format='MMM &lsquo;YY')
         for tag in collection.data
           - var isHidden = hidden.indexOf(tag.name) > -1
 
-          if !isHidden
+          if !isHidden && tag.files.length >= minCount
             li.archive-list-item
               a.archive-list-link(href=url_for(tag.path))= tag.name
                 span.archive-list-count= tag.files.length
