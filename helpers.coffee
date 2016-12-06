@@ -76,7 +76,7 @@ getRecent = _.memoize _getRecent
 
 _getRandom = (category, filterby) ->
   featured = getFeatured(category, filterby)
-  recent = getRecent(category, filterby)[...5]
+  recent = getRecent(category, filterby)[...6]
   headings = _.flatten [getHeadings(featured), getHeadings(recent)]
   items = filterByHeading category.data, headings
   _.shuffle if filterby then _.filter(items, filterby) else items
