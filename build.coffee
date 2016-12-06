@@ -314,8 +314,6 @@ app = new Metalsmith(DIR)
         {field: 'location', func: (entry) -> reverseGeoCode(entry).location}
         {field: 'country', func: (entry) -> reverseGeoCode(entry).country}
         {field: 'tags', func: gallEnrichFunc}
-        {field: 'title', func: (entry) -> entry.title or entry.id}
-        {field: 'name', func: (entry) -> entry.title}
         {field: 'description', func: (entry) -> ''}]
 
     filter:
