@@ -78,6 +78,8 @@ templateHelpers =
   format_date: helpers.formatDate
   tags_by_collection: helpers.tagsByCollection
 
+fafFilter = (item) -> not _.intersection(item.tags, config.hidden).length
+
 collectionConfig =
   home: 'index.html'
   pages:
@@ -96,9 +98,32 @@ collectionConfig =
       title: 'blog'
       show: true
       count: 5
-  gallery:
-    sortBy: 'date'
+  friends:
+    collection: 'gallery'
+    sortBy: 'datetaken'
     reverse: true
+    filter: (item) -> 'friends' in item.tags
+    metadata:
+      singular: 'photo'
+      filterby: 'datetaken'
+      plural: 'photos'
+      title: 'friends'
+      count: 6
+  family:
+    collection: 'gallery'
+    sortBy: 'datetaken'
+    reverse: true
+    filter: (item) -> 'family' in item.tags
+    metadata:
+      singular: 'photo'
+      filterby: 'datetaken'
+      plural: 'photos'
+      title: 'family'
+      count: 6
+  gallery:
+    sortBy: 'datetaken'
+    reverse: true
+    filter: fafFilter
     metadata:
       singular: 'photo'
       filterby: 'datetaken'
@@ -122,6 +147,16 @@ paginationConfig =
     layout: 'blog.pug'
     path: 'blog/page/:num/index.html'
     pageMetadata: title: 'blog', name: 'blog'
+  family:
+    perPage: 12
+    layout: 'gallery.pug'
+    path: 'family/page/:num/index.html'
+    pageMetadata: title: 'family', name: 'family'
+  friends:
+    perPage: 12
+    layout: 'gallery.pug'
+    path: 'friends/page/:num/index.html'
+    pageMetadata: title: 'friends', name: 'friends'
   gallery:
     perPage: 12
     layout: 'gallery.pug'
@@ -139,6 +174,7 @@ paginationConfig =
     page: []
     path: 'tagz/page/:num/index.html'
     pageMetadata: title: 'tagz', name: 'tagz'
+    fileFilter: fafFilter
   tagged:
     collection: 'tagz'
     perPage: 12
@@ -148,6 +184,7 @@ paginationConfig =
     firstPage: 'tagged/:slug/index.html'
     path: 'tagged/:slug/page/:num/index.html'
     pageMetadata: title: 'tagged :slug', name: 'tagged :slug'
+    fileFilter: fafFilter
   archive:
     perPage: 15
     layout: 'archive.pug'
@@ -187,7 +224,7 @@ end = checkpoint 'set config', end
 DIR = __dirname
 
 projEnrichFunc = (entry) ->
-  tags = if entry.language then [helpers.slug(entry.language)] else []
+  tags = if entry.language then [entry.language.toLowerCase()] else []
   description = entry.description.toLowerCase().split(' ')
 
   vizList = [
@@ -198,7 +235,7 @@ projEnrichFunc = (entry) ->
     tags.push 'visualization'
 
   if _.intersection(['hdx', 'ckan'], description).length
-    tags.push 'open-data'
+    tags.push 'open data'
 
   if _.intersection(['api'], description).length
     tags.push 'api'
@@ -222,14 +259,14 @@ gallEnrichFunc = (entry) ->
 
   tags = if tags[0] is '' then [] else tags
 
-  if entry.source is 'nahla'
+  if entry.source in ['nahla', 'arusha']
     tags.push 'family'
-  else if entry.source is 'gcs'
-    tags.push 'gcs'
+  else if entry.source in ['misc', 'arusha']
+    tags.push 'friends'
+  else if _.intersection(tags, config.hidden).length
+    false
   else if entry.source is 'travel'
     tags.push 'travel'
-  else if entry.source is 'misc'
-    tags.push 'friends'
 
   if entry.country
     tags.push entry.country.toLowerCase()
@@ -275,8 +312,6 @@ app = new Metalsmith(DIR)
         {field: 'location', func: (entry) -> reverseGeoCode(entry).location}
         {field: 'country', func: (entry) -> reverseGeoCode(entry).country}
         {field: 'tags', func: gallEnrichFunc}
-        {field: 'title', func: (entry) -> entry.title or entry.id}
-        {field: 'name', func: (entry) -> entry.title}
         {field: 'description', func: (entry) -> ''}]
 
     filter:
@@ -325,6 +360,7 @@ app = new Metalsmith(DIR)
     plural: 'tagz'
     sortBy: 'date'
     reverse: true
+    filter: (tags) -> not _.intersection(tags, config.hidden).length
   .use time plugin: 'tags'
   .use archive
     groupByMonth: true
@@ -341,19 +377,21 @@ app = new Metalsmith(DIR)
       {match: {collection: 'pages'}, pattern: ':title'}
       {match: {collection: 'blog'}, pattern: 'blog/:title'}
       {match: {collection: 'gallery'}, pattern: 'gallery/:title'}
+      {match: {collection: 'family'}, pattern: 'family/:title'}
+      {match: {collection: 'friends'}, pattern: 'friends/:title'}
       {match: {collection: 'projects'}, pattern: 'projects/:title'}
       {match: {collection: 'tagz'}, pattern: 'tagged/:slug'}
       {match: {collection: 'archive'}, pattern: 'archive/:year'}
     ]
   .use time plugin: 'permalinks'
+  .use pagination paginationConfig
+  .use time plugin: 'pagination'
   # .use lunr
   #   collection: 'blog'
   #   indexPath: 'searchIndex.json'
   #   fields: tags: 5, title: 2, markdown: 1
   #   pipelineFunctions: [_lunr.trimmer]
   # .use time plugin: 'lunr'
-  .use pagination paginationConfig
-  .use time plugin: 'pagination'
   .use pug
     locals: templateHelpers
     filters: marked: marked

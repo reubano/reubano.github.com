@@ -1,5 +1,3 @@
-- var collection = find(collections, {'name': page.collection})
-
 ul.breadcrumb
   li.non-mobile
     a(href=site.url)= site.title
@@ -14,4 +12,3 @@ ul.breadcrumb
     li page #{page.num} of #{page.pagination.totalPages}
   else
     li= page.title
-    li.mobile page 1 of 1

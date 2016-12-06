@@ -4,7 +4,7 @@ mixin truncate-posts(posts, count, name)
   - var truncated = posts.slice(0, count)
   - var gtOne = truncated.length && count && count > 1
 
-  if  gtOne && name == 'gallery'
+  if gtOne && ['gallery', 'friends', 'family'].indexOf(name) > -1
     .gallery
       each post in truncated
         +get-link(post, 'sm', true)
@@ -43,12 +43,12 @@ mixin get-featured(category, count)
   +pluralize('featured', category, count)
     +truncate-posts(get_featured(category), count, category.name)
 
-mixin get-site(collection, format='MMM &lsquo;YY')
+mixin get-site(collection, minCount=1, format='MMM &lsquo;YY')
   if collection.name == 'archive'
     +pluralize('site', collection, 2)
       ul.inline-list
         for period in collection.data
-          if period.date
+          if period.date && period.files.length >= minCount
             - var label = format_date(period.date, format)
 
             li.archive-list-item
@@ -58,9 +58,12 @@ mixin get-site(collection, format='MMM &lsquo;YY')
     +pluralize('site', collection, 2)
       ul.inline-list
         for tag in collection.data
-          li.archive-list-item
-            a.archive-list-link(href=url_for(tag.path))= tag.name
-              span.archive-list-count= tag.files.length
+          - var isHidden = hidden.indexOf(tag.name) > -1
+
+          if !isHidden && tag.sanitizedLength >= minCount
+            li.archive-list-item
+              a.archive-list-link(href=url_for(tag.path))= tag.name
+                span.archive-list-count= tag.sanitizedLength
   else
     +pluralize('site', blog, 2)
       ul.inline-list

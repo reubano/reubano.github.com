@@ -11,27 +11,28 @@ block nav
   +navbar(page.name)
 
 block content
+  - var collection = projects
   include _partials/collection-breadcrumb
 
   #category
     h1(class='category-title non-mobile')= page.title
     .projects
       div(class='category-tags non-mobile')
-        +list-tags(tags_by_collection(projects))
+        +list-tags(tags_by_collection(collection))
 
       .category-items
-        if projects.pagination
+        if collection.pagination
           for project in page.data
             +github-card(project)
         else
-          for project in projects.data
+          for project in collection.data
             +github-card(project)
 
 block aside
   aside
-    +get-featured(projects, projects.count)
-    +get-recent(projects, projects.count)
-    +get-random(projects, projects.count)
+    +get-featured(collection, collection.count)
+    +get-recent(collection, collection.count)
+    +get-random(collection, collection.count)
 
 block paginator
   include _partials/paginator

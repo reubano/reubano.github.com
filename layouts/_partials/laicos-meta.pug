@@ -12,7 +12,6 @@
 meta(name='robots', content=robotValue)
 
 //- Google data
-meta(itemprop='author', content=site.author)
 meta(itemprop='name', content=pageTitle)
 meta(itemprop='description' content=pageDesc)
 meta(itemprop='image' content=pageImage)
@@ -31,7 +30,7 @@ meta(name='twitter:image:src', content=pageImage)
 meta(name='twitter:url', content=pageURL)
 
 //- Open Graph data
-meta(property='author', content=site.author)
+meta(property='article:author', content=laicos.facebook.id)
 meta(property='og:title', content=pageTitle)
 meta(property='og:type', content=pageContentType)
 meta(property='og:url', content=pageURL)
@@ -43,6 +42,6 @@ meta(property='og:description', content=pageDesc)
 
 if pageTags && pageTags.length
   each tag in pageTags
-    meta(property='og:article:tag', content=tag)
+    meta(property='article:tag', content=tag)
 
 meta(property='fb:admins', content=laicos.facebook.id)

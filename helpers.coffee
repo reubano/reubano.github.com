@@ -34,10 +34,10 @@ getMatch = (entry, pattern) ->
   match = REGEX.exec(pattern)
 
   if match
-    getMatch entry, pattern.replace ":#{match[1]}", slug(entry[match[1]], slugOpts)
+    val = entry[match[1]]
+    getMatch entry, pattern.replace ":#{match[1]}", slug(val, slugOpts)
   else
     pattern
-
 
 _getFeatured = (category, filterby) ->
   item = category.data[0]
@@ -76,7 +76,7 @@ getRecent = _.memoize _getRecent
 
 _getRandom = (category, filterby) ->
   featured = getFeatured(category, filterby)
-  recent = getRecent(category, filterby)[...5]
+  recent = getRecent(category, filterby)[...6]
   headings = _.flatten [getHeadings(featured), getHeadings(recent)]
   items = filterByHeading category.data, headings
   _.shuffle if filterby then _.filter(items, filterby) else items
@@ -130,18 +130,25 @@ module.exports =
   # webdesignerdepot.com/2015/08/the-state-of-responsive-images/
   # stackoverflow.com/a/12158668/408556
   # developer.telerik.com/featured/lazy-loading-images-on-the-web/
-  getSrcset: (photo, ext='jpg', flickr=true, portrait) ->
+  getSrcset: (photo, ext='jpg', flickr=true, portrait=false, optimize=true) ->
     if flickr
+      srcset = []
+      base = if optimize then "#{config.paths.optimize}/" else ''
       filtered = _.filter _sizes, (s) -> photo[s.key]
-      ("#{photo[f.key]} #{photo[f.widthKey]}w" for f in filtered).join(', ')
+
+      for f in filtered
+        srcset.push "#{base}#{photo[f.key]} #{photo[f.widthKey]}w"
+
+      srcset.join(', ')
     else
       refSizes = if portrait then portSizes else landSizes
       sizes = (_.defaults(s, width: refSizes[i]) for s, i in _sizes)
       url = "#{config.site.url}/#{config.paths.images}"
       ("#{url}/#{photo}#{s.query}.#{ext} #{s.width}w" for s in sizes).join(', ')
 
-  buildFlickrURL: (photo, query='', ext='jpg') ->
-    base = "//farm#{photo.farm}.staticflickr.com/"
+  buildFlickrURL: (photo, query='', ext='jpg', optimize=true) ->
+    base = if optimize then "#{config.paths.optimize}/https:" else ''
+    base += "//farm#{photo.farm}.staticflickr.com/"
     base +="#{photo.server}/#{photo.id}_#{photo.secret}#{query}.#{ext}"
     base
 

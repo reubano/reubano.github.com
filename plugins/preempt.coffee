@@ -24,6 +24,7 @@ module.exports = (opts) ->
       d.dateFromNow = moment(d.date).fromNow()
       d.updatedFromNow = moment(d.updated).fromNow()
       d.contents = d.contents or d.content or d.description
-      d.title = d.title or d.name
+      d.title = d.title or d.name or d.id
+      d.name = d.name or d.title
 
     done()

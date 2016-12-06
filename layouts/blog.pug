@@ -11,25 +11,26 @@ block nav
   +navbar(page.name)
 
 block content
+  - var collection = blog
   include _partials/collection-breadcrumb
 
   #category
     h1(class='category-title non-mobile')= page.title
     .excerpts
       div(class='category-tags non-mobile')
-        +list-tags(tags_by_collection(blog))
+        +list-tags(tags_by_collection(collection))
 
       .category-items
-        if blog.pagination
+        if collection.pagination
           for post in page.data
             +blog-excerpt(post)
         else
-          for post in blog.data
+          for post in collection.data
             +blog-excerpt(post)
 
 block aside
   aside
-    +get-featured(blog, blog.count)
+    +get-featured(collection, collection.count)
 
 block paginator
   include _partials/paginator

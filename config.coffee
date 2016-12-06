@@ -14,6 +14,7 @@ module.exports =
   mode: process.env.NODE_ENV
   prod: process.env.NODE_ENV is 'production'
   serve: process.env.SERVE
+  hidden: ['friends', 'family']
   site:
     name: 'reubano'
     author: 'Reuben Cummings'
@@ -36,6 +37,7 @@ module.exports =
     source: 'source'
     dest: 'public'
     rss: 'feed.xml'
+    optimize: '//res.cloudinary.com/reubano/image/fetch/f_auto,q_auto'
 
   laicos:
     facebook:
