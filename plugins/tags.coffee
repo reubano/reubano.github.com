@@ -35,9 +35,6 @@ module.exports = (options) ->
         if typeof tagsData is 'string'
           tagsData = tagsData.split(',')
 
-        if filter and not filter tagsData
-          continue
-
         # reset original tag data so we can replace it with cleaned tags
         data[handle] = []
 
@@ -46,6 +43,7 @@ module.exports = (options) ->
 
           if not tagCache[tag]
             tagCache[tag] =
+              sanitizedLength: 0
               layout: layout
               name: tag
               slug: helpers.slug tag
@@ -56,6 +54,10 @@ module.exports = (options) ->
 
           data[handle].push(tag)
           tagCache[tag].files.push(data)
+
+        if (filter and filter data[handle]) or not filter
+          for tag in data[handle]
+            tagCache[tag].sanitizedLength += 1
 
     if _.keys(tagCache).length
       for key, tag of tagCache

@@ -360,6 +360,7 @@ app = new Metalsmith(DIR)
     plural: 'tagz'
     sortBy: 'date'
     reverse: true
+    filter: (tags) -> not _.intersection(tags, config.hidden).length
   .use time plugin: 'tags'
   .use archive
     groupByMonth: true
