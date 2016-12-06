@@ -7,7 +7,7 @@ curl -d "method=flickr.photosets.getList" \
      -d "format=json" \
      -d "nojsoncallback=1" \
     https://api.flickr.com/services/rest \
-     -o data/galleries.json
+    | jq . > data/galleries.json
 
 curl -d "method=flickr.photosets.getPhotos" \
      -d "api_key=76ca8dd185de46fdd0d24c24f6e4d0ea" \
@@ -17,7 +17,7 @@ curl -d "method=flickr.photosets.getPhotos" \
      -d "nojsoncallback=1" \
      -d "photoset_id=72157623891823165" \
      https://api.flickr.com/services/rest \
-     -o data/travel-gallery.json
+     | jq . > data/travel-gallery.json
 
 
 curl -d "method=flickr.photosets.getPhotos" \
@@ -28,7 +28,7 @@ curl -d "method=flickr.photosets.getPhotos" \
      -d "nojsoncallback=1" \
      -d "photoset_id=72157623888340443" \
      https://api.flickr.com/services/rest \
-     -o data/misc-gallery.json
+     | jq . > data/misc-gallery.json
 
 curl -d "method=flickr.photosets.getPhotos" \
      -d "api_key=76ca8dd185de46fdd0d24c24f6e4d0ea" \
@@ -38,7 +38,7 @@ curl -d "method=flickr.photosets.getPhotos" \
      -d "nojsoncallback=1" \
      -d "photoset_id=72157623678762653" \
      https://api.flickr.com/services/rest \
-     -o data/arusha-gallery.json
+     | jq . > data/arusha-gallery.json
 
 curl -d "method=flickr.photosets.getPhotos" \
      -d "api_key=76ca8dd185de46fdd0d24c24f6e4d0ea" \
@@ -48,4 +48,4 @@ curl -d "method=flickr.photosets.getPhotos" \
      -d "nojsoncallback=1" \
      -d "photoset_id=72157663394312666" \
      https://api.flickr.com/services/rest \
-     -o data/nahla-gallery.json
+     | jq . > data/nahla-gallery.json
