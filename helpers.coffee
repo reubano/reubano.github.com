@@ -154,15 +154,12 @@ module.exports =
       url = "#{config.site.url}/#{config.paths.images}"
       ("#{url}/#{photo}#{s.query}.#{ext} #{s.width}w" for s in sizes).join(', ')
 
-  buildFlickrURL: (photo, query='', ext='jpg', optimize=true) ->
+  buildFlickrURL: (photo, width, ext='jpg', optimize=true) ->
     if optimize
-      width = photo[_.find(_sizes, {query}).widthKey]
-      base = "#{config.paths.optimize},w_#{width}/#{photo.url_o}"
+      "#{config.paths.optimize},w_#{width}/#{photo.url_o}"
     else
-      base = "//farm#{photo.farm}.staticflickr.com/"
-      base +="#{photo.server}/#{photo.id}_#{photo.secret}#{query}.#{ext}"
-
-    base
+      urls = (photo[s.key] for s in _sizes when photo[s.widthKey] >= width)
+      if urls.length then urls[0] else photo.url_o
 
   getMatch: getMatch
   slug: (content) -> slug(content, slugOpts)
