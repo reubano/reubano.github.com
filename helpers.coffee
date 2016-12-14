@@ -133,11 +133,19 @@ module.exports =
   getSrcset: (photo, ext='jpg', flickr=true, portrait=false, optimize=true) ->
     if flickr
       srcset = []
-      base = if optimize then "#{config.paths.optimize}/" else ''
-      filtered = _.filter _sizes, (s) -> photo[s.key]
 
-      for f in filtered
-        srcset.push "#{base}#{photo[f.key]} #{photo[f.widthKey]}w"
+      if optimize
+        base = config.paths.optimize
+        filtered = _.filter _sizes, (s) -> photo[s.key]
+
+        for f in filtered
+          width = photo[f.widthKey]
+          srcset.push "#{base},w_#{width}/#{photo.url_o} #{width}w"
+      else
+        filtered = _.filter _sizes, (s) -> photo[s.key]
+
+        for f in filtered
+          srcset.push "#{photo[f.key]} #{photo[f.widthKey]}w"
 
       srcset.join(', ')
     else
