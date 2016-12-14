@@ -12,12 +12,13 @@ getImgTag = (loc, opts) ->
   name = loc.split('/')[1].split('.')[0]
   alt = (i[0].toUpperCase() + i[1..].toLowerCase() for i in name.split '_').join(' ')
   srcOpts = _.assign {width: 768}, opts
-  src = cloudinary.url loc, srcOpts
+  src = cloudinary.url(loc, srcOpts).replace(/^(https?):\/\//, '//')
   srcsets = []
 
   for width in WIDTHS
     srcsetOpts = _.assign {width}, opts
-    srcsets.push "#{cloudinary.url loc, srcsetOpts} #{width}w"
+    url = cloudinary.url(loc, srcsetOpts).replace(/^(https?):\/\//, '//')
+    srcsets.push "#{url} #{width}w"
 
   srcset = srcsets.join(', ')
   "<img class='fit' sizes='(min-width: 1024px) 66vw, 100vw' srcset='#{srcset}' src='#{src}' alt='#{alt}'>"
