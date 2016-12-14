@@ -343,6 +343,7 @@ app = new Metalsmith(DIR)
   .use ignore()
   .use time plugin: 'ignore'
   .use image()
+  .use time plugin: 'image'
   .use markdown()
   .use time plugin: 'markdown'
   .use stylus compress: false, use: [axis(), jeet()]
