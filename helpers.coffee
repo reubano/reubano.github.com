@@ -155,9 +155,13 @@ module.exports =
       ("#{url}/#{photo}#{s.query}.#{ext} #{s.width}w" for s in sizes).join(', ')
 
   buildFlickrURL: (photo, query='', ext='jpg', optimize=true) ->
-    base = if optimize then "#{config.paths.optimize}/https:" else ''
-    base += "//farm#{photo.farm}.staticflickr.com/"
-    base +="#{photo.server}/#{photo.id}_#{photo.secret}#{query}.#{ext}"
+    if optimize
+      width = photo[_.find(_sizes, {query}).widthKey]
+      base = "#{config.paths.optimize},w_#{width}/#{photo.url_o}"
+    else
+      base = "//farm#{photo.farm}.staticflickr.com/"
+      base +="#{photo.server}/#{photo.id}_#{photo.secret}#{query}.#{ext}"
+
     base
 
   getMatch: getMatch
