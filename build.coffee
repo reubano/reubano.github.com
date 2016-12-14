@@ -54,6 +54,7 @@ cleanCSS = require './plugins/clean-css'
 serve = require './plugins/serve'
 compress = require './plugins/compress'
 blc = require './plugins/blc'
+image = require './plugins/image'
 
 end = checkpoint 'require local plugins', end
 
@@ -341,6 +342,7 @@ app = new Metalsmith(DIR)
   .use time plugin: 'preempt'
   .use ignore()
   .use time plugin: 'ignore'
+  .use image()
   .use markdown()
   .use time plugin: 'markdown'
   .use stylus compress: false, use: [axis(), jeet()]
