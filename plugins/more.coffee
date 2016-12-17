@@ -2,18 +2,22 @@ path = require 'path'
 helpers = require '../helpers'
 
 marked = helpers.marked
-defaults = ext: 'html', regexp: /\s*<!--\s*more\s*-->/, cutoff: 256
+_ = helpers._
+
+DEFAULTS = ext: 'html', regexp: /\s*<!--\s*more\s*-->/, cutoff: 256
+UNESCAPE =
+  '&#39;': '\''
+  '&amp;': '&'
+  '&gt;': '>'
+  '&lt;': '<'
+  '&quot;': '"'
 
 module.exports = (options) ->
   options = options or {}
-  ext = options.ext or defaults.ext
-  regexp = options.regexp or defaults.regexp
-  key = options.key or defaults.key
-  ext = if ext[0] is '.' then ext else '.' + ext
-  cutoff = options.cutoff or defaults.cutoff
+  opts = _.defaults options, DEFAULTS
 
-  if typeof regexp is 'string'
-    regexp = new RegExp(regexp)
+  if typeof opts.regexp is 'string' then new RegExp(opts.regexp) else opts.regexp
+  ext = if opts.ext[0] is '.' then opts.ext else ".#{opts.ext}"
 
   (files, metalsmith, done) ->
     for file, data of files
@@ -26,10 +30,25 @@ module.exports = (options) ->
         if data.contents and not data.less
           string = data.contents.toString()
 
-          index = string.search(regexp)
-          less = if index > -1 then Buffer.byteLength(string[...index]) else cutoff
+          index = string.search(opts.regexp)
 
-          data.less = new Buffer marked "#{data.contents[...less].toString()}..."
+          if index > -1
+            less = Buffer.byteLength(string[...index])
+          else
+            less = opts.cutoff
+
+          lessHTML = marked "#{data.contents[...less].toString()}..."
+
+          if not data.description
+            regexp = /<p>(.*?)<\/p>/g
+            match = regexp.exec lessHTML
+            detagged = match[1].replace /<(?:.|\n)*?>/gm, ''
+            reducer = (result, replacement, tag) ->
+              result.replace tag, replacement
+
+            data.description = _.reduce UNESCAPE, reducer, detagged
+
+          data.less = new Buffer lessHTML
           data.more = new Buffer marked data.contents[less..].toString()
 
     done()
