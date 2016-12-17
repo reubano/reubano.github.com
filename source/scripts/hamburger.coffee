@@ -1,6 +1,5 @@
 utils = require './utils'
 
-CLASS_NAME = 'is-active'
 HAMBURGER_SELECTOR = '.hamburger'
 WRAPPER_ID = 'navbar'
 
@@ -10,7 +9,7 @@ wrapper = document.getElementById WRAPPER_ID
 hamburger_action = (e) ->
   e.preventDefault()
   e.stopPropagation()
-  utils.toggleClass hamburger, CLASS_NAME
+  utils.toggleClass hamburger, 'is-active'
   utils.toggleClass wrapper, 'hidden-slow'
   utils.toggleClass wrapper, 'visible-slow'
 
@@ -18,10 +17,9 @@ module.exports =
   main: ->
     if hamburger and wrapper
       hamburger.addEventListener 'click', hamburger_action
-
-    if not wrapper
-      console.log "wrapper ID '#{WRAPPER_ID}' not found!"
-
-    if not hamburger
+    else if wrapper
       console.log "hamburger selector '#{HAMBURGER_SELECTOR}' not found!"
-
+    else if hamburger
+      console.log "wrapper ID '#{WRAPPER_ID}' not found!"
+    else
+      console.log "hamburger selector '#{HAMBURGER_SELECTOR}' nor wrapper ID '#{WRAPPER_ID}' found!"

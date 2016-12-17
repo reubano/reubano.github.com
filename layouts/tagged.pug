@@ -44,10 +44,8 @@ block content
       li= tagz.homePath
 
   #category
-    - var untagged = page.slug === 'untagged'
-
     .non-mobile
-      if untagged
+      if page.slug == 'untagged'
         h1.tag-title untagged
       else if page.slug
         h1.tag-title #{tagz.past} #{page.slug}

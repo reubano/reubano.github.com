@@ -1,5 +1,5 @@
-remove = (orginal, to_remove) ->
-  regex = "(^|\\b)#{to_remove.split(' ').join('|')}(\\b|$)"
+remove = (orginal, toRemove) ->
+  regex = "(^|\\b)#{toRemove.split(' ').join('|')}(\\b|$)"
   orginal.replace(new RegExp(regex, 'gi'), ' ')
 
 module.exports =

@@ -2,9 +2,9 @@ utils = require './utils'
 fromPairs = require 'lodash.frompairs'
 # lunr = require 'lunr'
 
-elements = document.getElementsByClassName('plugin')
-pl_count = document.getElementById('plugin-list-count')
-ps_input = document.getElementById('plugin-search-input')
+elements = document.getElementsByClassName 'plugin'
+pl_count = document.getElementById 'plugin-list-count'
+ps_input = document.getElementById 'plugin-search-input'
 
 # http://stackoverflow.com/questions/16991341/json-parse-file-path
 request = new XMLHttpRequest()
