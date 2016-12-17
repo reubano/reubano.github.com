@@ -6,7 +6,7 @@ include _mixins/github-card
 include _mixins/blog-excerpt
 
 block title
-  title #{page.name} | #{site.title}
+  title #{page.slug || page.name} | #{site.title}
 
 block nav
   +navbar(tagz.name)
