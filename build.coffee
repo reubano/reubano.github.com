@@ -22,14 +22,13 @@ rm = require './node_modules/rimraf'
 
 end = checkpoint 'require base', stamp
 
-changed = require './node_modules/metalsmith-changed'
 permalinks = require './node_modules/metalsmith-permalinks'
-metallic = require './node_modules/metalsmith-metallic'
 fingerprint = require './node_modules/metalsmith-fingerprint-ignore'
 sitemap = require './node_modules/metalsmith-sitemap'
 uglify = require './node_modules/metalsmith-uglify'
 htmlMinifier = require './node_modules/metalsmith-html-minifier'
 msIf = require './node_modules/metalsmith-if'
+# changed = require './node_modules/metalsmith-changed'
 # gist = require './node_modules/metalsmith-gist'
 # livereload = require './node_modules/metalsmith-livereload'
 
@@ -68,7 +67,7 @@ templateHelpers =
   get_last_page: helpers.getLastPage
   get_first_page: helpers.getFirstPage
   get_related: helpers.getRelated
-  build_flickr_url: helpers.buildFlickrURL
+  get_src: helpers.getSrc
   get_srcset: helpers.getSrcset
   get_featured: helpers.getFeatured
   get_recent: helpers.getRecent
@@ -329,11 +328,10 @@ app = new Metalsmith(DIR)
       gallery: [
         'id', 'title', 'views', 'datetaken', 'latitude', 'longitude', 'url_sq',
         'url_t', 'url_q', 'url_s','url_n', 'url_m', 'url_e', 'url_z', 'url_c',
-        'url_l', 'url_h', 'url_k', 'url_o', 'farm', 'server', 'secret', 'tags',
+        'url_l', 'url_h', 'url_k', 'url_o', 'tags', 'name', 'description',
         'width_sq', 'width_t', 'width_q', 'width_s','width_n', 'width_m',
         'width_e', 'width_z', 'width_c', 'width_l', 'width_h', 'width_k',
-        'width_o', 'place_id', 'woeid', 'lastupdate', 'location', 'country',
-        'name', 'description']
+        'width_o', 'place_id', 'woeid', 'lastupdate', 'location', 'country']
 
   .use time plugin: 'json2files'
   # .use changed force: true
@@ -343,6 +341,7 @@ app = new Metalsmith(DIR)
   .use ignore()
   .use time plugin: 'ignore'
   .use image()
+  .use time plugin: 'image'
   .use markdown()
   .use time plugin: 'markdown'
   .use stylus compress: false, use: [axis(), jeet()]
@@ -351,8 +350,6 @@ app = new Metalsmith(DIR)
   .use time plugin: 'browserify'
   .use fingerprint pattern: ['**/*.css', '**/*.js']
   .use time plugin: 'fingerprint'
-  .use metallic()
-  .use time plugin: 'metallic'
   .use more()
   .use time plugin: 'more'
   .use collections collectionConfig
@@ -378,9 +375,9 @@ app = new Metalsmith(DIR)
       {match: {collection: 'home'}, pattern: ''}
       {match: {collection: 'pages'}, pattern: ':title'}
       {match: {collection: 'blog'}, pattern: 'blog/:title'}
-      {match: {collection: 'gallery'}, pattern: 'gallery/:title'}
-      {match: {collection: 'family'}, pattern: 'family/:title'}
-      {match: {collection: 'friends'}, pattern: 'friends/:title'}
+      {match: {collection: 'gallery'}, pattern: 'gallery/:id'}
+      {match: {collection: 'family'}, pattern: 'family/:id'}
+      {match: {collection: 'friends'}, pattern: 'friends/:id'}
       {match: {collection: 'projects'}, pattern: 'projects/:title'}
       {match: {collection: 'tagz'}, pattern: 'tagged/:slug'}
       {match: {collection: 'archive'}, pattern: 'archive/:year'}

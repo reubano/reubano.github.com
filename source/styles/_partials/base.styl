@@ -35,10 +35,22 @@ body
   -moz-osx-font-smoothing grayscale
   position relative
 
+code
+  font-family $font-mono
+  font-size $mono-font-size
+
+h1, h2, h3, h4, h5, h6
+  font-family $font-title
+  margin $quarter-headspace 0
+  padding-top $half-headspace
+
+p
+  margin $quarter-headspace 0
+
 html, body
   @media screen
     height 100%
-    overflow auto
+    overflow hidden
 
 div
   clearfix()
@@ -184,6 +196,11 @@ section
     background $inverse-bg-color
     padding $full-headspace 0
 
+#container
+  transition .4s
+  height 100%
+  overflow auto
+
 .container
   center($container-width)
 
@@ -282,9 +299,8 @@ section
 
 .hidden-slow
   max-height 0
-  transition max-height .5s ease-out
+  transition max-height .25s ease-out
 
 .visible-slow
   max-height 20em
-  transition max-height .5s ease-in
-
+  transition max-height .25s ease-in

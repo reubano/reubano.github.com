@@ -34,7 +34,9 @@ block content
 
     .photo
       +get-link(page, 'lg')
-      figcaption= page.description
+
+      if page.description
+        figcaption= page.description
 
     p(class='small mobile', itemprop='datePublished', content=postISO)
       | taken by #{site.author} on&nbsp;
@@ -52,7 +54,7 @@ block content
       include _partials/post-nav
 
 block aside
-  aside
+  aside#aside
     +get-related(gallery.count)
     +get-featured(gallery, gallery.count)
     +get-recent(gallery, gallery.count)

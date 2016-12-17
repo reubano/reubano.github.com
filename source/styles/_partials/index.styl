@@ -5,7 +5,7 @@
   @media $tablet
     stack()
     col(1/2, uncycle: 3, cycle: 2)
-  @media $desktop
+  @media $laptop
     stack()
     col(1/3, uncycle: 2, cycle: 3)
   @media $hd
@@ -17,6 +17,10 @@
 
   p, h1
     margin 0
+
+  h1
+    padding-top 0
+
   .logo
     svg
       float left
@@ -31,7 +35,7 @@
       svg, img
         height $intro-img-height
         width @height
-    @media $desktop
+    @media $laptop
       col(1/3)
       svg, img
         height $intro-img-height
@@ -48,7 +52,7 @@
         display none
     @media $tablet
       col(2/3)
-    @media $desktop
+    @media $laptop
       col(2/3)
     @media $hd
       col(2/3)
@@ -64,6 +68,9 @@
           font-size 115%
 
 #categories
+  h3
+    padding-top 0
+
   .recent-photos
     @media $hd
       display none
@@ -72,7 +79,7 @@
       display block
     @media $tablet
       display block
-    @media $desktop
+    @media $laptop
       display none
     @media $hd
       display none
@@ -83,7 +90,7 @@
       display none
     @media $tablet
       display none
-    @media $desktop
+    @media $laptop
       display none
     @media $hd
       display block
@@ -93,7 +100,7 @@
     display none
   @media $tablet
     display none
-  @media $desktop
+  @media $laptop
     display block
   @media $hd
     display none
@@ -109,7 +116,7 @@
     display none
   @media $tablet
     display none
-  @media $desktop
+  @media $laptop
     display none
   @media $hd
     display block
@@ -138,7 +145,7 @@
         display none
       .btn.abbrv
         display block
-    @media $desktop
+    @media $laptop
       .btn.full
         display block
       .btn.abbrv

@@ -5,6 +5,9 @@ slug = require './node_modules/slug'
 moment = require './node_modules/moment'
 marked = require './node_modules/marked'
 multimatch = require './node_modules/multimatch'
+cloudinary = require './node_modules/cloudinary'
+Flickr = require './node_modules/flickrapi'
+
 config = require './config'
 
 _sizes = [
@@ -26,7 +29,18 @@ _sizes = [
 
 landSizes = [75, 100, 150, 240, 320, 500, 500, 640, 800, 1024, 1600, 2048, 2048]
 portSizes = [75, 75, 150, 180, 240, 375, 375, 480, 600, 768, 1200, 1536, 1536]
+WIDTHS = [
+  75, 100, 150, 180, 240, 320, 375, 480, 500, 600, 640, 768, 800, 1024, 1200,
+  1536, 1600, 2048]
+
 REGEX = /:([\w]+(\.[\w]+)*)/g
+SRCSET_DEFAULTS = ext: 'jpg', source: 'flickr', portrait: false, optimize: true
+CLOUDINARY_DEFAULTS =
+  fetch_format: 'auto'
+  quality: 'auto'
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME
+  api_key: process.env.CLOUDINARY_API_KEY
+  api_secret: process.env.CLOUDINARY_API_SECRET
 
 slugOpts = {lower: true}
 
@@ -130,35 +144,67 @@ module.exports =
   # webdesignerdepot.com/2015/08/the-state-of-responsive-images/
   # stackoverflow.com/a/12158668/408556
   # developer.telerik.com/featured/lazy-loading-images-on-the-web/
-  getSrcset: (photo, ext='jpg', flickr=true, portrait=false, optimize=true) ->
-    if flickr
-      srcset = []
+  getSrc: (photo, width, options) ->
+    options = options or {}
+    opts = _.defaults options, SRCSET_DEFAULTS
 
-      if optimize
-        base = config.paths.optimize
-        filtered = _.filter _sizes, (s) -> photo[s.key]
+    switch opts.source
+      when 'flickr'
+        if opts.optimize and width >= photo.width_o
+          "#{config.paths.optimize}/#{photo.url_o}"
+        else if opts.optimize
+          "#{config.paths.optimize},w_#{width}/#{photo.url_o}"
+        else if width >= photo.width_o
+          photo.url_o
+        else
+          size = _.find _sizes, (s) -> photo[s.widthKey] >= width
+          photo[size.key]
+      when 'cloudinary'
+        cloudinaryOpts = _.defaults opts, CLOUDINARY_DEFAULTS
+        cloudinary.config cloudinaryOpts
+        srcOpts = _.assign {width}, cloudinaryOpts
+        url = cloudinary.url(opts.location, srcOpts)
+        url.replace(/^(https?):\/\//, '//')
+      when 'local'
+        "#{config.site.url}/#{config.paths.images}/#{photo}.#{opts.ext}"
 
-        for f in filtered
-          width = photo[f.widthKey]
-          srcset.push "#{base},w_#{width}/#{photo.url_o} #{width}w"
-      else
-        filtered = _.filter _sizes, (s) -> photo[s.key]
+  getSrcset: (photo, options) ->
+    options = options or {}
+    opts = _.defaults options, SRCSET_DEFAULTS
 
-        for f in filtered
-          srcset.push "#{photo[f.key]} #{photo[f.widthKey]}w"
+    switch opts.source
+      when 'flickr'
+        srcsets = []
 
-      srcset.join(', ')
-    else
-      refSizes = if portrait then portSizes else landSizes
-      sizes = (_.defaults(s, width: refSizes[i]) for s, i in _sizes)
-      url = "#{config.site.url}/#{config.paths.images}"
-      ("#{url}/#{photo}#{s.query}.#{ext} #{s.width}w" for s in sizes).join(', ')
+        if opts.optimize
+          base = config.paths.optimize
+          filtered = _.filter WIDTHS, (width) -> photo.width_o >= width
 
-  buildFlickrURL: (photo, query='', ext='jpg', optimize=true) ->
-    base = if optimize then "#{config.paths.optimize}/https:" else ''
-    base += "//farm#{photo.farm}.staticflickr.com/"
-    base +="#{photo.server}/#{photo.id}_#{photo.secret}#{query}.#{ext}"
-    base
+          for width in filtered
+            srcsets.push "#{base},w_#{width}/#{photo.url_o} #{width}w"
+        else
+          filtered = _.filter _sizes, (s) -> photo[s.key]
+
+          for f in filtered
+            srcsets.push "#{photo[f.key]} #{photo[f.widthKey]}w"
+      when 'cloudinary'
+        srcsets = []
+        cloudinaryOpts = _.defaults options, CLOUDINARY_DEFAULTS
+        cloudinary.config cloudinaryOpts
+        filtered = _.filter WIDTHS, (width) -> photo.width >= width
+
+        for width in filtered
+          srcsetOpts = _.assign {width}, cloudinaryOpts
+          url = cloudinary.url(opts.location, srcsetOpts)
+          protocoless = url.replace(/^(https?):\/\//, '//')
+          srcsets.push "#{protocoless} #{width}w"
+      when 'local'
+        refSizes = if opts.portrait then portSizes else landSizes
+        sizes = (_.defaults(s, width: refSizes[i]) for s, i in _sizes)
+        url = "#{config.site.url}/#{config.paths.images}"
+        srcsets = ("#{url}/#{photo}#{s.query}.#{opts.ext} #{s.width}w" for s in sizes)
+
+    srcsets.join(', ')
 
   getMatch: getMatch
   slug: (content) -> slug(content, slugOpts)

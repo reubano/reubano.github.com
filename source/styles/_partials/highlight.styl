@@ -16,32 +16,35 @@ pre
       border none
       background inherit
 
-    .comment, .quote
+    .hljs-comment, .hljs-quote, .hljs-template_comment, .diff .hljs-header, .hljs-doctype, .hljs-pi, .lisp .hljs-string, .hljs-javadoc
       color $solar-gray
 
-    .keyword, .selector-tag, .addition
+    .hljs-keyword, .hljs-selector-tag, .hljs-winutils, .method, .hljs-addition, .css .hljs-tag, .hljs-request, .hljs-status, .nginx .hljs-title
       color $solar-green
 
-    .number, .string, .meta .meta-string, .literal, .doctag, .regexp
+    .hljs-number, .hljs-string, .hljs-meta .hljs-meta-string, .hljs-literal, .hljs-doctag, .hljs-regexp, .hljs-command, .hljs-tag .hljs-value, .hljs-rules .hljs-value, .hljs-phpdoc, .hljs-hexcolor, .hljs-link_url, .hljs-params
       color $solar-cyan
 
-    .title, .section, .name, .selector-id, .selector-class
+    .hljs-title, .hljs-section, .hljs-name, .hljs-selector-id, .hljs-selector-class, .hljs-localvars, .hljs-chunk, .hljs-decorator, .hljs-built_in, .hljs-identifier, .vhdl .hljs-literal, .hljs-id, .css .hljs-function
       color $solar-blue
 
-    .attribute, .variable, .template-variable, .class .title, .type
+    .hljs-attribute, .hljs-variable, .hljs-template-variable, .hljs-class .hljs-title, .hljs-type, .lisp .hljs-body, .smalltalk .hljs-number, .hljs-constant, .hljs-parent, .haskell .hljs-type, .hljs-link_reference
       color $solar-yellow
 
-    .symbol, .bullet, .subst, .meta, .meta .keyword, .selector-attr, .selector-pseudo, .link
+    .hljs-symbol, .hljs-bullet, .hljs-subst, .hljs-meta, .hljs-meta .hljs-keyword, .hljs-selector-attr, .hljs-selector-pseudo, .hljs-link, .hljs-preprocessor, .hljs-preprocessor .hljs-keyword, .hljs-pragma, .hljs-shebang, .hljs-symbol .hljs-string, .diff .hljs-change, .hljs-special, .hljs-attr_selector, .hljs-cdata, .clojure .hljs-title, .css .hljs-pseudo, .hljs-header
       color $solar-orange
 
-    .built_in, .deletion
+    .hljs-built_in, .hljs-deletion, .hljs-important
       color $solar-red
 
-    .formula
+    .hljs-formula, .tex .hljs-formula
       background $solar-dark-gray
 
-    .emphasis
+    .hljs-link_label
+      color $solar-violet
+
+    .hljs-emphasis
       font-style italic
 
-    .strong
+    .hljs-strong
       font-weight bold

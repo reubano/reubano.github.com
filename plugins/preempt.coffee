@@ -23,6 +23,7 @@ module.exports = (opts) ->
       d.updated = if typeof updated is 'string' then parse(updated) else updated
       d.dateFromNow = moment(d.date).fromNow()
       d.updatedFromNow = moment(d.updated).fromNow()
+      d.description = d.description?._content or d.description
       d.contents = d.contents or d.content or d.description
       d.title = d.title or d.name or d.id
       d.name = d.name or d.title

@@ -6,7 +6,7 @@ include _mixins/github-card
 include _mixins/blog-excerpt
 
 block title
-  title #{page.name} | #{site.title}
+  title #{page.slug || page.name} | #{site.title}
 
 block nav
   +navbar(tagz.name)
@@ -44,10 +44,8 @@ block content
       li= tagz.homePath
 
   #category
-    - var untagged = page.slug === 'untagged'
-
     .non-mobile
-      if untagged
+      if page.slug == 'untagged'
         h1.tag-title untagged
       else if page.slug
         h1.tag-title #{tagz.past} #{page.slug}
@@ -72,7 +70,7 @@ block content
                 +get-link(post, 'lg', true)
 
 block aside
-  aside
+  aside#aside
     +get-site(tagz, 2)
     +get-site(archive)
 

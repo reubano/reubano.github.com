@@ -1,10 +1,14 @@
 hamburger = require './hamburger'
+aside = require './aside'
 # search = require './search'
-# toc = require './toc'
 
-callback = ->
+loadJS = (e) ->
+  console.log 'DOM ready'
   hamburger.main()
+  aside.main()
   # search.main()
-  # toc.main()
 
-window.addEventListener 'load', callback, false
+if document.readyState in ['complete', 'interactive', 'loaded']
+  loadJS()
+else
+  document.addEventListener 'DOMContentLoaded', loadJS, false

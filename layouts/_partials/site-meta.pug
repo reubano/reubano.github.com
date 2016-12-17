@@ -1,4 +1,4 @@
-- var pageDesc = page.description || site.description
+- var pageDesc = page.description || (page.less ? page.less.toString() : null) || site.description
 
 meta(charset='utf8')
 meta(http-equiv='content-type', content='text/html; charset=utf-8')

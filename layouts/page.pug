@@ -26,7 +26,7 @@ block content
       != page.html
 
 block aside
-  aside
+  aside#aside
     each category in collections
       if category.show
         +get-featured(category, category.count)

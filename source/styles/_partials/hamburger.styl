@@ -4,14 +4,16 @@
  * @author Jonathan Suh @jonsuh
  * @link https://github.com/jonsuh/hamburgers
  */
+ $headspace = -.625em
+
 .hamburger
-  padding $quarter-headspace $full-gutter $quarter-headspace - .625em
-  margin $quarter-headspace 0
+  padding $quarter-headspace $quarter-gutter $quarter-headspace + $headspace
+  margin-top 0.8em
   border 1px solid $nav-link-color
   display inline-block
   cursor pointer
   transition-property opacity, filter
-  transition-duration 0.15s
+  transition-duration 0.1s
   transition-timing-function linear
   font inherit
   color inherit
@@ -26,10 +28,9 @@
       &, &::before, &::after
         background-color $nav-bg-color
 
-
 .hamburger-box
   width 2.5em
-  height 1.5em
+  height 1.25em
   display inline-block
   position relative
 
@@ -49,10 +50,10 @@
     display block
 
   &::before
-    top -.625em
+    top $headspace
 
   &::after
-    bottom -.625em
+    bottom $headspace
 
   &, &::before, &::after
     width 2.5em
@@ -61,7 +62,7 @@
     border-radius $border-radius
     position absolute
     transition-property transform
-    transition-duration 0.15s
+    transition-duration 0.1s
     transition-timing-function ease
 
 .hamburger--squeeze
