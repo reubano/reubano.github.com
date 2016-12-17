@@ -1,10 +1,10 @@
 hamburger = require './hamburger'
+aside = require './aside'
 # search = require './search'
-# toc = require './toc'
 
 callback = ->
   hamburger.main()
+  aside.main()
   # search.main()
-  # toc.main()
 
 window.addEventListener 'load', callback, false

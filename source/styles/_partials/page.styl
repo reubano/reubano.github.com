@@ -137,11 +137,15 @@ aside
     .site-archives, .site-tags
       col(1/2)
   @media $desktop
-    col(1 / (1 + $golden-ratio))
+    col(1 / $golden-ratio-p1)
+    shift(0)
+    left 2px
     .aside
       col(1)
   @media $hd
     col(1/5)
+    shift(0)
+    left 2px
     .aside
       col(1)
 
@@ -159,7 +163,7 @@ aside
     .two-cols
       display none
   @media $desktop
-    col($golden-ratio / (1 + $golden-ratio))
+    col($golden-ratio / $golden-ratio-p1)
     .one-col
       display block
     .two-cols

@@ -38,7 +38,7 @@ body
 html, body
   @media screen
     height 100%
-    overflow auto
+    overflow hidden
 
 div
   clearfix()
@@ -184,6 +184,11 @@ section
     background $inverse-bg-color
     padding $full-headspace 0
 
+#container
+  transition .4s
+  height 100%
+  overflow auto
+
 .container
   center($container-width)
 
@@ -288,3 +293,24 @@ section
   max-height 20em
   transition max-height .25s ease-in
 
+.fixed
+  z-index: 1
+
+  @media $desktop
+    span(1 / $golden-ratio-p1)
+    shift($golden-ratio / $golden-ratio-p1, span)
+    position fixed
+    top $quarter-headspace
+    bottom 0
+    padding-right 7.5%
+    overflow-x scroll
+    overflow-y auto
+  @media $hd
+    span(1 / 5)
+    shift(4 / 5, span)
+    position fixed
+    top $quarter-headspace
+    bottom 0
+    padding-right 7.5%
+    overflow-x scroll
+    overflow-y auto

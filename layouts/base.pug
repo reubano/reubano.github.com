@@ -16,16 +16,18 @@ html(lang=site.language, prefix='og: http://ogp.me/ns#')
         title= site.title
 
   body
-    block nav
-      +navbar()
+    #container
+      block nav
+        +navbar()
 
-    section#content
-      .container
-        block content
-        block aside
+      section#content
+        .container
+          block content
+          block aside
 
-    block alt
-    block paginator
+      block alt
+      block paginator
+      include _partials/footer
+
     include _partials/laicos-icons
-    include _partials/footer
     script(async src=url_for(fingerprint[paths.js + '/bundle.js']))
