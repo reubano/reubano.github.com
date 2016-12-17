@@ -24,7 +24,7 @@ $small-font-size = 1rem
 $ligatures = 'false'
 $line-height = $golden-ratio
 $base-height = $font-size * $line-height
-$half-base-height = $base-height / $golden-ratio
+$half-base-height = $base-height/$golden-ratio
 
 // Layout
 $max-width = 75rem
@@ -36,12 +36,12 @@ $pull-quote-width = 62%
 $hamburger-button-height = 2.1em
 
 $full-gutter = 1.25rem
-$half-gutter = $full-gutter / $golden-ratio
-$quarter-gutter = $half-gutter / $golden-ratio
+$half-gutter = $full-gutter/$golden-ratio
+$quarter-gutter = $half-gutter/$golden-ratio
 
 $full-headspace = 2rem
-$half-headspace = $full-headspace / $golden-ratio
-$quarter-headspace = $half-headspace / $golden-ratio
+$half-headspace = $full-headspace/$golden-ratio
+$quarter-headspace = $half-headspace/$golden-ratio
 
 $burger-spacing = .625em
 $intro-img-height = 12em
@@ -63,12 +63,14 @@ $border-bottom-margin = $quarter-headspace
 // hd 160em (2560px)
 
 $mobile-cutoff = 40em  // 640px
-$desktop-cutoff = 64em  // 1024px
-$hd-cutoff = 125em  // 2000px
+$laptop-cutoff = 64em  // 1024px
+$desktop-cutoff = 80em  // 1280px
+$hd-cutoff = 130em  // 2080px
 
 // Media queries
 $mobile = 'screen and (max-width: $mobile-cutoff)'
 $tablet = 'screen and (min-width: $mobile-cutoff) and (max-width: $desktop-cutoff)'
+$laptop = 'screen and (min-width: $laptop-cutoff)'
 $desktop = 'screen and (min-width: $desktop-cutoff)'
 $hd = 'screen and (min-width: $hd-cutoff)'
 $non-mobile = 'screen and (min-width: $mobile-cutoff)'
