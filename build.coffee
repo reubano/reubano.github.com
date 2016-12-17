@@ -22,13 +22,13 @@ rm = require './node_modules/rimraf'
 
 end = checkpoint 'require base', stamp
 
-changed = require './node_modules/metalsmith-changed'
 permalinks = require './node_modules/metalsmith-permalinks'
 fingerprint = require './node_modules/metalsmith-fingerprint-ignore'
 sitemap = require './node_modules/metalsmith-sitemap'
 uglify = require './node_modules/metalsmith-uglify'
 htmlMinifier = require './node_modules/metalsmith-html-minifier'
 msIf = require './node_modules/metalsmith-if'
+# changed = require './node_modules/metalsmith-changed'
 # gist = require './node_modules/metalsmith-gist'
 # livereload = require './node_modules/metalsmith-livereload'
 
