@@ -1,41 +1,45 @@
-cloudinary = require '../node_modules/cloudinary'
+path = require 'path'
 helpers = require '../helpers'
 _ = helpers._
 
-WIDTHS = [
-  75, 100, 150, 180, 240, 320, 375, 480, 500, 600, 640, 768, 800, 1024, 1200,
-  1536, 1600, 2048]
+DEFAULTS =
+  source: 'flickr'
+  optimize: true
+  sourceDir: 'data'
+  sourceFile: 'post-images-gallery'
 
-DEFAULTS = fetch_format: 'auto', quality: 'auto'
+getImgTag = (opts) ->
+  sizes = '(min-width: 1024px) 66vw, 100vw'
 
-getImgTag = (loc, opts) ->
-  name = loc.split('/')[1].split('.')[0]
-  alt = (i[0].toUpperCase() + i[1..].toLowerCase() for i in name.split '_').join(' ')
-  srcOpts = _.assign {width: 768}, opts
-  src = cloudinary.url(loc, srcOpts).replace(/^(https?):\/\//, '//')
-  srcsets = []
-
-  for width in WIDTHS
-    srcsetOpts = _.assign {width}, opts
-    url = cloudinary.url(loc, srcsetOpts).replace(/^(https?):\/\//, '//')
-    srcsets.push "#{url} #{width}w"
-
-  srcset = srcsets.join(', ')
-  "<img class='fit' sizes='(min-width: 1024px) 66vw, 100vw' srcset='#{srcset}' src='#{src}' alt='#{alt}'>"
+  if opts.source is 'flickr'
+    photo = _.find opts.photos, {id: opts.id}
+    description = photo.description?._content
+    src = helpers.getSrc photo, 768, opts
+    srcset = helpers.getSrcset photo, opts
+    "<div class='photo'><img class='fit' sizes='#{sizes}' srcset='#{srcset}' src='#{src}' title='#{photo.title}'><figcaption>#{description}</figcaption></div>"
+  else
+    src = helpers.getSrc {}, 768, opts
+    srcset = helpers.getSrcset {width: 1024}, opts
+    "<div class='photo'><img class='fit' sizes='#{sizes}' srcset='#{srcset}' src='#{src}'></div>"
 
 exports = module.exports = (options) ->
   options = options or {}
   opts = _.defaults options, DEFAULTS
 
-  cloudinary.config
-    cloud_name: options.cloud_name or process.env.CLOUDINARY_CLOUD_NAME
-    api_key: options.api_key or process.env.CLOUDINARY_API_KEY
-    api_secret: options.api_secret or process.env.CLOUDINARY_API_SECRET
-
   (files, metalsmith, done) ->
+    filename = "#{opts.sourceFile}.json"
+    filepath = path.resolve metalsmith.directory(), opts.sourceDir, filename
+
+    try
+      gallery = require filepath
+    catch error
+      done "Error fetching #{filepath}: #{error.code}"
+
+    opts.photos = gallery.photoset.photo
+
     for file, data of files
       for element in (data.contents.toString().match(/image\|.\S*/g) or [])
-        tag = getImgTag element.split('|')[1], opts
+        tag = getImgTag _.assign {id: element.split('|')[1]}, opts
         data.contents = data.contents.toString().replace(element, tag)
 
     done()

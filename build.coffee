@@ -67,7 +67,7 @@ templateHelpers =
   get_last_page: helpers.getLastPage
   get_first_page: helpers.getFirstPage
   get_related: helpers.getRelated
-  build_flickr_url: helpers.buildFlickrURL
+  get_src: helpers.getSrc
   get_srcset: helpers.getSrcset
   get_featured: helpers.getFeatured
   get_recent: helpers.getRecent
