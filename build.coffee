@@ -375,9 +375,9 @@ app = new Metalsmith(DIR)
       {match: {collection: 'home'}, pattern: ''}
       {match: {collection: 'pages'}, pattern: ':title'}
       {match: {collection: 'blog'}, pattern: 'blog/:title'}
-      {match: {collection: 'gallery'}, pattern: 'gallery/:title'}
-      {match: {collection: 'family'}, pattern: 'family/:title'}
-      {match: {collection: 'friends'}, pattern: 'friends/:title'}
+      {match: {collection: 'gallery'}, pattern: 'gallery/:id'}
+      {match: {collection: 'family'}, pattern: 'family/:id'}
+      {match: {collection: 'friends'}, pattern: 'friends/:id'}
       {match: {collection: 'projects'}, pattern: 'projects/:title'}
       {match: {collection: 'tagz'}, pattern: 'tagged/:slug'}
       {match: {collection: 'archive'}, pattern: 'archive/:year'}
