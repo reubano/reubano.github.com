@@ -24,7 +24,6 @@ end = checkpoint 'require base', stamp
 
 changed = require './node_modules/metalsmith-changed'
 permalinks = require './node_modules/metalsmith-permalinks'
-metallic = require './node_modules/metalsmith-metallic'
 fingerprint = require './node_modules/metalsmith-fingerprint-ignore'
 sitemap = require './node_modules/metalsmith-sitemap'
 uglify = require './node_modules/metalsmith-uglify'
@@ -351,8 +350,6 @@ app = new Metalsmith(DIR)
   .use time plugin: 'browserify'
   .use fingerprint pattern: ['**/*.css', '**/*.js']
   .use time plugin: 'fingerprint'
-  .use metallic()
-  .use time plugin: 'metallic'
   .use more()
   .use time plugin: 'more'
   .use collections collectionConfig
