@@ -82,15 +82,6 @@ article
 .aside
   margin-bottom $full-headspace
 
-  h3
-    margin-bottom 0
-
-  &:not(:first-child)
-    h3
-      margin-top 0
-
-  h2
-    margin-bottom 0
   span
     margin-left $quarter-gutter
     small()
@@ -132,6 +123,10 @@ article
 
 aside
   z-index: 1
+  .aside
+    &:not(:first-child)
+      h3
+        margin-top 0
 
   @media $mobile
     col(1)

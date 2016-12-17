@@ -16,11 +16,17 @@ mixin truncate-posts(posts, count, name)
   else if truncated.length
     - var post = truncated[0]
 
-    h4
+    if post.datetaken && post.title
+      h4
+        a(href=url_for(post.path))= post.title
+
       +get-link(post)
+    else
+      h4
+        +get-link(post)
 
     if post.less
-      | !{post.less.toString()}
+      p !{post.less.toString()}
 
     if name == 'blog'
       a.link(href=url_for(post.path)) read full post
