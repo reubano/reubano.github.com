@@ -17,7 +17,7 @@
           "_content": "Post Images"
         },
         "description": {
-          "_content": ""
+          "_content": "Blog post photos"
         },
         "needs_interstitial": 0,
         "visibility_can_see_set": 1,
@@ -25,7 +25,7 @@
         "count_comments": "0",
         "can_comment": 0,
         "date_create": "1481986550",
-        "date_update": "1481986718"
+        "date_update": "1482007229"
       },
       {
         "id": "72157663394312666",
