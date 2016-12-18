@@ -5,12 +5,7 @@ marked = helpers.marked
 _ = helpers._
 
 DEFAULTS = ext: 'html', regexp: /\s*<!--\s*more\s*-->/, cutoff: 256
-UNESCAPE =
-  '&#39;': '\''
-  '&amp;': '&'
-  '&gt;': '>'
-  '&lt;': '<'
-  '&quot;': '"'
+UNESCAPE = '&#39;': '\'', '&amp;': '&', '&gt;': '>', '&lt;': '<', '&quot;': '"'
 
 module.exports = (options) ->
   options = options or {}
