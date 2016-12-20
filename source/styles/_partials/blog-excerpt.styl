@@ -5,11 +5,17 @@
   background $alt-bg-color
   margin-bottom $half-headspace
   color $alt-font-color
+  unstack()
+  col(1)
 
   @media $mobile
     border none
     padding 0
     background $bg-color
+
+  @media $hd
+    stack()
+    col(1/2, uncycle: 3, cycle: 2)
 
   &:last-child
     margin-bottom 0
@@ -34,16 +40,3 @@
 
   .excerpt-footer
     border-top $border-weight solid $border-color
-
-  @media $mobile
-    unstack()
-    col(1)
-  @media $tablet
-    unstack()
-    col(1)
-  @media $laptop
-    unstack()
-    col(1)
-  @media $hd
-    stack()
-    col(1/2, uncycle: 3, cycle: 2)

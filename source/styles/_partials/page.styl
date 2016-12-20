@@ -190,36 +190,14 @@ aside
       margin-left -2.45%
 
 #category, #archives, .article
-  @media $mobile
-    col(1)
-    .one-col
-      display block
-    .two-cols
-      display none
-  @media $tablet
-    col(1)
-    .one-col
-      display block
-    .two-cols
-      display none
+  col(1)
+
   @media $laptop
     col($golden-ratio/$golden-ratio-p1)
-    .one-col
-      display block
-    .two-cols
-      display none
   @media $desktop
     col(3/4)
-    .one-col
-      display block
-    .two-cols
-      display none
   @media $hd
     col(4/5)
-    .one-col
-      display none
-    .two-cols
-      display block
 
   margin-bottom $full-headspace
 

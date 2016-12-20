@@ -28,8 +28,50 @@
     .table-center &, a&, ul.tl
       display none
 
+.tablet
+  display none
+
+  @media $tablet
+    display block
+
+.non-tablet
+  display block
+
+  @media $tablet
+    display none
+
+.handheld
+  display none
+
+  @media $handheld
+    display block
+
+.non-handheld
+  display block
+
+  @media $handheld
+    display none
+
 .laptop
   display none
 
   @media $laptop
     display block
+
+.lapdesk
+  display none
+
+  @media $lapdesk
+    display block
+
+.hd
+  display none
+
+  @media $hd
+    display block
+
+.non-hd
+  display block
+
+  @media $hd
+    display none

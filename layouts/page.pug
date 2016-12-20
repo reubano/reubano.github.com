@@ -19,10 +19,10 @@ block content
   article.article(itemscope itemtype='http://schema.org/Article')
     h1.non-mobile(itemprop='name')= page.title
 
-    div(class='content one-col', itemprop='articleBody')
+    div(class='content one-col non-hd', itemprop='articleBody')
       != page.html
 
-    div(class='content two-cols', itemprop='articleBody')
+    div(class='content two-cols hd', itemprop='articleBody')
       != page.html
 
 block aside

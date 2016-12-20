@@ -1,15 +1,12 @@
 .category
-  @media $mobile
-    stack()
-    col(1)
+  unstack()
+  col(1)
+
   @media $tablet
     stack()
     col(1/2, uncycle: 3, cycle: 2)
   @media $laptop
     stack()
-    col(1/3, uncycle: 2, cycle: 3)
-  @media $hd
-    unstack()
     col(1/3, uncycle: 2, cycle: 3)
 
 #intro
@@ -22,50 +19,33 @@
     padding-top 0
 
   .logo
+    col(1/3)
+
     svg
       float left
       display table-cell
+
+    svg, img
+      height $intro-img-height
+      width @height
+
     @media $mobile
       col(1)
       svg, img
         height height $intro-img-height-mobile
         width @height
-    @media $tablet
-      col(1/3)
-      svg, img
-        height $intro-img-height
-        width @height
-    @media $laptop
-      col(1/3)
-      svg, img
-        height $intro-img-height
-        width @height
-    @media $hd
-      col(1/3)
-      svg, img
-        height $intro-img-height
-        width @height
   .text
+    col(2/3)
+
     @media $mobile
       col(1)
       p
         display none
-    @media $tablet
-      col(2/3)
-    @media $laptop
-      col(2/3)
-    @media $hd
-      col(2/3)
 
     .description
       margin-top $quarter-headspace
       padding-top $quarter-headspace
       border-top $heavy-border-weight solid $base-color
-      big
-        @media $mobile
-          font-size 110%
-        @media $tablet
-          font-size 115%
 
 #categories
   h3
@@ -74,52 +54,9 @@
   .recent-photos
     @media $hd
       display none
-  .category-about
-    @media $mobile
-      display block
-    @media $tablet
-      display block
-    @media $laptop
-      display none
-    @media $hd
-      display none
-
-#intro
-  .about
-    @media $mobile
-      display none
-    @media $tablet
-      display none
-    @media $laptop
-      display none
-    @media $hd
-      display block
-
-.about-home
-  @media $mobile
-    display none
-  @media $tablet
-    display none
-  @media $laptop
-    display block
-  @media $hd
-    display none
-
-.category-about, .about-home, #intro .about
-  h2
-    display none
-    &:first-child
-      display block
 
 #photos
-  @media $mobile
-    display none
-  @media $tablet
-    display none
-  @media $laptop
-    display none
   @media $hd
-    display block
     h3
       display none
     .category
@@ -133,26 +70,8 @@
   border-top $border-weight solid $border-color
   .category
     @media $mobile
+      col(1)
       &:not(:last-child)
         margin-bottom $quarter-headspace
-      .btn.full
-        display block
-      .btn.abbrv
-        display none
     @media $tablet
       col(1/3)
-      .btn.full
-        display none
-      .btn.abbrv
-        display block
-    @media $laptop
-      .btn.full
-        display block
-      .btn.abbrv
-        display none
-    @media $hd
-      col(1/3)
-      .btn.full
-        display block
-      .btn.abbrv
-        display none
