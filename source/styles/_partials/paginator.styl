@@ -10,10 +10,11 @@
   z-index 10
 
   a, span
+    padding 0 $full-gutter
+
     @media $mobile
       padding 0 $half-gutter
-    @media $non-mobile
-      padding 0 $full-gutter
+
     display inline-block
   a
     link($alt-link-color, 'glow')

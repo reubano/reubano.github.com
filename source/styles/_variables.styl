@@ -68,9 +68,8 @@ $desktop-cutoff = 80em  // 1280px
 $hd-cutoff = 130em  // 2080px
 
 // Media queries
-$mobile = 'screen and (max-width: $mobile-cutoff)'
-$tablet = 'screen and (min-width: $mobile-cutoff) and (max-width: $desktop-cutoff)'
+$mobile = 'screen and (max-width: $mobile-cutoff - 1)'
+$tablet = 'screen and (min-width: $mobile-cutoff) and (max-width: $laptop-cutoff - 1)'
 $laptop = 'screen and (min-width: $laptop-cutoff)'
 $desktop = 'screen and (min-width: $desktop-cutoff)'
 $hd = 'screen and (min-width: $hd-cutoff)'
-$non-mobile = 'screen and (min-width: $mobile-cutoff)'

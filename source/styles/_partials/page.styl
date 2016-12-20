@@ -2,12 +2,11 @@ article
   h1
     margin 0
   .photo
+    margin $half-headspace 0
     figure($base-color)
 
     @media $mobile
       margin 0
-    @media $non-mobile
-      margin $half-headspace 0
 
   .meta
     padding $quarter-headspace $quarter-gutter
@@ -249,19 +248,14 @@ aside
       padding-bottom 0
       margin-bottom 0
 
-.content
-  @media $non-mobile
-    padding $quarter-headspace 0
-
 .category-tags
   padding-bottom $half-headspace
 
 .excerpts, .gallery, .projects, .tag-content
+  margin-top $full-headspace
+
   @media $mobile
     margin-top 0
-  @media $non-mobile
-    margin-top $full-headspace
-
 
 .tag-content .blog-excerpt, .tag-content .github-card
   clearfix()
