@@ -1,12 +1,11 @@
 #topnav
   @media $laptop
     nav(8, $nav-bg-color, $nav-link-color)
-  @media $hd
-    nav(8, $nav-bg-color, $nav-link-color)
 
   background $nav-bg-color
   height auto !important
-  overflow auto
+  overflow hidden
+
   h1
     margin 0
     padding-left 0
@@ -18,34 +17,13 @@
   h1
     float left
     line-height $hamburger-button-height
+    padding 0
 
   .mobile-nav
     float right
 
-  @media $mobile
-    display block
-  @media $tablet
-    display block
-  @media $laptop
-    display none
-  @media $hd
-    display none
-
 #navbar
-  @media $mobile
-    h1
-      display none
-
-    .nav-list
-      reset-list()
-      border-top 1px solid $background-color
-      padding $half-headspace 0
-      li
-        text-align center
-  @media $tablet
-    h1
-      display none
-
+  @media $handheld
     .nav-list
       reset-list()
       border-top 1px solid $background-color
@@ -53,9 +31,6 @@
       li
         text-align center
   @media $laptop
-    h1
-      display block
-
     .nav-list
       border-top 0
       float: right

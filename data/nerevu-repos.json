@@ -2264,7 +2264,7 @@
     "releases_url": "https://api.github.com/repos/nerevu/riko/releases{/id}",
     "deployments_url": "https://api.github.com/repos/nerevu/riko/deployments",
     "created_at": "2016-06-02T12:22:51Z",
-    "updated_at": "2016-12-02T06:59:42Z",
+    "updated_at": "2016-12-17T01:39:08Z",
     "pushed_at": "2016-11-05T16:48:28Z",
     "git_url": "git://github.com/nerevu/riko.git",
     "ssh_url": "git@github.com:nerevu/riko.git",
@@ -2272,8 +2272,8 @@
     "svn_url": "https://github.com/nerevu/riko",
     "homepage": "",
     "size": 2241,
-    "stargazers_count": 1198,
-    "watchers_count": 1198,
+    "stargazers_count": 1204,
+    "watchers_count": 1204,
     "language": "Python",
     "has_issues": true,
     "has_downloads": true,
@@ -2284,7 +2284,7 @@
     "open_issues_count": 17,
     "forks": 36,
     "open_issues": 17,
-    "watchers": 1198,
+    "watchers": 1204,
     "default_branch": "master"
   },
   {

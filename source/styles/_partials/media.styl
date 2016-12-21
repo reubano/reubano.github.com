@@ -1,21 +1,37 @@
-.mobile
-  @media $mobile
-    display block
-  @media $non-mobile
-    display none !important
+.mobile, .tablet, .handheld, .laptop, .lapdesk, .hd
+  display-none()
 
-.non-mobile
-  @media $mobile
-    display none !important
-  @media $non-mobile
-    display block
+.non-mobile, .non-tablet, .non-handheld, .non-hd
+  display-some()
 
-.desktop
-  @media $mobile
-    display none !important
-  @media $tablet
-    display none !important
-  @media $laptop
-    display block
-  @media $desktop
-    display block
+@media $mobile
+  .mobile
+    display-some()
+  .non-mobile
+    display-none()
+
+@media $tablet
+  .tablet
+    display-some()
+  .non-tablet
+    display-none()
+
+@media $handheld
+  .handheld
+    display-some()
+  .non-handheld
+    display-none()
+
+@media $laptop
+  .laptop
+    display-some()
+
+@media $lapdesk
+  .lapdesk
+    display-some()
+
+@media $hd
+  .hd
+    display-some()
+  .non-hd
+    display-none()

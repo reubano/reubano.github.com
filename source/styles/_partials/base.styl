@@ -41,11 +41,12 @@ code
 
 h1, h2, h3, h4, h5, h6
   font-family $font-title
-  margin $quarter-headspace 0
-  padding-top $half-headspace
 
-p
+h1, h2, h3, h4, h5, h6, p
   margin $quarter-headspace 0
+
+h1, h2, h3
+  padding-top $half-headspace
 
 html, body
   @media screen
@@ -83,20 +84,18 @@ blockquote
   blockquote($base-color)
 
 pullquote
+  blockquote($base-color)
+  display block
+  margin $quarter-headspace 0 $quarter-headspace $full-gutter
+  padding-left $half-gutter
+  float right
+  width $pull-quote-width
+
   @media $mobile
     border-left none
-    display block
     margin 0
     padding-left 0
     width 100%
-
-  @media $non-mobile
-    blockquote($base-color)
-    display block
-    margin $quarter-headspace 0 $quarter-headspace $full-gutter
-    padding-left $half-gutter
-    float right
-    width $pull-quote-width
 
   font-size 125%
 
@@ -150,7 +149,7 @@ p
   paragraph($font-size)
 
 .big, big
-  font-size 125%
+  font-size 115%
 
 hr
   rule(alpha($base-color, .65))
@@ -202,6 +201,7 @@ section
   overflow auto
 
 .container
+  position relative
   center($container-width)
 
 .factoid, .thumb
@@ -295,7 +295,7 @@ section
   clearfix()
 
 .hidden
-  display none
+  display-none()
 
 .hidden-slow
   max-height 0

@@ -1,16 +1,22 @@
 .blog-excerpt
+  border-radius $border-radius
+  border $border-weight solid $border-color
+  padding 0 $quarter-headspace $half-gutter
+  background $alt-bg-color
+  margin-bottom $half-headspace
+  color $alt-font-color
+  unstack()
+  col(1)
+
   @media $mobile
     border none
     padding 0
     background $bg-color
-  @media $non-mobile
-    border-radius $border-radius
-    border $border-weight solid $border-color
-    padding 0 $quarter-headspace $half-gutter
-    background $alt-bg-color
 
-  margin-bottom $half-headspace
-  color $alt-font-color
+  @media $hd
+    stack()
+    col(1/2, uncycle: 3, cycle: 2)
+
   &:last-child
     margin-bottom 0
 
@@ -18,10 +24,10 @@
     link($alt-link-color, 'glow')
 
   .excerpt
+    padding $quarter-headspace 0
+
     @media $mobile
       padding 0
-    @media $non-mobile
-      padding $quarter-headspace 0
 
     p
       overflow hidden
@@ -34,16 +40,3 @@
 
   .excerpt-footer
     border-top $border-weight solid $border-color
-
-  @media $mobile
-    unstack()
-    col(1)
-  @media $tablet
-    unstack()
-    col(1)
-  @media $laptop
-    unstack()
-    col(1)
-  @media $hd
-    stack()
-    col(1/2, uncycle: 3, cycle: 2)

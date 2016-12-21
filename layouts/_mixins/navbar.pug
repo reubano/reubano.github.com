@@ -1,6 +1,6 @@
 mixin navbar(cur)
   nav#topnav(role='navigation')
-    #mobile-navbar.container
+    div(id='mobile-navbar', class='container handheld')
       h1
         a(href=site.url, class={active: cur == site.name})= site.name
 
@@ -11,7 +11,7 @@ mixin navbar(cur)
           // span.hamburger-label Menu
 
     div(id='navbar', class='container hidden-slow')
-      h1
+      h1.non-handheld
         a(href=site.url, class={active: cur == site.name})= site.name
 
       ul.nav-list

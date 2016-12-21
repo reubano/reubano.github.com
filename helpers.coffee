@@ -6,7 +6,6 @@ moment = require './node_modules/moment'
 marked = require './node_modules/marked'
 multimatch = require './node_modules/multimatch'
 cloudinary = require './node_modules/cloudinary'
-Flickr = require './node_modules/flickrapi'
 
 config = require './config'
 

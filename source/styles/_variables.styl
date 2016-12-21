@@ -68,9 +68,26 @@ $desktop-cutoff = 80em  // 1280px
 $hd-cutoff = 130em  // 2080px
 
 // Media queries
-$mobile = 'screen and (max-width: $mobile-cutoff)'
-$tablet = 'screen and (min-width: $mobile-cutoff) and (max-width: $desktop-cutoff)'
+$mobile = 'screen and (max-width: $mobile-cutoff - 1)'
+$tablet = 'screen and (min-width: $mobile-cutoff) and (max-width: $laptop-cutoff - 1)'
+$handheld = 'screen and (max-width: $laptop-cutoff - 1)'
 $laptop = 'screen and (min-width: $laptop-cutoff)'
 $desktop = 'screen and (min-width: $desktop-cutoff)'
+$lapdesk = 'screen and (min-width: $laptop-cutoff) and (max-width: $hd-cutoff - 1)'
 $hd = 'screen and (min-width: $hd-cutoff)'
-$non-mobile = 'screen and (min-width: $mobile-cutoff)'
+
+// Mixins
+display-none()
+  &, a&, a.button&, ul.tl &, .table-center &
+    display none
+
+display-some()
+  &, a.button&
+    display block
+  .table-center &
+    center()
+    display table
+  a&
+    display inline-block
+  ul.tl &
+    display table-cell

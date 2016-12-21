@@ -32,10 +32,10 @@ block content
       a(href=url_for(href))= postdate
       |&nbsp;~ #{readtime} minute read
 
-    div(class='content one-col', itemprop='articleBody')
+    div(class='content one-col non-hd', itemprop='articleBody')
       != page.html
 
-    div(class='content two-cols', itemprop='articleBody')
+    div(class='content two-cols hd', itemprop='articleBody')
       != page.html
 
     .tags

@@ -5,12 +5,7 @@ marked = helpers.marked
 _ = helpers._
 
 DEFAULTS = ext: 'html', regexp: /\s*<!--\s*more\s*-->/, cutoff: 256
-UNESCAPE =
-  '&#39;': '\''
-  '&amp;': '&'
-  '&gt;': '>'
-  '&lt;': '<'
-  '&quot;': '"'
+UNESCAPE = '&#39;': '\'', '&amp;': '&', '&gt;': '>', '&lt;': '<', '&quot;': '"'
 
 module.exports = (options) ->
   options = options or {}
@@ -29,9 +24,9 @@ module.exports = (options) ->
 
         if data.contents and not data.less
           string = data.contents.toString()
-          index = string.search opts.regexp
-          less = if index > -1 then index else opts.cutoff
           headingless = string.replace /^#.*$/mg, ''
+          index = headingless.search opts.regexp
+          less = if index > -1 then index else opts.cutoff
           lessHTML = marked "#{headingless[...less]}..."
 
           if not data.description
@@ -45,6 +40,6 @@ module.exports = (options) ->
             data.description = _.reduce UNESCAPE, reducer, detagged
 
           data.less = new Buffer lessHTML
-          data.more = new Buffer marked string[less..]
+          data.more = new Buffer marked headingless[less..]
 
     done()

@@ -17,10 +17,9 @@ block content
         h1= site.title
         p= site.subtitle
 
-      .description
-        big= site.description
+      div(class='description big')= site.description
 
-      .about
+      div(class='about hd')
         include _partials/about
 
   #categories
@@ -35,13 +34,13 @@ block content
           unless category.name === 'blog'
             +get-recent(category, category.count, category.filterby)
 
-    div(class='category category-about')
+    div(class='category category-about handheld')
       include _partials/about
 
-  #about.about-home
+  div(id='about', class='.about-home lapdesk')
     include _partials/about
 
-  #photos
+  div(id='photos', class='hd')
     div(class='category category-gallery')
       h2
         a(href=url_for('gallery')) recent gallery photos
@@ -55,5 +54,5 @@ block alt
         if category.show
           - var name = category.name
           .category
-            a(href=url_for(name), class="btn block full") view #{name}...
-            a(href=url_for(name), class="btn block abbrv") #{name}...
+            a(href=url_for(name), class='btn block full non-tablet') view #{name}...
+            a(href=url_for(name), class='btn block abbrv tablet') #{name}...
