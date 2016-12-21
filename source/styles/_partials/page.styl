@@ -127,7 +127,11 @@ article
 
 aside
   z-index: 1
+  col(1)
+  shift(0)
+
   .aside
+    col(1)
     &:not(:first-child)
       h3
         margin-top 0
@@ -138,67 +142,53 @@ aside
           margin-top 0
 
   @media $mobile
-    col(1)
     border-top $border-weight solid $border-color
-    .aside
-      col(1)
   @media $tablet
-    col(1)
     .aside
       col(1/3)
     .site-archives, .site-tags
       col(1/2)
+
   @media $laptop
     col(1/$golden-ratio-p1)
-    shift(0)
-
-    .aside
-      col(1)
 
     &.fixed
-      span(1/$golden-ratio-p1)
-      shift($golden-ratio/$golden-ratio-p1, span)
-      position fixed
-      top $quarter-headspace
-      bottom 0
-      overflow-x scroll
-      overflow-y auto
-      padding-right 6.5%
-      margin-left -.15%
+      shift(0.616575, span)
+      padding-right 5.5%
+    &.absolute
+      shift(0.636575, span)
+      padding-right 0
   @media $desktop
     col(1/4)
-    shift(0)
-
-    .aside
-      col(1)
 
     &.fixed
-      span(1/4)
-      shift(3/4, span)
-      position fixed
-      top $quarter-headspace
-      bottom 0
-      overflow-x scroll
-      overflow-y auto
-      padding-right 5.5%
-      margin-left -1.75%
+      shift(0.7325, span)
+      padding-right 3.5%
+    &.absolute
+      shift(0.7725, span)
+      padding-right 0
   @media $hd
     col(1/5)
-    shift(0)
-
-    .aside
-      col(1)
 
     &.fixed
-      span(1/5)
-      shift(4/5, span)
+      shift(0.775, span)
+      padding-right 2.5%
+    &.absolute
+      shift(0.825, span)
+      padding-right 0
+
+  @media $laptop
+    &.fixed
       position fixed
       top $quarter-headspace
       bottom 0
       overflow-x scroll
       overflow-y auto
-      padding-right 5.5%
-      margin-left -2.45%
+
+    &.absolute
+      position absolute
+      top auto
+      bottom 0
 
 #category, #archives, .article
   col(1)

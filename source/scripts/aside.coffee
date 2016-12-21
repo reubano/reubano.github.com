@@ -5,22 +5,36 @@ topnav = document.getElementById 'topnav'
 breadcrumb = document.getElementsByClassName('breadcrumb')[0]
 aside = document.getElementById 'aside'
 toTop = document.getElementById 'to-top'
+pageNav = document.getElementsByClassName('page-navigator')[0]
+footer = document.getElementById 'footer'
+category = document.getElementById 'category'
+article = document.getElementsByClassName('article')[0]
 
-updateAsidePosition = (height) ->
-  if container.scrollTop > height
+updateAsidePosition = (absHeight, fixedHeight, normal) ->
+  if normal and container.scrollTop >= absHeight
+    utils.addClass aside, 'absolute'
+    utils.removeClass aside, 'fixed'
+  else if normal and container.scrollTop >= fixedHeight
     utils.addClass aside, 'fixed'
+    utils.removeClass aside, 'absolute'
   else
     utils.removeClass aside, 'fixed'
+    utils.removeClass aside, 'absolute'
 
 module.exports =
   main: ->
-    height = topnav.clientHeight + utils.getFullHeight(breadcrumb)
+    fixedHeight = topnav.clientHeight + utils.getFullHeight(breadcrumb)
 
     if aside
-      container.addEventListener 'scroll', ->
-        window.requestAnimationFrame -> updateAsidePosition height
+      absHeight = (pageNav or footer)['offsetTop'] - aside.clientHeight
+      contHeight = (category or article)['clientHeight']
+      normal = (absHeight > fixedHeight) and (aside.clientHeight < contHeight)
 
-      updateAsidePosition height
+      container.addEventListener 'scroll', ->
+        window.requestAnimationFrame ->
+          updateAsidePosition absHeight, fixedHeight, normal
+
+      updateAsidePosition absHeight, fixedHeight, normal
 
     if toTop
       toTop.addEventListener 'click', (e) ->
