@@ -50,7 +50,6 @@ article
       display none
 
     @media $mobile
-      padding $half-headspace 0 0
       .updated
         col(1)
         unshift(1/4)
@@ -80,6 +79,11 @@ article
 
 .aside
   margin-bottom $full-headspace
+
+  @media $mobile
+    margin-bottom 0
+    &:last-child
+      margin-bottom $half-headspace
 
   span
     margin-left $quarter-gutter
@@ -119,6 +123,7 @@ article
 
 .two-cols
   columns($count: 2, $gap: $full-gutter)
+  padding-bottom $quarter-headspace
 
 aside
   z-index: 1
@@ -127,8 +132,14 @@ aside
       h3
         margin-top 0
 
+    @media $handheld
+      &:first-child
+        h3
+          margin-top 0
+
   @media $mobile
     col(1)
+    border-top $border-weight solid $border-color
     .aside
       col(1)
   @media $tablet
