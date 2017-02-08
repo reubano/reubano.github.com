@@ -20,7 +20,7 @@ module.exports =
     author: 'Reuben Cummings'
     email: 'reubano@gmail.com'
     title: 'Reuben on Data'
-    subtitle: 'musings of a data wrangler'
+    subtitle: 'musings of a data whisperer'
     url: URLS[process.env.SITE]
     version: '0.0.4'
 

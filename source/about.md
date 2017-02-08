@@ -7,17 +7,45 @@ collection: pages
 
 ### Me
 
-Hi, I'm Reuben Cummings, a [data scientist](//en.wikipedia.org/wiki/Data_scientist) and [software developer](//en.wikipedia.org/wiki/Software_developer) who bounces between [Chicago, IL](//goo.gl/maps/98QbKDXjsD42) and [Arusha, Tanzania](//goo.gl/maps/33NnTaeekys). I specialize in [data analysis](/tagged/data/), [visualization](/tagged/visualization/), and [offline first](/tagged/app/) technology. When I'm not working with [databases](/tagged/data/), [APIs](/tagged/api/), or automating my life; I enjoy [taking photos](/gallery/) and [traveling](/tagged/travel/).
+Hi, I'm Reuben Cummings, an open source enthusiast and [Pythonista](/tagged/python/)
+who bounces between [Chicago, IL](//goo.gl/maps/98QbKDXjsD42) and [Arusha, Tanzania](//goo.gl/maps/33NnTaeekys). I believe the ability to understand data is key to making informed decisions. To this end, I have made it my mission to lower the barriers to transforming data and extracting meaningful information from it.
+
+With this data driven mindset, I help organizations eliminate inefficiencies and identify how customers are using their products and services. This usually involves solving problems with customer engagement, churn, operating expenses, or productivity.
+
+As a skilled developer and analyst, I specialize in collecting and interpreting business [data](/tagged/data/) to uncover a path to increased profitability. I've worked with Fortune 500 companies, NGOs, and startups alike to build business intelligence systems, automated reporting solutions, and interactive dashboards.
 
 While you're here, feel free to browse through [my project portfolio](/projects/), check out [my blog](/blog/), or learn more about [me and this site](/about/). If you have any questions or would like to discuss a speaking or consulting engagement, please [contact me](/contact/) for more info.<!-- more -->
 
-As an open source enthusiast, my tools of the trade are [Python](/tagged/python/) (Flask), Postgres, SQLite, [JavaScript](/tagged/javascript/)/[CoffeScript](/tagged/coffeescript/) (Mithril.js, Backbone.js, and Node.js), and Bash (Unix shell). I've worked with Fortune 500 companies, NGOs, and startups alike to build business intelligence systems, automated reporting solutions, and interactive dashboards.
+As part of my service offerings, I can help you answer questions such as the following:
+
+  - How can we automate these time consuming manual processes?
+  - How do customers use our product?
+  - Which customer segment should we market to and how do we identify them?
+  - Which product features provide the most customer benefit? The least?
+  - Is our pricing model sustainable?
+
+And in the course of answering those questions, I may employ any of a number of analytical tools or methodologies including:
+
+  - pricing optimization
+  - trend analysis & forecasting
+  - customer insight & segmentation
+  - key performance indicator (KPI) monitoring
+  - [web application](/tagged/app/) development
+  - database architecture and migration
+  - [API](/tagged/api/) development and integration
+  - enterprise resource planning (ERP)
+  - A/B testing
+  - data analysis and [visualization](/tagged/visualization/)
+
+My interests span technology, [finance](/tagged/finance/), healthcare, and entrepreneurship. I also enjoy [taking photos](/gallery/) and [traveling](/tagged/travel/).
 
 ### My Bio
 
-Reuben Cummings is a data scientist and software developer skilled in business development, entrepreneurship, and programming. He is Founder & Managing Director of [Nerevu Development](//nerevu.com) and has worked with clients including the [UN Humanitarian Data Exchange (HDX)](//data.humdata.org), [Moringa School](//moringaschool.com), and [Africa’s Talking](//www.africastalking.com/). Reuben specializes in data integration and analysis, visualization, API development, and workflow automation.
+Reuben Cummings is an international speaker and trainer who uses data to show entrepreneurs and product owners how to make better decisions regarding their operations, customers, and products. Skilled in data analysis, software development, and entrepreneurship, he recommends and implements cost saving and/or revenue generating actions.
 
-Reuben previously served in IT and Business Development roles at social enterprise [Global Cycle Solutions (GCS)](//www.gcstz.com) in Arusha, Tanzania; and was an analyst at [MIDIOR Consulting](//www.midior.com/) in Cambridge, Massachusetts. He holds a degree in Chemical Engineering from the [Massachusetts Institute of Technology](//web.mit.edu/), and is Lead Organizer of the [Arusha Coders](//groups.google.com/forum/#!forum/arusha-coders) programmers meetup.
+Reuben is Founder & Managing Director of [Nerevu Development](//nerevu.com) and has worked with clients including the [UN Humanitarian Data Exchange (HDX)](//data.humdata.org), [Moringa School](//moringaschool.com), and [Africa’s Talking](//www.africastalking.com/). Reuben specializes in collecting and interpreting business [data](/tagged/data/) to uncover a path to increased profitability.
+
+Reuben previously served in IT and Business Development roles at social enterprise [Global Cycle Solutions (GCS)](//www.gcstz.com) in Arusha, Tanzania; and was an analyst at [MIDIOR Consulting](//www.midior.com/) in Cambridge, Massachusetts. He holds a degree in Chemical Engineering from the [Massachusetts Institute of Technology](//web.mit.edu/), and is Lead Organizer of the [Arusha Coders](//groups.google.com/forum/#!forum/arusha-coders) meetup.
 
 ### My Life
 
