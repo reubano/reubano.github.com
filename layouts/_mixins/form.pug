@@ -28,8 +28,9 @@ mixin subscription(category, type)
       button(class='tablet inline', type='submit') Yes, send me #{offer}!
 
     p
-      input(type='checkbox', name='swag', value='guide')
-      span Also send me the free guide <em>You Might Not Need Pandas</em>.
+      label
+        input(type='checkbox', name='swag', value='guide')
+        small &nbsp;Also send me the free guide <em>You Might Not Need Pandas</em>.
 
     p.non-tablet
       button.block(type='submit') Yes, send me #{offer}!
