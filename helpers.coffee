@@ -62,7 +62,7 @@ _getFeatured = (category, filterby) ->
   else if item.comments?
     ranked = _.sortBy category.data, (item) -> -item.comments
   else if item.featured?
-    ranked = _.sortBy category.data, (item) -> -item.featured
+    ranked = _.filter category.data, (item) -> item.featured
   else
     ranked = _.sortBy category.data, (item) -> -item.date
 
