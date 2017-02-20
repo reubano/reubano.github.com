@@ -7,14 +7,12 @@ collection: pages
 
 ### Me
 
-Hi, I'm Reuben Cummings, an open source enthusiast and [Pythonista](/tagged/python/)
-who bounces between [Chicago, IL](//goo.gl/maps/98QbKDXjsD42) and [Arusha, Tanzania](//goo.gl/maps/33NnTaeekys). I believe the ability to understand data is key to making informed decisions. To this end, I have made it my mission to lower the barriers to transforming data and extracting meaningful information from it.
+Hi, I'm Reuben Cummings, an [open source enthusiast](/blog/) and [Pythonista](/tagged/python/)
+who bounces between [Chicago, IL](//goo.gl/maps/98QbKDXjsD42) and [Arusha, Tanzania](//goo.gl/maps/33NnTaeekys). I believe the ability to understand data is key to making informed decisions. To this end, I have [made it my mission](/portfolio/) to lower the barriers to transforming data and extracting meaningful information from it.
 
-With this data driven mindset, I help organizations eliminate inefficiencies and identify how customers are using their products and services. This usually involves solving problems with customer engagement, churn, operating expenses, or productivity.
+With this data driven mindset, I help software companies eliminate inefficiencies and identify how customers are using their products and services. Whether you suffer from problems with customer engagement, churn, operating expenses, or productivity, [we can work together](/contact/) to devise a solution. When your data starts talking, I’m the one you want listening.<!-- more -->
 
 As a skilled developer and analyst, I specialize in collecting and interpreting business [data](/tagged/data/) to uncover a path to increased profitability. I've worked with Fortune 500 companies, NGOs, and startups alike to build business intelligence systems, automated reporting solutions, and interactive dashboards.
-
-While you're here, feel free to browse through [my project portfolio](/portfolio/), check out [my blog](/blog/), or learn more about [me and this site](/about/). If you have any questions or would like to discuss a speaking or consulting engagement, please [contact me](/contact/) for more info.<!-- more -->
 
 As part of my service offerings, I can help you answer questions such as the following:
 
