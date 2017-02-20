@@ -3,6 +3,7 @@ include _mixins/navbar
 include _mixins/aside
 include _mixins/utils
 include _mixins/github-card
+include _mixins/form
 
 block title
   include _partials/title
@@ -11,12 +12,12 @@ block nav
   +navbar(page.name)
 
 block content
-  - var collection = projects
+  - var collection = portfolio
   include _partials/collection-breadcrumb
 
   #category
     h1(class='category-title non-mobile')= page.title
-    .projects
+    .portfolio
       div(class='category-tags non-mobile')
         +list-tags(tags_by_collection(collection))
 
@@ -30,6 +31,7 @@ block content
 
 block aside
   aside#aside
+    +subscription(collection, 'index')
     +get-featured(collection, collection.count)
     +get-recent(collection, collection.count)
     +get-random(collection, collection.count)

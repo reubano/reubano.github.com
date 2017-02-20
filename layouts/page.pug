@@ -2,6 +2,7 @@ extends base
 include _mixins/navbar
 include _mixins/aside
 include _mixins/utils
+include _mixins/form
 
 block nav
   +navbar(page.title)
@@ -27,6 +28,8 @@ block content
 
 block aside
   aside#aside
+    +subscription(blog, 'page')
+
     each category in collections
       if category.show
         +get-featured(category, category.count)

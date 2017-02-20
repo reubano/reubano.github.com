@@ -14,7 +14,7 @@ With this data driven mindset, I help organizations eliminate inefficiencies and
 
 As a skilled developer and analyst, I specialize in collecting and interpreting business [data](/tagged/data/) to uncover a path to increased profitability. I've worked with Fortune 500 companies, NGOs, and startups alike to build business intelligence systems, automated reporting solutions, and interactive dashboards.
 
-While you're here, feel free to browse through [my project portfolio](/projects/), check out [my blog](/blog/), or learn more about [me and this site](/about/). If you have any questions or would like to discuss a speaking or consulting engagement, please [contact me](/contact/) for more info.<!-- more -->
+While you're here, feel free to browse through [my project portfolio](/portfolio/), check out [my blog](/blog/), or learn more about [me and this site](/about/). If you have any questions or would like to discuss a speaking or consulting engagement, please [contact me](/contact/) for more info.<!-- more -->
 
 As part of my service offerings, I can help you answer questions such as the following:
 

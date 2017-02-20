@@ -2,6 +2,7 @@ extends base
 include _mixins/navbar
 include _mixins/aside
 include _mixins/utils
+include _mixins/form
 
 block nav
   +navbar(page.collection)
@@ -47,5 +48,6 @@ block content
 
 block aside
   aside#aside
+    +subscription(blog)
     +get-related(blog.count)
     +get-featured(blog, blog.count)

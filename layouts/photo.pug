@@ -2,6 +2,7 @@ extends base
 include _mixins/navbar
 include _mixins/aside
 include _mixins/utils
+include _mixins/form
 
 block nav
   +navbar(gallery.name)
@@ -55,6 +56,7 @@ block content
 
 block aside
   aside#aside
+    +subscription(gallery)
     +get-related(gallery.count)
     +get-featured(gallery, gallery.count)
     +get-recent(gallery, gallery.count)

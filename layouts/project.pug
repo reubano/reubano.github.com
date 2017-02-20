@@ -2,9 +2,10 @@ extends base
 include _mixins/navbar
 include _mixins/aside
 include _mixins/utils
+include _mixins/form
 
 block nav
-  +navbar(projects.name)
+  +navbar(portfolio.name)
 
 block title
   include _partials/title
@@ -19,7 +20,7 @@ block content
       a(href=site.url)= site.title
 
     li
-      a(href=url_for(projects.name))= projects.title
+      a(href=url_for(portfolio.name))= portfolio.title
 
     li= page.title
 
@@ -48,6 +49,7 @@ block content
 
 block aside
   aside#aside
-    +get-related(projects.count)
-    +get-featured(projects, projects.count)
-    +get-recent(projects, projects.count)
+    +subscription(portfolio)
+    +get-related(portfolio.count)
+    +get-featured(portfolio, portfolio.count)
+    +get-recent(portfolio, portfolio.count)

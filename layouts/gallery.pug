@@ -2,6 +2,7 @@ extends base
 include _mixins/navbar
 include _mixins/aside
 include _mixins/utils
+include _mixins/form
 
 block title
   include _partials/title
@@ -31,6 +32,7 @@ block content
 
 block aside
   aside#aside
+    +subscription(collection, 'index')
     +get-featured(collection, collection.count, 'datetaken')
     +get-recent(collection, collection.count, 'datetaken')
     +get-random(collection, collection.count, 'datetaken')

@@ -93,7 +93,7 @@ collectionConfig =
     sortBy: 'date'
     reverse: true
     metadata:
-      singular: 'post'
+      singular: 'article'
       plural: 'posts'
       title: 'blog'
       show: true
@@ -131,13 +131,13 @@ collectionConfig =
       title: 'gallery'
       show: true
       count: 6
-  projects:
+  portfolio:
     sortBy: 'updated'
     reverse: true
     metadata:
       singular: 'project'
       plural: 'projects'
-      title: 'projects'
+      title: 'portfolio'
       show: true
       count: 5
 
@@ -162,11 +162,11 @@ paginationConfig =
     layout: 'gallery.pug'
     path: 'gallery/page/:num/index.html'
     pageMetadata: title: 'gallery', name: 'gallery'
-  projects:
+  portfolio:
     perPage: 10
-    layout: 'projects.pug'
-    path: 'projects/page/:num/index.html'
-    pageMetadata: title: 'projects', name: 'projects'
+    layout: 'portfolio.pug'
+    path: 'portfolio/page/:num/index.html'
+    pageMetadata: title: 'portfolio', name: 'portfolio'
   tagz:
     perPage: 12
     layout: 'tagged.pug'
@@ -307,7 +307,7 @@ app = new Metalsmith(DIR)
     source: 'data'
     extract: gallery: 'photoset.photo'
     enrich:
-      projects: [{field: 'tags', func: projEnrichFunc}]
+      portfolio: [{field: 'tags', func: projEnrichFunc}]
       gallery: [
         {field: 'location', func: (entry) -> reverseGeoCode(entry).location}
         {field: 'country', func: (entry) -> reverseGeoCode(entry).country}
@@ -315,12 +315,12 @@ app = new Metalsmith(DIR)
         {field: 'description', func: (entry) -> ''}]
 
     filter:
-      projects: [
+      portfolio: [
         {field: 'fork', op: 'is', value: false},
         {field: 'description', op: 'not in', value: 'code.google.com'}]
 
     pick:
-      projects: [
+      portfolio: [
         'id', 'name', 'html_url', 'description', 'fork', 'homepage',
         'size', 'watchers', 'forks', 'created_at', 'updated_at', 'language',
         'stargazers_count', 'open_issues', 'tags']
@@ -365,7 +365,7 @@ app = new Metalsmith(DIR)
     groupByMonth: true
     sortBy: 'date'
     reverse: true
-    collections: ['projects', 'blog']
+    collections: ['portfolio', 'blog']
   .use time plugin: 'archive'
   .use permalinks
     pattern: ':title'
@@ -378,7 +378,7 @@ app = new Metalsmith(DIR)
       {match: {collection: 'gallery'}, pattern: 'gallery/:id'}
       {match: {collection: 'family'}, pattern: 'family/:id'}
       {match: {collection: 'friends'}, pattern: 'friends/:id'}
-      {match: {collection: 'projects'}, pattern: 'projects/:title'}
+      {match: {collection: 'portfolio'}, pattern: 'portfolio/:title'}
       {match: {collection: 'tagz'}, pattern: 'tagged/:slug'}
       {match: {collection: 'archive'}, pattern: 'archive/:year'}
     ]

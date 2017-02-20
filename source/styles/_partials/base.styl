@@ -71,11 +71,24 @@ table
   button($inverse-button-color, 'large', $inverse-button-font-color)
   hover-color($inverse-button-hover-color)
 
-input
-  autofill($autofill-bg-color, $autofill-font-color)
+.disabled
+  button-disabled()
 
 +html5-inputs()
   input()
+  font-size $font-size
+
+input
+  autofill($autofill-bg-color, $autofill-font-color)
+
+.field
+  field: left
+
+form .success
+  input-success()
+
+form .error
+  input-error()
 
 label
   label()
@@ -281,6 +294,9 @@ section
 .block
   display block
   width 100%
+
+.inline
+  display inline-block
 
 .area
   area()
