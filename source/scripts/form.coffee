@@ -1,16 +1,6 @@
 utils = require './utils'
 
-# API_BASE = 'api.nerevu.com'
-API_BASE = '127.0.0.1:5000'
-
 # http://jdp.org.uk/ajax/2015/05/20/ajax-forms-without-jquery.html
-
-getRequest = ->
-  request = new XMLHttpRequest()
-  request.open 'POST', "//#{API_BASE}/subscription", true
-  request.setRequestHeader 'accept', 'application/json'
-  request
-
 listenToRequest = (request, form, statusMessage, button, curText) ->
   request.onreadystatechange = ->
     if request.readyState is 4 and 300 > request.status >= 200
@@ -38,6 +28,7 @@ listenToRequest = (request, form, statusMessage, button, curText) ->
 module.exports =
   main: ->
     form = document.getElementById 'subscription-form'
+    apiInput = document.getElementById 'api-url'
 
     if form
       button = form.children[5].firstElementChild
@@ -50,7 +41,7 @@ module.exports =
         if not form.classList.contains('disabled')
           button.textContent = 'Loading...'
           utils.addClass button, 'disabled'
-          request = getRequest()
+          request = utils.ajax "//#{apiInput.value}/subscription", 'POST'
           event.preventDefault()
           form.appendChild(statusMessage)
           formData = new FormData(form)

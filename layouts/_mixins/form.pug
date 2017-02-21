@@ -18,9 +18,8 @@ mixin subscription(category, type)
 
     div.hidden
       input(type='text', name='honey')
-
-    div.hidden
       input(type='text', name='list', value=category.name)
+      input#api-url(type='text', name='url', value=site.api)
 
     p
       label Email:
