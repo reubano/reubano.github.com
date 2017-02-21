@@ -1,12 +1,12 @@
 ---
-title: projects
-layout: projects.pug
-name: projects
+title: portfolio
+layout: portfolio.pug
+name: portfolio
 json_files:
   source: [reubano-repos, nerevu-repos]
-  pattern: projects/:name
+  pattern: portfolio/:name
   layout: project.pug
-  collection: projects
+  collection: portfolio
 ---
 
 

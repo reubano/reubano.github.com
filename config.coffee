@@ -1,7 +1,11 @@
+mode = process.env.NODE_ENV
+prod = mode is 'production'
+
 URLS =
   gh: 'https://reubano.xyz'
   netlify: 'https://reubano.xyz'
   local: 'http://localhost:8080'
+  api: if prod then 'api.nerevu.com' else '127.0.0.1:5000'
 
 tags = [
   'programming', 'data', 'finance', 'technology', 'photography',  'travel',
@@ -11,8 +15,8 @@ tags = [
   'restful api', 'flask', 'node', 'coffeescript']
 
 module.exports =
-  mode: process.env.NODE_ENV
-  prod: process.env.NODE_ENV is 'production'
+  mode: mode
+  prod: prod
   serve: process.env.SERVE
   hidden: ['friends', 'family']
   site:
@@ -20,12 +24,14 @@ module.exports =
     author: 'Reuben Cummings'
     email: 'reubano@gmail.com'
     title: 'Reuben on Data'
-    subtitle: 'musings of a data wrangler'
+    subtitle: 'musings of a data whisperer'
     url: URLS[process.env.SITE]
+    api: URLS.api
     version: '0.0.4'
 
     description: 'The personal website of Reuben Cummings covering' +
-      ' programming, data, finance, technology, photography, and travel'
+      ' programming, data, finance, technology, photography, and travel.' +
+      ' When your data starts talking, I’m the one you want listening.'
 
     tags: tags
     keywords: tags.join ', '

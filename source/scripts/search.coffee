@@ -7,17 +7,16 @@ pl_count = document.getElementById 'plugin-list-count'
 ps_input = document.getElementById 'plugin-search-input'
 
 # http://stackoverflow.com/questions/16991341/json-parse-file-path
-request = new XMLHttpRequest()
-# request.open('GET', '/searchIndex.json')
+# request = utils.ajax '/searchIndex.json'
 # request.send(null)
 
-request.onreadystatechange = ->
-  if request.readyState is 4 and request.status is 200
-    index = JSON.parse(request.responseText)
-    idx = lunr.Index.load(index)
-  else
-    console.log 'error loading searchIndex.json'
-    console.log request
+# request.onreadystatechange = ->
+#   if request.readyState is 4 and request.status is 200
+#     index = JSON.parse(request.responseText)
+#     idx = lunr.Index.load(index)
+#   else
+#     console.log 'error loading searchIndex.json'
+#     console.log request
 
 updateCount = (results) ->
   count = results.length

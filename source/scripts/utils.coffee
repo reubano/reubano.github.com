@@ -39,3 +39,9 @@ module.exports =
       height
     else
       0
+
+  ajax: (url, method='GET') ->
+    request = new XMLHttpRequest()
+    request.open method, url, true
+    request.setRequestHeader 'accept', 'application/json'
+    request

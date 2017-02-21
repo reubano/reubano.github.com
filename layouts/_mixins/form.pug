@@ -1,0 +1,35 @@
+mixin subscription(category, type)
+  if type == 'index'
+    - var adjective = 'these'
+    - var noun = category.plural
+    - var offer = category.plural + ' like these'
+  else if type == 'page'
+    - var adjective = 'my'
+    - var noun = category.name
+    - var offer = 'awesome ' + category.plural
+  else
+    - var adjective = 'this'
+    - var noun = category.singular
+    - var offer = category.plural + ' like this'
+
+  form.aside(name=category.name, id='subscription-form')
+    h3 Do you like #{adjective} #{noun}?
+    p Enter your email to get new <b>#{category.plural}</b> from the <b>Reuben on Data #{category.name}</b> delivered straight to your inbox!
+
+    div.hidden
+      input(type='text', name='honey')
+      input(type='text', name='list', value=category.name)
+      input#api-url(type='text', name='url', value=site.api)
+
+    p
+      label Email:
+      input(type='text', name='email', placeholder='name@example.com', required)
+      button(class='tablet inline', type='submit') Yes, send me #{offer}!
+
+    p
+      label
+        input(type='checkbox', name='swag', value='guide')
+        small &nbsp;Also send me the free guide <em>You Might Not Need Pandas</em>.
+
+    p.non-tablet
+      button.block(type='submit') Yes, send me #{offer}!

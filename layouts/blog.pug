@@ -2,6 +2,7 @@ extends base
 include _mixins/navbar
 include _mixins/aside
 include _mixins/utils
+include _mixins/form
 include _mixins/blog-excerpt
 
 block title
@@ -30,6 +31,7 @@ block content
 
 block aside
   aside#aside
+    +subscription(collection, 'index')
     +get-featured(collection, collection.count)
 
 block paginator
