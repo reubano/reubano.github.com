@@ -31,7 +31,7 @@ module.exports =
     apiInput = document.getElementById 'api-url'
 
     if form
-      button = form.children[5].firstElementChild
+      button = form.children[4].firstElementChild
       curText = button.textContent
       statusMessage = document.createElement('div')
       statusMessage.className = 'status'

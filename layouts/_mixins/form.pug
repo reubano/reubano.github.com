@@ -26,10 +26,12 @@ mixin subscription(category, type)
       input(type='email', name='email', placeholder='name@example.com', required)
       button(class='tablet inline', type='submit') Yes, send me #{offer}!
 
-    p
-      label
-        input(type='checkbox', name='swag', value='guide')
-        small &nbsp;Also send me the free guide <em>You Might Not Need Pandas</em>.
+    //- p
+    //-   label
+    //-     input(type='checkbox', name='swag', value='guide')
+    //-     small &nbsp;Also send me the free guide <em>You Might Not Need Pandas</em>.
 
     p.non-tablet
       button.block(type='submit') Yes, send me #{offer}!
+
+    small Your security is our top priority. We will <b>never</b> sell or share your email address with 3rd parties.
