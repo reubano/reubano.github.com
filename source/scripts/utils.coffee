@@ -40,8 +40,9 @@ module.exports =
     else
       0
 
-  ajax: (url, method='GET') ->
-    request = new XMLHttpRequest()
-    request.open method, url, true
-    request.setRequestHeader 'accept', 'application/json'
-    request
+  ajax: (url, method='GET', timeout=4000) ->
+    xhr = new XMLHttpRequest()
+    xhr.open method, url, true
+    xhr.setRequestHeader 'accept', 'application/json'
+    xhr.timeout = timeout
+    xhr

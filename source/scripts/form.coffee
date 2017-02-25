@@ -1,28 +1,33 @@
 utils = require './utils'
 
+resetButton = (message, form, statusMessage, button, curText, err) ->
+  button.textContent = curText
+  utils.removeClass button, 'disabled'
+  formClass = if err then 'error' else 'success'
+  utils.addClass form, formClass
+  statusMessage.innerHTML = message
+  # form.insertAdjacentHTML('beforeend', message)
+
 # http://jdp.org.uk/ajax/2015/05/20/ajax-forms-without-jquery.html
 listenToRequest = (request, form, statusMessage, button, curText) ->
+  request.ontimeout = ->
+    message = 'Whoops! There was a problem subscribing your email.'
+    message += ' The subscription service timed out.'
+    resetButton message, form, statusMessage, button, curText, true
+
   request.onreadystatechange = ->
     if request.readyState is 4 and 300 > request.status >= 200
       message = 'Thank you! Please check your inbox for a confirmation message.'
-      button.textContent = curText
-      utils.removeClass button, 'disabled'
-      utils.addClass form, 'success'
     else if request.readyState is 4
+      err = true
       jsonResponse = JSON.parse request.responseText
       message = 'Whoops! There was a problem subscribing your email.'
 
       if jsonResponse.suggestion
         message += " #{jsonResponse.message}"
 
-      button.textContent = curText
-      utils.removeClass button, 'disabled'
-      utils.addClass form, 'error'
-
     if message
-      console.log message
-      statusMessage.innerHTML = message
-      # form.insertAdjacentHTML('beforeend', message)
+      resetButton message, form, statusMessage, button, curText, err
 
 
 module.exports =
