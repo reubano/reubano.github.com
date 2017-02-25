@@ -2,10 +2,10 @@ mode = process.env.NODE_ENV
 prod = mode is 'production'
 
 URLS =
-  gh: 'https://reubano.xyz'
-  netlify: 'https://reubano.xyz'
+  gh: 'https://www.reubano.xyz'
+  netlify: 'https://www.reubano.xyz'
   local: 'http://localhost:8080'
-  api: if prod then 'api.nerevu.com' else '127.0.0.1:5000'
+  api: if prod then 'blog-subs-api.herokuapp.com' else 'localhost:5000'
 
 tags = [
   'programming', 'data', 'finance', 'technology', 'photography',  'travel',
