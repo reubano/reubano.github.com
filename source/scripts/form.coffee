@@ -17,21 +17,21 @@ resetButton = (message, form, statusMessage, buttons, curText, err) ->
   # form.insertAdjacentHTML('beforeend', message)
 
 # http://jdp.org.uk/ajax/2015/05/20/ajax-forms-without-jquery.html
-listenToRequest = (request, form, statusMessage, buttons, curText) ->
-  request.onerror = ->
+listenToRequest = (xhr, form, statusMessage, buttons, curText) ->
+  xhr.onerror = ->
     message = 'Could not connect to the subscription service.'
     resetButton message, form, statusMessage, buttons, curText, true
 
-  request.ontimeout = ->
+  xhr.ontimeout = ->
     message = 'The subscription service timed out.'
     resetButton message, form, statusMessage, buttons, curText, true
 
-  request.onreadystatechange = ->
-    if request.readyState is 4 and 300 > request.status >= 200
+  xhr.onreadystatechange = ->
+    if 300 > xhr.status >= 200
       message = 'Thank you! Please check your inbox for a confirmation message.'
-    else if request.readyState is 4
+    else
       err = true
-      responseText = request.responseText
+      responseText = xhr.responseText
 
       if responseText
         jsonResponse = JSON.parse responseText
@@ -39,7 +39,7 @@ listenToRequest = (request, form, statusMessage, buttons, curText) ->
       else
         message = 'The subscription service returned an empty response.'
 
-    if message
+    if xhr.readyState is 4
       resetButton message, form, statusMessage, buttons, curText, err
 
 
@@ -64,11 +64,11 @@ module.exports =
             button.textContent = 'Loading...'
             utils.addClass button, 'disabled'
 
-          request = utils.ajax "//#{apiInput.value}/subscription", 'POST'
+          xhr = utils.ajax "//#{apiInput.value}/subscription", 'POST'
           event.preventDefault()
           formData = new FormData(form)
-          request.send formData
-          listenToRequest request, form, statusMessage, buttons, curText
+          xhr.send formData
+          listenToRequest xhr, form, statusMessage, buttons, curText
     else if form
       console.log 'FormData not supported'
     else
