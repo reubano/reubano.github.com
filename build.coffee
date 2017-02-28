@@ -402,8 +402,7 @@ app = new Metalsmith(DIR)
   .use feed
     collection: 'blog'
     limit: 20
-    destination: config.laicos.rss.path
-    postDescription: (file) -> file.less or file.excerpt or file.contents or ''
+    destination: config.paths.rss
   .use time plugin: 'feed'
   .use sitemap
     hostname: config.site.url

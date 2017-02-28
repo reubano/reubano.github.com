@@ -6,11 +6,11 @@ _ = helpers._
 
 module.exports = (options) ->
   options = options or {}
-  limit = options.limit or 20
+  limit = options.limit ? 20
   destination = options.destination or 'rss.xml'
   collectionName = options.collection
   postDescription = options.postDescription or (file) ->
-    file.description or file.less or file.excerpt or file.contents
+    file.html or file.description or file.less or file.excerpt or ''
 
   postCustomElements = options.postCustomElements
 

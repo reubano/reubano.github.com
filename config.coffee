@@ -42,7 +42,7 @@ module.exports =
     js: 'scripts'
     source: 'source'
     dest: 'public'
-    rss: 'feed.xml'
+    rss: '/feed.xml'
     optimize: '//res.cloudinary.com/reubano/image/fetch/f_auto,q_auto'
 
   laicos:
@@ -65,7 +65,7 @@ module.exports =
       path: '//angel.co/reubano'
       title: 'AngelList'
     rss:
-      path: '/feed.xml'
+      path: '//feeds.feedburner.com/reubano'
       title: 'RSS'
     flickr:
       user: 'reubano'
