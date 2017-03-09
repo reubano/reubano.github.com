@@ -5,7 +5,15 @@ helpers = require '../helpers'
 marked = helpers.marked
 _ = helpers._
 
+renderer = new marked.Renderer()
+
+# add an embedded anchor tag like on GitHub
+renderer.heading = (text, level) ->
+  slug = helpers.slug text
+  "<h#{level} class='heading'>#{text}<a title='#{text}' id='#{slug}' class='anchor' href='##{slug}' aria-hidden='true'></a></h#{level}>"
+
 DEFAULTS =
+  renderer: renderer
   smartypants: true
   highlight: (code, lang) -> hljs.highlight(lang, code).value
 
