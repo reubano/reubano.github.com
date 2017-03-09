@@ -16,7 +16,7 @@ getImgTag = (opts) ->
     description = photo.description?._content
     src = helpers.getSrc photo, 768, opts
     srcset = helpers.getSrcset photo, opts
-    "<div class='photo'><img class='fit' sizes='#{sizes}' srcset='#{srcset}' src='#{src}' title='#{photo.title}'><figcaption>#{description}</figcaption></div>"
+    "<div class='photo'><img class='fit' sizes='#{sizes}' srcset='#{srcset}' src='#{src}' title='#{photo.title}'><figcaption>#{description} (<a href='#{src}' target='_blank' rel='noopener noreferrer'>view original</a>)</figcaption></div>"
   else
     src = helpers.getSrc {}, 768, opts
     srcset = helpers.getSrcset {width: 1024}, opts

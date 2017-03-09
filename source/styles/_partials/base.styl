@@ -125,7 +125,7 @@ em
   color tint($font-color, 5%)
   opacity 0.85
 
-h1 a, h2 a, h4 a, p a, li a, span a, a.link
+h1 a, h2 a, h4 a, p a, li a, span a, figcaption a, a.link, a.anchor
   link($link-color, 'glow')
 
 .inverse a
@@ -144,6 +144,16 @@ nav a
 nav a.active
   color $nav-active-color
   bold()
+
+.heading:hover .anchor
+  display inline-block
+
+.anchor:before
+  content '#'
+
+.anchor
+  margin-left 10px
+  display none
 
 a:visited
   color $link-visited-color

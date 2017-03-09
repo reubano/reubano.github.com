@@ -33,14 +33,14 @@ block content
       a(href=url_for(href))= postdate
       |&nbsp;~ #{readtime} minute read
 
+    .tags
+      +list-tags(page.tags)
+
     div(class='content one-col non-hd', itemprop='articleBody')
       != page.html
 
     div(class='content two-cols hd', itemprop='articleBody')
       != page.html
-
-    .tags
-      +list-tags(page.tags)
 
     footer.article-footer
       include _partials/post-updated
