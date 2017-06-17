@@ -24,6 +24,7 @@
   },
   "scripts": {
     "deploy": "gh-pages-deploy",
+    "update": "./update",
     "clean": "rimraf README.md source plugins layouts data package.json *.coffee",
     "start": "SITE=$npm_package_config_site SERVE=$npm_package_config_serve coffee build.coffee",
     "start:gh": "NODE_ENV=production npm run start --reubano:site=gh",
