@@ -357,7 +357,7 @@ app = new Metalsmith(DIR)
   .use tags
     metadataKey: 'tagz'
     plural: 'tagz'
-    sortBy: 'date'
+    sortBy: 'updated'
     reverse: true
     filter: (tags) -> not _.intersection(tags, config.hidden).length
   .use time plugin: 'tags'
