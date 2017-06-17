@@ -225,7 +225,8 @@ DIR = __dirname
 
 projEnrichFunc = (entry) ->
   tags = if entry.language then [entry.language.toLowerCase()] else []
-  description = entry.description.toLowerCase().split(' ')
+  _description = entry.description.toLowerCase().split(' ')
+  description = (d.replace(')', '').replace('(', '') for d in _description)
 
   vizList = [
     'visualization', 'viz', 'visualizer', 'graph', 'chart', 'displays', '4w',
@@ -234,10 +235,14 @@ projEnrichFunc = (entry) ->
   if _.intersection(vizList, description).length
     tags.push 'visualization'
 
-  if _.intersection(['hdx', 'ckan'], description).length
+  if (
+    _.intersection(['hdx', 'ckan'], description).length or
+    ~entry.name.toLowerCase().indexOf('hdx') or
+    ~entry.name.toLowerCase().indexOf('scraper')
+  )
     tags.push 'open data'
 
-  if _.intersection(['api'], description).length
+  if ~entry.name.toLowerCase().indexOf('api')
     tags.push 'api'
 
   if _.intersection(['stock', 'portfolio', 'ofx', 'qif'], description).length
