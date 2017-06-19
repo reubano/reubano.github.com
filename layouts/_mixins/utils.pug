@@ -32,11 +32,11 @@ mixin get-link(post, size='sm', thumbnail, long, link)
   else if post.title
     a(href=url_for(urlRef.path))= post.title
 
-mixin list-tags(tags, size)
+mixin list-tags(tags, size, minCount=1)
   if tagz && tags && tags.length
     ul(class='inline-list tag-list')
       for tag in tagz.data
-        if tags.indexOf(tag.name) > -1
+        if (tags.indexOf(tag.name) > -1) && (tag.sanitizedLength >= minCount)
           - var tagURL = url_for(tag.path)
 
           li
