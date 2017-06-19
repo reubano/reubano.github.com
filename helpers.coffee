@@ -133,6 +133,11 @@ module.exports =
 
     sorted.filter (item) -> item.title isnt article.title
 
+  getMentionedProject: (portfolio, photo) ->
+    _.find portfolio.data, (project) ->
+      # flickr removes non-alphanum chars from tags
+      slug(project.title, replacement: '') in photo.tags
+
   getMentionedPhotos: (gallery, project) ->
     # TODO: filter gallery for screenshot album
     # flickr removes non-alphanum chars from tags
