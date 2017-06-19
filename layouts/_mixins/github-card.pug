@@ -12,16 +12,26 @@ mixin github-card(project)
     .content
       .mobile
         +get-mentioned-photos(1, project, 'lg', false, true)
+
+      .mobile
+        if project.description
+          p= project.description
+        else
+          p= project.contents
+
+        if project.tags
+          +list-tags(project.tags)
+
       .non-mobile
         +get-mentioned-photos(1, project, 'sm', true, true)
 
-      if project.description
-        p= project.description
-      else
-        p= project.contents
+        if project.description
+          p= project.description
+        else
+          p= project.contents
 
-      if project.tags
-        +list-tags(project.tags)
+        if project.tags
+          +list-tags(project.tags)
 
     .footer
       span.status <strong>#{project.stargazers_count || 0}</strong> Stars
