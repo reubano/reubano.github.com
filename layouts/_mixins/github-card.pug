@@ -21,5 +21,5 @@ mixin github-card(project)
         +list-tags(project.tags)
 
     .footer
-      span.status <strong>#{project.forks || 0}</strong> Forks
       span.status <strong>#{project.stargazers_count || 0}</strong> Stars
+      span.status <strong>#{project.forks || 0}</strong> Forks
