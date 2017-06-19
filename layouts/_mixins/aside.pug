@@ -17,7 +17,7 @@ mixin truncate-posts(posts, count, name, size='sm', thumbnail=true, force, link)
     - var post = truncated[0]
     - var thumbnail = (thumbnail && force) ? 'true' : false
 
-    if thumbnail
+    if thumbnail || force
       +get-link(post, size, thumbnail, false, link)
     else if post.datetaken && post.title
       h4

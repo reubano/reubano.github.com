@@ -10,7 +10,10 @@ mixin github-card(project)
       a(class='button laptop', href=project.html_url, target='_blank', rel='noopener noreferrer') ★ Star
 
     .content
-      +get-mentioned-photos(1, project, 'sm', true, true)
+      .mobile
+        +get-mentioned-photos(1, project, 'lg', false, true)
+      .non-mobile
+        +get-mentioned-photos(1, project, 'sm', true, true)
 
       if project.description
         p= project.description
