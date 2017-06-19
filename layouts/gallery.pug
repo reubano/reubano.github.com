@@ -20,7 +20,7 @@ block content
     .gallery
       if page.name == 'gallery'
         div(class='category-tags non-mobile')
-          +list-tags(tags_by_collection(collection))
+          +list-tags(tags_by_collection(collection), null, 2)
 
       .category-items
         if collection.pagination

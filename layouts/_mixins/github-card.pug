@@ -1,3 +1,4 @@
+include aside
 include utils
 
 mixin github-card(project)
@@ -9,6 +10,8 @@ mixin github-card(project)
       a(class='button laptop', href=project.html_url, target='_blank', rel='noopener noreferrer') ★ Star
 
     .content
+      +get-mentioned-photos(1, project, 'sm', true, true)
+
       if project.description
         p= project.description
       else
@@ -18,5 +21,5 @@ mixin github-card(project)
         +list-tags(project.tags)
 
     .footer
-      span.status <strong>#{project.forks || 0}</strong> Forks
       span.status <strong>#{project.stargazers_count || 0}</strong> Stars
+      span.status <strong>#{project.forks || 0}</strong> Forks

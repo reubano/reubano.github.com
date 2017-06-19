@@ -13,8 +13,6 @@ block title
 block content
   - var postdate = format_date(page.date, 'MMM D, YYYY')
   - var postISO = page.date.toISOString()
-  - var month = format_date(page.date, 'MM')
-  - var href = archive.name + '/' + page.date.getFullYear() + '/' + month
 
   ul.breadcrumb
     li.non-mobile
@@ -28,8 +26,8 @@ block content
   article.article(itemscope itemtype='http://schema.org/Article')
     h2.non-mobile(itemprop='name')= page.title
     p(class='small non-mobile', itemprop='datePublished', content=postISO)
-      | taken by #{site.author} on&nbsp;
-      a(href=url_for(href))= postdate
+      | taken by #{site.author} on&nbsp; #{postdate}
+
       if page.location
         |&nbsp;in #{page.location}
 
@@ -40,8 +38,8 @@ block content
         figcaption= page.description
 
     p(class='small mobile', itemprop='datePublished', content=postISO)
-      | taken by #{site.author} on&nbsp;
-      a(href=url_for(href))= postdate
+      | taken by #{site.author} on&nbsp; #{postdate}
+
       if page.location
         |&nbsp;in #{page.location}
 

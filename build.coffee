@@ -67,6 +67,8 @@ templateHelpers =
   get_last_page: helpers.getLastPage
   get_first_page: helpers.getFirstPage
   get_related: helpers.getRelated
+  get_mentioned_photos: helpers.getMentionedPhotos
+  get_mentioned_project: helpers.getMentionedProject
   get_src: helpers.getSrc
   get_srcset: helpers.getSrcset
   get_featured: helpers.getFeatured

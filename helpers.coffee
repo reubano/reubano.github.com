@@ -133,6 +133,19 @@ module.exports =
 
     sorted.filter (item) -> item.title isnt article.title
 
+  getMentionedProject: (portfolio, photo) ->
+    _.find portfolio.data, (project) ->
+      # flickr removes non-alphanum chars from tags
+      slug(project.title, replacement: '') in photo.tags
+
+  getMentionedPhotos: (gallery, project) ->
+    # TODO: filter gallery for screenshot album
+    # flickr removes non-alphanum chars from tags
+    sanitized = slug(project.title, replacement: '')
+
+    gallery.data.filter (photo) ->
+      (sanitized in photo.tags) and ('mockup' not in photo.tags)
+
   tagsByCollection: (category) -> _.uniq _.flatMap category.data, 'tags'
   getFeatured: getFeatured
   getRecent: getRecent

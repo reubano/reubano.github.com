@@ -2,6 +2,7 @@
 - var source = '//www.flickr.com/photos/' + user + '/' + page.id
 - var latlon = page.latitude + ',' + page.longitude
 - var gMapURL = 'https://www.google.com/maps/place/'
+- var project = get_mentioned_project(locals.portfolio, page)
 
 .meta
   ul.tl
@@ -16,17 +17,32 @@
 
     if page.aperture
       li ƒ/#{page.aperture}
+
     if page.exposure
       li= page.exposure
+
     li= page.views
+
+    if project
+      li
+        a(href=url_for(project.path))= project.title
+
     li
       a(href=source, target='_blank', rel='noopener noreferrer') flickr
+
   ul.tl
     if page.location || (page.latitude && page.longitude)
       li location
+
     if page.aperture
       li aperture
+
     if page.exposure
       li exposure
+
     li views
+
+    if project
+      li project
+
     li source
