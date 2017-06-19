@@ -1,29 +1,32 @@
 include utils
 
-mixin truncate-posts(posts, count, name)
+mixin truncate-posts(posts, count, name, size='sm', thumbnail=true, force)
   - var truncated = posts.slice(0, count)
   - var gtOne = truncated.length && count && count > 1
 
   if gtOne && ['gallery', 'friends', 'family'].indexOf(name) > -1
     .gallery
       each post in truncated
-        +get-link(post, 'sm', true)
+        +get-link(post, size, thumbnail)
   else if gtOne
     ul.bordered-count
       each post in truncated
         li
-          +get-link(post, 'sm', true)
+          +get-link(post, size, thumbnail)
   else if truncated.length
     - var post = truncated[0]
+    - var thumbnail = (thumbnail && force) ? 'true' : false
 
-    if post.datetaken && post.title
+    if thumbnail
+      +get-link(post, size, thumbnail)
+    else if post.datetaken && post.title
       h4
         a(href=url_for(post.path))= post.title
 
-      +get-link(post)
+      +get-link(post, size, thumbnail)
     else
       h4
-        +get-link(post)
+        +get-link(post, size, thumbnail)
 
     if post.less
       p !{post.less.toString()}
@@ -44,6 +47,14 @@ mixin get-related(count)
 
   +pluralize('related', category, count)
     +truncate-posts(get_related(category, page), count, category.name)
+
+mixin get-mentioned(count, collection, curPage, size='sm', thumbnail=true, force)
+  -
+    var category = locals[collection]
+    var _page = curPage || page
+    var mentioned = get_mentioned(category, _page)
+
+  +truncate-posts(mentioned, count, category.name, size, thumbnail, force)
 
 mixin get-featured(category, count)
   +pluralize('featured', category, count)

@@ -133,6 +133,13 @@ module.exports =
 
     sorted.filter (item) -> item.title isnt article.title
 
+  getMentioned: (category, article) ->
+    # flickr removes non-alphanum chars from tags
+    sanitized = slug(article.title, replacement: '')
+
+    category.data.filter (item) ->
+      (sanitized in item.tags) and ('mockup' not in item.tags)
+
   tagsByCollection: (category) -> _.uniq _.flatMap category.data, 'tags'
   getFeatured: getFeatured
   getRecent: getRecent

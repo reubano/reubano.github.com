@@ -32,6 +32,9 @@ block content
       a(href=url_for(href))= postdate
       |&nbsp;in #{page.language || 'n/a'}
 
+    .mentioned
+      +get-mentioned(portfolio.count, 'gallery', page, 'lg', false)
+
     if page.description
       pullquote!= page.description
 
