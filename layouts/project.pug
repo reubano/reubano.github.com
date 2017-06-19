@@ -33,7 +33,7 @@ block content
       |&nbsp;in #{page.language || 'n/a'}
 
     .mentioned
-      +get-mentioned(portfolio.count, 'gallery', page, 'lg', false)
+      +get-mentioned-photos(portfolio.count, page, 'lg', false)
 
     if page.description
       pullquote!= page.description

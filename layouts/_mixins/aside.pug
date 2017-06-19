@@ -48,13 +48,13 @@ mixin get-related(count)
   +pluralize('related', category, count)
     +truncate-posts(get_related(category, page), count, category.name)
 
-mixin get-mentioned(count, collection, curPage, size='sm', thumbnail=true, force)
+mixin get-mentioned-photos(count, curPage, size='sm', thumbnail=true, force)
   -
-    var category = locals[collection]
-    var _page = curPage || page
-    var mentioned = get_mentioned(category, _page)
+    var gallery = locals.gallery
+    var project = curPage || page
+    var photos = get_mentioned_photos(gallery, project)
 
-  +truncate-posts(mentioned, count, category.name, size, thumbnail, force, project)
+  +truncate-posts(photos, count, gallery.name, size, thumbnail, force, project)
 
 mixin get-featured(category, count)
   +pluralize('featured', category, count)
