@@ -1,6 +1,6 @@
 include utils
 
-mixin truncate-posts(posts, count, name, size='sm', thumbnail=true, force)
+mixin truncate-posts(posts, count, name, size='sm', thumbnail=true, force, link)
   - var truncated = posts.slice(0, count)
   - var gtOne = truncated.length && count && count > 1
 
@@ -18,7 +18,7 @@ mixin truncate-posts(posts, count, name, size='sm', thumbnail=true, force)
     - var thumbnail = (thumbnail && force) ? 'true' : false
 
     if thumbnail
-      +get-link(post, size, thumbnail)
+      +get-link(post, size, thumbnail, false, link)
     else if post.datetaken && post.title
       h4
         a(href=url_for(post.path))= post.title
@@ -54,7 +54,7 @@ mixin get-mentioned(count, collection, curPage, size='sm', thumbnail=true, force
     var _page = curPage || page
     var mentioned = get_mentioned(category, _page)
 
-  +truncate-posts(mentioned, count, category.name, size, thumbnail, force)
+  +truncate-posts(mentioned, count, category.name, size, thumbnail, force, project)
 
 mixin get-featured(category, count)
   +pluralize('featured', category, count)
