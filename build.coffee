@@ -1,5 +1,6 @@
 path = require 'path'
 helpers = require './helpers'
+descriptions = require './data/descriptions'
 
 _ = helpers._
 moment = helpers.moment
@@ -225,7 +226,9 @@ paginationConfig =
 end = checkpoint 'set config', end
 DIR = __dirname
 
-projEnrichFunc = (entry) ->
+addLess = (entry) -> _.get descriptions, entry.name, ''
+
+addTags = (entry) ->
   tags = if entry.language then [entry.language.toLowerCase()] else []
   _description = entry.description.toLowerCase().split(' ')
   description = (d.replace(')', '').replace('(', '') for d in _description)
@@ -314,7 +317,9 @@ app = new Metalsmith(DIR)
     source: 'data'
     extract: gallery: 'photoset.photo'
     enrich:
-      portfolio: [{field: 'tags', func: projEnrichFunc}]
+      portfolio: [
+        {field: 'tags', func: addTags}
+        {field: 'less', func: addLess}]
       gallery: [
         {field: 'location', func: (entry) -> reverseGeoCode(entry).location}
         {field: 'country', func: (entry) -> reverseGeoCode(entry).country}
@@ -330,7 +335,7 @@ app = new Metalsmith(DIR)
       portfolio: [
         'id', 'name', 'html_url', 'description', 'fork', 'homepage',
         'size', 'watchers', 'forks', 'created_at', 'updated_at', 'language',
-        'stargazers_count', 'open_issues', 'tags']
+        'stargazers_count', 'open_issues', 'tags', 'less']
 
       gallery: [
         'id', 'title', 'views', 'datetaken', 'latitude', 'longitude', 'url_sq',

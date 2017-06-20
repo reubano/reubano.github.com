@@ -35,7 +35,7 @@ block content
     .mentioned
       +get-mentioned-photos(portfolio.count, page, 'lg', false)
 
-    if page.description
+    if page.less && page.description && page.less !== page.description
       pullquote!= page.description
 
     .content(itemprop='articleBody')
