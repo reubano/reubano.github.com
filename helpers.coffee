@@ -174,7 +174,8 @@ module.exports =
       when 'cloudinary'
         cloudinaryOpts = _.defaults opts, CLOUDINARY_DEFAULTS
         cloudinary.config cloudinaryOpts
-        srcOpts = _.assign {width}, cloudinaryOpts
+        _width = if width >= photo.width_o then photo.width_o else width
+        srcOpts = _.assign {width: _width}, cloudinaryOpts
         url = cloudinary.url(opts.location, srcOpts)
         url.replace(/^(https?):\/\//, '//')
       when 'local'
