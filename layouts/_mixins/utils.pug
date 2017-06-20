@@ -22,7 +22,7 @@ mixin get-link(post, size='sm', thumbnail, long, link)
       - var img_sizes = '(min-width: 640px) 50vw, 100vw'
       - var src = get_src(post, 640)
 
-    if !thumbnail && size == 'lg'
+    if !(thumbnail || link) && size == 'lg'
       img.fit(sizes=img_sizes, srcset=srcset, src=src, title=post.title)
     else
       a(href=url_for(urlRef.path), class=_class)
