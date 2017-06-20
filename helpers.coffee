@@ -163,14 +163,14 @@ module.exports =
     switch opts.source
       when 'flickr'
         if opts.optimize and width >= photo.width_o
-          "#{config.paths.optimize}/#{photo.url_o}"
+          url = "#{config.paths.optimize}/#{photo.url_o}"
         else if opts.optimize
-          "#{config.paths.optimize},w_#{width}/#{photo.url_o}"
+          url = "#{config.paths.optimize},w_#{width}/#{photo.url_o}"
         else if width >= photo.width_o
-          photo.url_o
+          url = photo.url_o
         else
           size = _.find _sizes, (s) -> photo[s.widthKey] >= width
-          photo[size.key]
+          url = photo[size.key]
       when 'cloudinary'
         cloudinaryOpts = _.defaults opts, CLOUDINARY_DEFAULTS
         cloudinary.config cloudinaryOpts
@@ -179,7 +179,9 @@ module.exports =
         url = cloudinary.url(opts.location, srcOpts)
         url.replace(/^(https?):\/\//, '//')
       when 'local'
-        "#{config.site.url}/#{config.paths.images}/#{photo}.#{opts.ext}"
+        url = "#{config.site.url}/#{config.paths.images}/#{photo}.#{opts.ext}"
+
+    url
 
   getSrcset: (photo, options) ->
     options = options or {}
@@ -191,22 +193,18 @@ module.exports =
 
         if opts.optimize
           base = config.paths.optimize
-          filtered = _.filter WIDTHS, (width) -> photo.width_o >= width
 
-          for width in filtered
+          for width in _.filter(WIDTHS, (width) -> photo.width_o >= width)
             srcsets.push "#{base},w_#{width}/#{photo.url_o} #{width}w"
         else
-          filtered = _.filter _sizes, (s) -> photo[s.key]
-
-          for f in filtered
+          for f in _.filter(_sizes, (s) -> photo[s.key])
             srcsets.push "#{photo[f.key]} #{photo[f.widthKey]}w"
       when 'cloudinary'
         srcsets = []
         cloudinaryOpts = _.defaults options, CLOUDINARY_DEFAULTS
         cloudinary.config cloudinaryOpts
-        filtered = _.filter WIDTHS, (width) -> photo.width >= width
 
-        for width in filtered
+        for width in _.filter(WIDTHS, (width) -> photo.width_o >= width)
           srcsetOpts = _.assign {width}, cloudinaryOpts
           url = cloudinary.url(opts.location, srcsetOpts)
           protocoless = url.replace(/^(https?):\/\//, '//')
