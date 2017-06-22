@@ -227,39 +227,13 @@ end = checkpoint 'set config', end
 DIR = __dirname
 
 addLess = (entry) -> _.get descriptions, entry.name, ''
+addFeatured = (entry) -> 'featured' in entry.topics
 
 addTags = (entry) ->
-  tags = if entry.language then [entry.language.toLowerCase()] else []
-  _description = entry.description.toLowerCase().split(' ')
-  description = (d.replace(')', '').replace('(', '') for d in _description)
+  tags = (tag for tag in entry.topics when tag isnt 'featured')
 
-  vizList = [
-    'visualization', 'viz', 'visualizer', 'graph', 'chart', 'displays', '4w',
-    '3w']
-
-  if _.intersection(vizList, description).length
-    tags.push 'visualization'
-
-  if (
-    _.intersection(['hdx', 'ckan'], description).length or
-    ~entry.name.toLowerCase().indexOf('hdx') or
-    ~entry.name.toLowerCase().indexOf('scraper')
-  )
-    tags.push 'open data'
-
-  if ~entry.name.toLowerCase().indexOf('api')
-    tags.push 'api'
-
-  if _.intersection(['stock', 'portfolio', 'ofx', 'qif'], description).length
-    tags.push 'finance'
-
-  if _.intersection(['application', 'app', 'apps', 'webapp'], description).length
-    tags.push 'app'
-
-  dataList = ['csv', 'json', 'data', 'analysis', 'processing']
-
-  if _.intersection(dataList, description).length
-    tags.push 'data'
+  if entry.language
+    tags.push helpers.slug entry.language
 
   tags
 
@@ -319,7 +293,8 @@ app = new Metalsmith(DIR)
     enrich:
       portfolio: [
         {field: 'tags', func: addTags}
-        {field: 'less', func: addLess}]
+        {field: 'less', func: addLess}
+        {field: 'featured', func: addFeatured}]
       gallery: [
         {field: 'location', func: (entry) -> reverseGeoCode(entry).location}
         {field: 'country', func: (entry) -> reverseGeoCode(entry).country}
@@ -335,7 +310,7 @@ app = new Metalsmith(DIR)
       portfolio: [
         'id', 'name', 'html_url', 'description', 'fork', 'homepage',
         'size', 'watchers', 'forks', 'created_at', 'updated_at', 'language',
-        'stargazers_count', 'open_issues', 'tags', 'less']
+        'stargazers_count', 'open_issues', 'tags', 'less', 'topics', 'featured']
 
       gallery: [
         'id', 'title', 'views', 'datetaken', 'latitude', 'longitude', 'url_sq',

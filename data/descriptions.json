@@ -40,7 +40,7 @@
   "kazeeki": "",
   "portfolio-maker": "",
   "prometheus": "Prometheus is a Flask powered web app that tells you how your stock portfolio has performed over time, gives insight into how to optimize your asset allocation, and monitors your portfolio for rebalancing or performance enhancing opportunities.",
-  "prometheus-api": "Prometheus-API is the Flask powered RESTful API behind Prometheus",
+  "prometheus-api": "Prometheus-API is the Flask powered RESTful API behind Prometheus, the stock portfolio allocation & analysis app.",
   "proposer": "",
   "redcross-viz": "",
   "riko": "riko is a pure Python library for analyzing and processing streams of structured data. riko has synchronous and asynchronous APIs, supports parallel execution, and is well suited for processing RSS feeds. riko also supplies a command-line interface for executing flows, i.e., stream processors aka workflows."

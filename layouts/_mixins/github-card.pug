@@ -7,7 +7,11 @@ mixin github-card(project)
       strong.name
         a(href=url_for(project.path))= project.title
         sup.language= project.language || 'n/a'
-      a(class='button laptop', href=project.html_url, target='_blank', rel='noopener noreferrer') ★ Star
+
+      if project.featured
+        span(title='featured project') &nbsp🏆
+
+      a(class='button laptop', href=project.html_url, target='_blank', rel='noopener noreferrer', title='view on GitHub') ★ Star
 
     .content
       .mobile

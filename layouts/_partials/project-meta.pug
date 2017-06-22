@@ -5,10 +5,10 @@
     li.non-mobile= page.forks || 0
     // li= page.version || '0.0.0'
     li
-      a(href=page.html_url, target='_blank', rel='noopener noreferrer') github
+      a(href=page.html_url, target='_blank', rel='noopener noreferrer', title='view on github') github
     if page.homepage
       li
-        a(href=page.homepage, target='_blank', rel='noopener noreferrer') view
+        a(href=page.homepage, target='_blank', rel='noopener noreferrer', title='view live site') view
   ul.tl
     li.mobile lang
     li.non-mobile language

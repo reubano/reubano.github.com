@@ -55,14 +55,14 @@ getMatch = (entry, pattern) ->
 _getFeatured = (category, filterby) ->
   item = category.data[0]
 
-  if item.views?
+  if item.featured?
+    ranked = _.filter category.data, (item) -> item.featured
+  else if item.views?
     ranked = _.sortBy category.data, (item) -> -item.views
   else if item.stargazers_count?
     ranked = _.sortBy category.data, (item) -> -item.stargazers_count
   else if item.comments?
     ranked = _.sortBy category.data, (item) -> -item.comments
-  else if item.featured?
-    ranked = _.filter category.data, (item) -> item.featured
   else
     ranked = _.sortBy category.data, (item) -> -item.date
 
