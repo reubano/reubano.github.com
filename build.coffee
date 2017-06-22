@@ -356,7 +356,10 @@ app = new Metalsmith(DIR)
   .use time plugin: 'image'
   .use markdown()
   .use time plugin: 'markdown'
-  .use stylus compress: false, use: [axis(), jeet()]
+  .use stylus
+    compress: false
+    use: [axis(), jeet()]
+    # debug: not config.prod
   .use time plugin: 'stylus'
   .use browserify destFolder: js
   .use time plugin: 'browserify'
@@ -409,8 +412,9 @@ app = new Metalsmith(DIR)
     useMetadata: true
     pretty: true
     cache: true
+    # debug: not config.prod
   .use time plugin: 'pug'
-  # .use gist debug: true
+  # .use gist debug: not config.prod
   .use feed
     collection: 'blog'
     limit: 20
