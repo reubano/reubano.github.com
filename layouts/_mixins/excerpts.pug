@@ -16,13 +16,13 @@ mixin blog-excerpt(post)
       p(class='small non-mobile', itemprop='datePublished', content=postISO)
         | written by #{site.author} on&nbsp;
         a(href=url_for(archiveURL))= postdate
-        |&nbsp;~ #{readtime} minute read ~&nbsp;
-        a(href=url_for(post.path)) full post
+        |&nbsp;~&nbsp;
+        a(href=url_for(post.path)) #{readtime} minute read
 
       p(class='small mobile', itemprop='datePublished', content=postISO)
         a(href=url_for(archiveURL))= postdate
-        |&nbsp;~ #{readtime} m read ~&nbsp;
-        a(href=url_for(post.path)) full post
+        |&nbsp;~&nbsp;
+        a(href=url_for(post.path)) #{readtime} m read
 
     .excerpt(itemprop='articleBody')
       | !{post.less.toString()}
