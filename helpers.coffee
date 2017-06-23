@@ -2,7 +2,7 @@ path = require 'path'
 
 _ = require './node_modules/lodash'
 slug = require './node_modules/slug'
-moment = require './node_modules/moment'
+moment = require './node_modules/moment-timezone'
 marked = require './node_modules/marked'
 multimatch = require './node_modules/multimatch'
 cloudinary = require './node_modules/cloudinary'
@@ -42,6 +42,7 @@ CLOUDINARY_DEFAULTS =
   api_secret: process.env.CLOUDINARY_API_SECRET
 
 slugOpts = {lower: true}
+now = new Date()
 
 getMatch = (entry, pattern) ->
   match = REGEX.exec(pattern)
@@ -111,10 +112,20 @@ module.exports =
     "#{config.site.url}/#{stripped}/"
 
   formatDate: (date, format) ->
+    if date.toDate
+      zone = date.format('z')
+      date = new Date date.toString()[...-9]
+    else
+      zone = moment(date).format('z')
+
     day = date.getDate()
     index = date.getMonth()
     year = date.getFullYear()
+    hour = date.getHours()
+    minute = date.getMinutes()
+
     format
+      .replace('a', if hour < 12 then 'AM' else 'PM')
       .replace('DD', pad(day.toString(), 2))
       .replace('D', day)
       .replace('MMMM', monthNames[index])
@@ -122,6 +133,11 @@ module.exports =
       .replace('MM', index + 1)
       .replace('YYYY', year)
       .replace('YY', year.toString().slice(2))
+      .replace('hh', pad(hour.toString(), 2))
+      .replace('h', if hour < 12 then hour else hour - 12)
+      .replace('mm', pad(minute.toString(), 2))
+      .replace('z', zone)
+      .replace('m', minute)
 
   min2read: (content, wpm=160) ->
     word_cnt = content.toString().split(' ').length

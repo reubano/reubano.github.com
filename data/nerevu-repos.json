@@ -1979,7 +1979,7 @@
     "releases_url": "https://api.github.com/repos/nerevu/prometheus/releases{/id}",
     "deployments_url": "https://api.github.com/repos/nerevu/prometheus/deployments",
     "created_at": "2013-01-09T22:40:10Z",
-    "updated_at": "2017-06-22T12:06:14Z",
+    "updated_at": "2017-06-23T19:22:20Z",
     "pushed_at": "2014-04-08T11:48:41Z",
     "git_url": "git://github.com/nerevu/prometheus.git",
     "ssh_url": "git@github.com:nerevu/prometheus.git",
@@ -2002,7 +2002,8 @@
       "app",
       "asset-allocation",
       "finance",
-      "flask"
+      "flask",
+      "visualization"
     ],
     "forks": 6,
     "open_issues": 0,

@@ -13,7 +13,8 @@ block nav
 block content
   - var postdate = format_date(page.date, 'MMM D, YYYY')
   - var month = format_date(page.date, 'MM')
-  - var href = archive.name + '/' + page.date.getFullYear() + '/' + month
+  - var year = format_date(page.date, 'YYYY')
+  - var href = archive.name + '/' + year + '/' + month
 
   ul.breadcrumb
     li.non-mobile

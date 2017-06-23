@@ -5,7 +5,8 @@ mixin blog-excerpt(post)
   - var postdate = format_date(post.date, 'MMM D, YYYY')
   - var postISO = post.date.toISOString()
   - var month = format_date(post.date, 'MM')
-  - var archiveURL = archive.name + '/' + post.date.getFullYear() + '/' + month
+  - var year = format_date(post.date, 'YYYY')
+  - var archiveURL = archive.name + '/' + year + '/' + month
 
   article.blog-excerpt(itemscope itemtype='http://schema.org/Article')
     .header
