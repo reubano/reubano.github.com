@@ -4,11 +4,11 @@ include _mixins/aside
 include _mixins/utils
 include _mixins/form
 
-block nav
-  +navbar(page.title)
-
 block title
   include _partials/title
+
+block nav
+  +navbar(page.title)
 
 block content
   ul.breadcrumb
