@@ -21,10 +21,14 @@ module.exports = (options) ->
 
         if data.contents and not data.less
           string = data.contents.toString()
-          headingless = string.replace /^#.*$/mg, ''
+          headingless = string.replace(/^#.*$/mg, '').trim()
           index = headingless.search opts.regexp
           less = if index > -1 then index else opts.cutoff
-          lessHTML = marked "#{headingless[...less]}..."
+
+          if headingless and less and less >= headingless.length
+            lessHTML = marked headingless
+          else
+            lessHTML = marked "#{headingless[...less]}…"
 
           if not data.description
             regexp = /<p>(.*?)<\/p>/g
