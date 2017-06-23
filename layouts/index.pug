@@ -17,27 +17,69 @@ block content
         h1= site.title
         p= site.subtitle
 
-      div(class='description big')= site.description
+      div(class='non-hd one-col')
+        include _partials/index-text
 
-      div(class='about hd')
-        include _partials/about
+      div(class='hd two-cols')
+        include _partials/index-text
+
+  #podium.non-desktop
+    .mobile
+      h2
+        a(href=url_for('podium')) podium
+
+      include _partials/upcoming
+
+      div
+        +get-featured(podium)
+
+    .tablet
+      include _partials/upcoming
+
+    .lapdesk
+      h2
+        a(href=url_for('podium')) podium
+
+      include _partials/upcoming
+
+      div
+        +get-featured(podium)
 
   #categories
     each category in collections
       if category.show
         div(class='category category-' + category.name)
-          h2
-            a(href=url_for(category.name))= category.name
+          if category.name === 'podium'
+            .tablet
+              h2
+                a(href=url_for(category.name))= category.name
 
-          +get-featured(category)
+              +get-featured(category)
 
-          unless category.name === 'blog'
-            +get-recent(category, category.count, category.filterby)
+            .desktop
+              h2
+                a(href=url_for(category.name))= category.name
 
-    div(class='category category-about handheld')
-      include _partials/about
+              +get-featured(category)
+              +get-recent(category, category.count, category.filterby)
+          else if category.name === 'gallery'
+            h2
+              a(href=url_for(category.name))= category.name
 
-  div(id='about', class='about-home lapdesk')
+            +get-featured(category)
+
+            .lapdesk
+              +get-recent(category, category.count, category.filterby)
+          else
+            h2
+              a(href=url_for(category.name))= category.name
+
+            +get-featured(category)
+
+            .laptop
+              +get-recent(category, category.count, category.filterby)
+
+  div(id='about', class='about-home non-hd')
     include _partials/about
 
   #photos.hd

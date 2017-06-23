@@ -43,6 +43,7 @@ CLOUDINARY_DEFAULTS =
 
 slugOpts = {lower: true}
 now = new Date()
+localURL = "#{config.site.url}/#{config.paths.images}"
 
 getMatch = (entry, pattern) ->
   match = REGEX.exec(pattern)
@@ -106,38 +107,38 @@ monthNames = [
   "January", "February", "March", "April", "May", "June", "July",
   "August", "September", "October", "November", "December"]
 
+formatDate = (date, format) ->
+  if date.toDate
+    zone = date.format('z')
+    date = new Date date.toString()[...-9]
+  else
+    zone = moment(date).format('z')
+
+  day = date.getDate()
+  index = date.getMonth()
+  year = date.getFullYear()
+  hour = date.getHours()
+  minute = date.getMinutes()
+
+  format
+    .replace('a', if hour < 12 then 'AM' else 'PM')
+    .replace('DD', pad(day.toString(), 2))
+    .replace('D', day)
+    .replace('MMMM', monthNames[index])
+    .replace('MMM', monthsAbrs[index])
+    .replace('MM', index + 1)
+    .replace('YYYY', year)
+    .replace('YY', year.toString().slice(2))
+    .replace('hh', pad(hour.toString(), 2))
+    .replace('h', if hour < 12 then hour else hour - 12)
+    .replace('mm', pad(minute.toString(), 2))
+    .replace('z', zone)
+    .replace('m', minute)
+
 module.exports =
   urlFor: (item) ->
     stripped = item.replace '/index.html', ''
     "#{config.site.url}/#{stripped}/"
-
-  formatDate: (date, format) ->
-    if date.toDate
-      zone = date.format('z')
-      date = new Date date.toString()[...-9]
-    else
-      zone = moment(date).format('z')
-
-    day = date.getDate()
-    index = date.getMonth()
-    year = date.getFullYear()
-    hour = date.getHours()
-    minute = date.getMinutes()
-
-    format
-      .replace('a', if hour < 12 then 'AM' else 'PM')
-      .replace('DD', pad(day.toString(), 2))
-      .replace('D', day)
-      .replace('MMMM', monthNames[index])
-      .replace('MMM', monthsAbrs[index])
-      .replace('MM', index + 1)
-      .replace('YYYY', year)
-      .replace('YY', year.toString().slice(2))
-      .replace('hh', pad(hour.toString(), 2))
-      .replace('h', if hour < 12 then hour else hour - 12)
-      .replace('mm', pad(minute.toString(), 2))
-      .replace('z', zone)
-      .replace('m', minute)
 
   min2read: (content, wpm=160) ->
     word_cnt = content.toString().split(' ').length
@@ -149,10 +150,10 @@ module.exports =
 
     sorted.filter (item) -> item.title isnt article.title
 
-  getMentionedProject: (portfolio, photo) ->
-    _.find portfolio.data, (project) ->
-      # flickr removes non-alphanum chars from tags
-      slug(project.title, replacement: '') in photo.tags
+  getMentionedProjects: (portfolio, article, one=true) ->
+    # flickr removes non-alphanum chars from tags
+    match = (project) -> slug(project.title, replacement: '') in article.tags
+    if one then _.find(portfolio.data, match) else portfolio.data.filter(match)
 
   getMentionedPhotos: (gallery, project) ->
     # TODO: filter gallery for screenshot album
@@ -162,10 +163,47 @@ module.exports =
     gallery.data.filter (photo) ->
       (sanitized in photo.tags) and ('mockup' not in photo.tags)
 
+  getEventDate: (talk, time) ->
+    upcoming = talk.date >= new Date()
+
+    if upcoming
+      eventStart = formatDate(talk.event_date, 'D MMM')
+      yearStart = formatDate(talk.event_date, 'YYYY')
+      monthStart = formatDate(talk.event_date, 'MMM')
+      dayStart = formatDate(talk.event_date, 'D')
+
+      eventEnd = formatDate(talk.event_end, 'D MMM')
+      yearEnd = formatDate(talk.event_end, 'YYYY')
+      monthEnd = formatDate(talk.event_end, 'MMM')
+      dayEnd = formatDate(talk.event_end, 'D')
+    else
+      eventStart = formatDate(talk.date, 'MMM D, YYYY')
+      eventTime = formatDate(talk.date, 'h:mm a z')
+
+    if time and not upcoming
+      prefix: 'on ', date: "#{eventTime}, #{eventStart}"
+    else if not upcoming
+      prefix: 'on ', date: eventStart
+    else if eventStart is eventEnd
+      prefix: 'on ', date: "#{eventStart}, #{yearStart}"
+    else if monthStart is monthEnd
+      prefix: '', date: "#{dayStart} — #{dayEnd} #{monthStart}, #{yearStart}"
+    else if yearStart is yearEnd
+      prefix: '', date: "#{eventStart} — #{eventEnd}, #{yearStart}"
+    else
+      prefix: '', date: "#{eventStart}, #{yearStart} — #{eventEnd}, #{yearEnd}"
+
   tagsByCollection: (category) -> _.uniq _.flatMap category.data, 'tags'
+  formatDate: formatDate
   getFeatured: getFeatured
   getRecent: getRecent
   getRandom: getRandom
+
+  upcoming: (data) ->
+    filtered = data.filter (item) -> item.date >= now
+    _.sortBy filtered, (item) -> item.date
+
+  past: (data) -> data.filter (item) -> item.date < now
 
   # css-tricks.com/responsive-images-youre-just-changing-resolutions-use-srcset/
   # sitepoint.com/how-to-build-responsive-images-with-srcset/
@@ -195,7 +233,7 @@ module.exports =
         url = cloudinary.url(opts.location, srcOpts)
         url.replace(/^(https?):\/\//, '//')
       when 'local'
-        url = "#{config.site.url}/#{config.paths.images}/#{photo}/logo.#{opts.ext}"
+        url = "#{localURL}/#{photo}/logo.#{opts.ext}"
 
     url
 
@@ -228,8 +266,7 @@ module.exports =
       when 'local'
         refSizes = if opts.portrait then portSizes else landSizes
         sizes = (_.defaults(s, width: refSizes[i]) for s, i in _sizes)
-        url = "#{config.site.url}/#{config.paths.images}/#{photo}"
-        srcsets = ("#{url}/logo#{s.query}.#{opts.ext} #{s.width}w" for s in sizes)
+        srcsets = ("#{localURL}/#{photo}/logo#{s.query}.#{opts.ext} #{s.width}w" for s in sizes)
 
     srcsets.join(', ')
 

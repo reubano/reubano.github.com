@@ -62,6 +62,8 @@ block content
         .tag-content
           for post in tag.files
             case post.collection
+              when 'podium'
+                +podium-excerpt(post)
               when 'blog'
                 +blog-excerpt(post)
               when 'portfolio'

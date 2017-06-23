@@ -69,7 +69,7 @@ templateHelpers =
   get_first_page: helpers.getFirstPage
   get_related: helpers.getRelated
   get_mentioned_photos: helpers.getMentionedPhotos
-  get_mentioned_project: helpers.getMentionedProject
+  get_mentioned_projects: helpers.getMentionedProjects
   get_src: helpers.getSrc
   get_srcset: helpers.getSrcset
   get_featured: helpers.getFeatured
@@ -80,6 +80,9 @@ templateHelpers =
   range: _.range
   format_date: helpers.formatDate
   tags_by_collection: helpers.tagsByCollection
+  upcoming: helpers.upcoming
+  past: helpers.past
+  get_event_date: helpers.getEventDate
 
 fafFilter = (item) -> not _.intersection(item.tags, config.hidden).length
 
@@ -143,6 +146,15 @@ collectionConfig =
       title: 'portfolio'
       show: true
       count: 5
+  podium:
+    sortBy: 'event_date'
+    reverse: true
+    metadata:
+      singular: 'talk'
+      plural: 'talks'
+      title: 'podium'
+      show: true
+      count: 3
 
 paginationConfig =
   blog:
@@ -170,6 +182,11 @@ paginationConfig =
     layout: 'portfolio.pug'
     path: 'portfolio/page/:num/index.html'
     pageMetadata: title: 'portfolio', name: 'portfolio'
+  podium:
+    perPage: 6
+    layout: 'podium.pug'
+    path: 'podium/page/:num/index.html'
+    pageMetadata: title: 'podium', name: 'podium'
   tagz:
     perPage: 12
     layout: 'tagged.pug'
@@ -237,6 +254,8 @@ addTags = (entry) ->
 
   tags
 
+addTitle = (entry) -> entry.session_name or entry.event_name
+
 gallEnrichFunc = (entry) ->
   tags = _.filter entry.tags.split(' '), (tag) ->
     tag not in ['facebook', 'iphotorating5']
@@ -301,6 +320,10 @@ app = new Metalsmith(DIR)
         {field: 'tags', func: gallEnrichFunc}
         {field: 'description', func: (entry) -> ''}]
 
+      podium: [
+        {field: 'title', func: addTitle}
+      ]
+
     filter:
       portfolio: [
         {field: 'fork', op: 'is', value: false},
@@ -355,7 +378,7 @@ app = new Metalsmith(DIR)
     groupByMonth: true
     sortBy: 'date'
     reverse: true
-    collections: ['portfolio', 'blog']
+    collections: ['portfolio', 'blog', 'podium']
   .use time plugin: 'archive'
   .use permalinks
     pattern: ':title'
@@ -369,6 +392,7 @@ app = new Metalsmith(DIR)
       {match: {collection: 'family'}, pattern: 'family/:id'}
       {match: {collection: 'friends'}, pattern: 'friends/:id'}
       {match: {collection: 'portfolio'}, pattern: 'portfolio/:title'}
+      {match: {collection: 'podium'}, pattern: 'podium/:title-:location'}
       {match: {collection: 'tagz'}, pattern: 'tagged/:slug'}
       {match: {collection: 'archive'}, pattern: 'archive/:year'}
     ]

@@ -21,7 +21,7 @@ If you have a budget of at least $5k, and would like to hire me to help you make
 
 ### Speaking/Training
 
-I've [spoken and taught workshops](//lanyrd.com/profile/reubano/) at tech conferences, meetups, and training events in South Africa, Tanzania, and Kenya. Topics I have presented on include [static site generators](//speakerdeck.com/reubano/static-sites-and-generators-ftw), [data mining](//www.youtube.com/watch?v=05C_E1wyT1I), and [functional programming](//speakerdeck.com/reubano/intro-to-functional-programming).
+I've [spoken and taught workshops](/podium/) at tech conferences, meetups, and training events in South Africa, Tanzania, the U.S., and Kenya. Some topics I've presented on are [static site generators](/podium/static-sites-generators-ftw-arusha-tanzania/), [data mining](/podium/data-mining-and-processing-for-fun-and-profit-cape-town-south-africa/), and [functional programming](/podium/a-functional-programming-approach-to-data-processing-in-python-boulder-co/).
 
 If you would like me to speak at your event or lead a training session, please [email me](mailto:rcummings@nerevu.com?subject=Speaking inquiry) with:
 

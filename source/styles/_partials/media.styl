@@ -1,7 +1,7 @@
-.mobile, .tablet, .handheld, .laptop, .lapdesk, .hd
+.mobile, .tablet, .handheld, .laptop, .desktop, .lapdesk, .hd
   display-none()
 
-.non-mobile, .non-tablet, .non-handheld, .non-hd
+.non-mobile, .non-tablet, .non-handheld, .non-laptop, .non-desktop, .non-lapdesk, .non-hd
   display-some()
 
 @media $mobile
@@ -25,10 +25,24 @@
 @media $laptop
   .laptop
     display-some()
+  .non-laptop
+    display-none()
+  .non-lapdesk
+    display-none()
+
+@media $desktop
+  .desktop
+    display-some()
+  .non-desktop
+    display-none()
+  .non-lapdesk
+    display-none()
 
 @media $lapdesk
   .lapdesk
     display-some()
+  .non-lapdesk
+    display-none()
 
 @media $hd
   .hd

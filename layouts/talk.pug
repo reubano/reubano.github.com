@@ -1,0 +1,70 @@
+extends base
+include _mixins/navbar
+include _mixins/aside
+include _mixins/utils
+include _mixins/form
+
+block title
+  include _partials/title
+
+block nav
+  +navbar(page.collection)
+
+block content
+  - var eventDate = get_event_date(page)
+  - var talkISO = page.date.toISOString()
+  - var month = format_date(page.date, 'MM')
+  - var year = format_date(page.date, 'YYYY')
+  - var archiveURL = archive.name + '/' + year + '/' + month
+  - var upcomingTalk = page.date >= new Date()
+  - var projects = get_mentioned_projects(locals.portfolio, page, false)
+
+  ul.breadcrumb
+    li.non-mobile
+      a(href=site.url)= site.title
+
+    li
+      a(href=url_for(page.collection))= page.collection
+
+    li= page.title
+
+  article.article(itemscope itemtype='http://schema.org/subEvent')
+    h2.non-mobile(itemprop='name')= page.title
+
+    p.big(itemprop='doorTime', content=talkISO)
+      if upcomingTalk
+        | #{site.author} will deliver this #{page.session_type} at&nbsp;
+        a(href=page.event_site, target='_blank', rel='noopener noreferrer')= page.event_name
+        |&nbsp;taking place #{eventDate.prefix}#{eventDate.date} in #{page.location}.
+      else
+        | #{site.author} delivered this #{page.session_duration} minute&nbsp;
+        | #{page.session_type} at #{page.event_name} #{eventDate.prefix}
+        | #{eventDate.date} in #{page.location}.
+
+    .tags
+      +list-tags(page.tags)
+
+    div(class='content one-col non-hd', itemprop='articleBody')
+      != page.html
+
+    div(class='content two-cols hd', itemprop='articleBody')
+      != page.html
+
+    include _partials/talk-meta
+
+    if projects.length
+      h3 Referenced projects
+      ul.inline-list
+        for project in projects
+          li
+            a(href=url_for(project.path))= project.title
+
+    footer.article-footer
+      include _partials/post-updated
+      include _partials/post-nav
+
+block aside
+  aside#aside
+    +subscription(podium)
+    +get-related(podium.count)
+    +get-featured(podium, podium.count)

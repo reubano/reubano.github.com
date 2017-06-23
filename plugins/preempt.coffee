@@ -21,8 +21,8 @@ module.exports = (opts) ->
   (files, metalsmith, done) ->
     for file, d of files
       date = d.date or d.datetaken or d.created or d.created_at or d.stats?.ctime or d.session_date or d.event_date
-      updated = d.updated or d.updated_at or d.lastupdate or d.stats?.mtime or d.date
       d.date = if typeof date is 'string' then parse(date) else date
+      updated = d.updated or d.updated_at or d.lastupdate or d.stats?.mtime or d.date
       d.updated = if typeof updated is 'string' then parse(updated) else updated
 
       if typeof d.session_date is 'string'
