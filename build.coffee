@@ -166,7 +166,7 @@ paginationConfig =
     path: 'gallery/page/:num/index.html'
     pageMetadata: title: 'gallery', name: 'gallery'
   portfolio:
-    perPage: 10
+    perPage: 9
     layout: 'portfolio.pug'
     path: 'portfolio/page/:num/index.html'
     pageMetadata: title: 'portfolio', name: 'portfolio'
