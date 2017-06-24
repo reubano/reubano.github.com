@@ -15,9 +15,9 @@ You can contact or connect with me via the following:
 
 ### Consulting
 
-I am available for consulting on projects to help you eliminate inefficiencies or identify how customers are using your products and services. Projects usually involve solving problems with customer engagement, churn, operating expenses, or productivity.
+I work with small and medium-sized software companies on projects to eliminate inefficiencies or identify how customers are using your products and services. Projects usually involve solving problems with customer engagement, churn, operating expenses, or productivity.
 
-If you would like to hire me so that you can make better data driven decisions regarding your operations, customers, or products, please [email me](mailto:rcummings@nerevu.com?subject=Consulting inquiry).
+If you have a budget of at least $5k, and would like to hire me to help you make better data driven decisions regarding your operations, customers, or products, please [email me](mailto:rcummings@nerevu.com?subject=Consulting inquiry).
 
 ### Speaking/Training
 
@@ -27,8 +27,8 @@ If you would like me to speak at your event or lead a training session, please [
 
   - event date(s)
   - desired topic
-  - speaking format (training, tutorial, workshop, talk, keynote, etc.)
+  - desired format (training, tutorial, workshop, talk, keynote, etc.)
 
-I can usually accommodate non-profit events for free, provided that my travel (flights and transportation), accommodation (hotel/host), and conference ticket are covered.
+I can usually accommodate non-profit/community events for free, provided that my travel, accommodation, and conference ticket is covered.
 
 I'm also available to train/speak at corporate/for-profit events for a reasonable speaker's fee.
