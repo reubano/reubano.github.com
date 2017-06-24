@@ -195,7 +195,7 @@ module.exports =
         url = cloudinary.url(opts.location, srcOpts)
         url.replace(/^(https?):\/\//, '//')
       when 'local'
-        url = "#{config.site.url}/#{config.paths.images}/#{photo}.#{opts.ext}"
+        url = "#{config.site.url}/#{config.paths.images}/#{photo}/logo.#{opts.ext}"
 
     url
 
@@ -228,8 +228,8 @@ module.exports =
       when 'local'
         refSizes = if opts.portrait then portSizes else landSizes
         sizes = (_.defaults(s, width: refSizes[i]) for s, i in _sizes)
-        url = "#{config.site.url}/#{config.paths.images}"
-        srcsets = ("#{url}/#{photo}#{s.query}.#{opts.ext} #{s.width}w" for s in sizes)
+        url = "#{config.site.url}/#{config.paths.images}/#{photo}"
+        srcsets = ("#{url}/logo#{s.query}.#{opts.ext} #{s.width}w" for s in sizes)
 
     srcsets.join(', ')
 
