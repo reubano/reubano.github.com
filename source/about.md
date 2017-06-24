@@ -3,6 +3,7 @@ title: about
 name: about
 layout: page.pug
 collection: pages
+coverImage: kodi1
 ---
 
 ### Me

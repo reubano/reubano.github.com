@@ -213,8 +213,15 @@ img
 aside img, .aside img
   margin-bottom $quarter-headspace
 
-.photo img
-  margin-bottom 0
+.photo
+  margin $half-headspace 0
+  figure($base-color)
+
+  @media $mobile
+    margin 0
+
+  img
+    margin-bottom 0
 
 section
   // center($max-width)

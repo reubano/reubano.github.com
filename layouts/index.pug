@@ -7,7 +7,7 @@ block nav
 block content
   #intro
     - var srcset = get_srcset('pycon', {ext: 'png', source: 'local'})
-    - var src = get_src('pycon', {ext: 'png', source: 'local'})
+    - var src = get_src('pycon', null, {ext: 'png', source: 'local'})
     - var img_sizes = '(min-width: 640px) 33vw, 100vw'
 
     img(class='cover logo', title=site.author, sizes=img_sizes, srcset=srcset, src=src, alt=site.author)
