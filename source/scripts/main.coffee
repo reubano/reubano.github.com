@@ -10,7 +10,7 @@ loadJS = (e) ->
   form.main()
   # search.main()
 
-if document.readyState in ['complete', 'interactive', 'loaded']
+if document.readyState is 'complete'
   loadJS()
 else
-  document.addEventListener 'DOMContentLoaded', loadJS, false
+  window.onload = loadJS
