@@ -4,16 +4,17 @@ include _mixins/aside
 include _mixins/utils
 include _mixins/form
 
-block nav
-  +navbar(page.collection)
-
 block title
   include _partials/title
+
+block nav
+  +navbar(page.collection)
 
 block content
   - var postdate = format_date(page.date, 'MMM D, YYYY')
   - var month = format_date(page.date, 'MM')
-  - var href = archive.name + '/' + page.date.getFullYear() + '/' + month
+  - var year = format_date(page.date, 'YYYY')
+  - var href = archive.name + '/' + year + '/' + month
 
   ul.breadcrumb
     li.non-mobile

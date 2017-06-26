@@ -1,0 +1,45 @@
+- var locURL = 'https://www.google.com/maps/place/' + page.location
+
+.meta
+  ul.tl
+    li #{page.event_type} #{page.session_type}
+
+    if upcomingTalk
+      li
+        a(href=locURL, target='_blank', rel='noopener noreferrer')= page.location
+
+    if page.session_video
+      li
+        a(href=page.session_video, target='_blank', rel='noopener noreferrer') watch
+
+    if page.session_slides
+      li
+        a(href=page.session_slides, target='_blank', rel='noopener noreferrer') view
+
+    if page.session_repo
+      li
+        a(href=page.session_repo, target='_blank', rel='noopener noreferrer') github
+
+    if upcomingTalk
+      li
+        a(href=page.event_site, target='_blank', rel='noopener noreferrer')= page.event_name
+
+  ul.tl
+    li type
+
+    if upcomingTalk
+      li location
+
+    if page.session_video
+      li video
+
+    if page.session_slides
+      li slides
+
+    if page.session_repo
+      li repo
+
+    if upcomingTalk
+      li register
+
+

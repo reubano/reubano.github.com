@@ -62,18 +62,23 @@ $border-bottom-margin = $quarter-headspace
 // desktop 90em (1440px)
 // hd 160em (2560px)
 
-$mobile-cutoff = 40em  // 640px
-$laptop-cutoff = 64em  // 1024px
-$desktop-cutoff = 80em  // 1280px
-$hd-cutoff = 130em  // 2080px
+$mobile-cutoff = 640px  // 40em
+$laptop-cutoff = 1024px  // 64em
+$desktop-cutoff = 1280px  // 80em
+$hd-cutoff = 2080px  // 130em
+
+$mobile-cutoff-m = $mobile-cutoff - 1px
+$laptop-cutoff-m = $laptop-cutoff - 1px
+$desktop-cutoff-m = $desktop-cutoff - 1px
+$hd-cutoff-m = $hd-cutoff - 1px
 
 // Media queries
-$mobile = 'screen and (max-width: $mobile-cutoff - 1)'
-$tablet = 'screen and (min-width: $mobile-cutoff) and (max-width: $laptop-cutoff - 1)'
-$handheld = 'screen and (max-width: $laptop-cutoff - 1)'
+$mobile = 'screen and (max-width: $mobile-cutoff-m)'
+$tablet = 'screen and (min-width: $mobile-cutoff) and (max-width: $laptop-cutoff-m)'
+$handheld = 'screen and (max-width: $laptop-cutoff-m)'
 $laptop = 'screen and (min-width: $laptop-cutoff)'
 $desktop = 'screen and (min-width: $desktop-cutoff)'
-$lapdesk = 'screen and (min-width: $laptop-cutoff) and (max-width: $hd-cutoff - 1)'
+$lapdesk = 'screen and (min-width: $laptop-cutoff) and (max-width: $hd-cutoff-m)'
 $hd = 'screen and (min-width: $hd-cutoff)'
 
 // Mixins

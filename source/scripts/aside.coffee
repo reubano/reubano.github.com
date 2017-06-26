@@ -2,13 +2,12 @@ utils = require './utils'
 
 container = document.getElementById 'container'
 topnav = document.getElementById 'topnav'
-breadcrumb = document.getElementsByClassName('breadcrumb')[0]
+crumb = document.getElementsByClassName('breadcrumb')[0]
 aside = document.getElementById 'aside'
 toTop = document.getElementById 'to-top'
-pageNav = document.getElementsByClassName('page-navigator')[0]
-footer = document.getElementById 'footer'
 category = document.getElementById 'category'
 article = document.getElementsByClassName('article')[0]
+meat = category or article
 
 updateAsidePosition = (absHeight, fixedHeight, normal) ->
   if normal and container.scrollTop >= absHeight
@@ -23,12 +22,16 @@ updateAsidePosition = (absHeight, fixedHeight, normal) ->
 
 module.exports =
   main: ->
-    fixedHeight = topnav.clientHeight + utils.getFullHeight(breadcrumb)
-
     if aside
-      absHeight = (pageNav or footer)['offsetTop'] - aside.clientHeight
-      contHeight = (category or article)['clientHeight']
-      normal = (absHeight > fixedHeight) and (aside.clientHeight < contHeight)
+      crumbMarginTop = utils.propHeight(crumb, 'marginTop')
+      crumbHeight = utils.outerHeight(crumb, false, true) + crumbMarginTop
+      topnavHeight = utils.outerHeight topnav
+      contHeight = utils.outerHeight meat
+      asideHeight = utils.outerHeight aside
+
+      fixedHeight = topnavHeight + crumbHeight
+      absHeight = utils.outerHeight(meat, true) + fixedHeight - asideHeight
+      normal = (absHeight > fixedHeight) and (contHeight > asideHeight)
 
       container.addEventListener 'scroll', ->
         window.requestAnimationFrame ->

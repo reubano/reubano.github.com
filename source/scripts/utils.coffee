@@ -25,18 +25,25 @@ module.exports =
     else
       el.className = className
 
-  getFullHeight: (el, props...) ->
+  outerHeight: (el, margin, border) ->
     if el
-      height = el.clientHeight
+      height = el.scrollHeight
+      style = getComputedStyle el
 
-      unless props.length
-        props = ['padding-top', 'margin-top', 'border-bottom']
+      if margin
+        height += parseFloat(style.marginTop) + parseFloat(style.marginBottom)
 
-      for prop in props
-        value = window.getComputedStyle(el, null).getPropertyValue prop
-        height += parseFloat value
+      if border
+        height += parseFloat(style.borderTop) + parseFloat(style.borderBottom)
 
       height
+    else
+      0
+
+  propHeight: (el, prop) ->
+    if el
+      style = getComputedStyle el
+      parseFloat style[prop]
     else
       0
 

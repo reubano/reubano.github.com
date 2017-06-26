@@ -3,6 +3,7 @@ title: about
 name: about
 layout: page.pug
 collection: pages
+coverImage: kodi1
 ---
 
 ### Me
@@ -67,7 +68,7 @@ In 2014, I founded the data analytics firm [Nerevu Development](//nerevu.com).
 
 #### _Finance/Investing_
 
-I started investing at the end of 1999 at the age of 17. Unknown to me at the time, I couldn't have picked a worse period to begin... this was the beginning of the [market collapse of 2000](//en.wikipedia.org/wiki/Dot-com_bubble). I've learned a lot since then and am convinced about the principles of dollar cost averaging, passive index investing, and asset allocation. I'm also enamored with hedge funds and in the process of developing an application to unlock the secrets of [replicating their returns](//en.wikipedia.org/wiki/Hedge_fund_replication).
+I started investing at the end of 1999 at the age of 17. Unknown to me at the time, I couldn't have picked a worse period to begin… this was the beginning of the [market collapse of 2000](//en.wikipedia.org/wiki/Dot-com_bubble). I've learned a lot since then and am convinced about the principles of dollar cost averaging, passive index investing, and asset allocation. I'm also enamored with hedge funds and in the process of developing an application to unlock the secrets of [replicating their returns](//en.wikipedia.org/wiki/Hedge_fund_replication).
 
 #### _Travel_
 

@@ -161,6 +161,10 @@ a:visited
 .breadcrumb a:visited, h2 a:visited
   color $link-color
 
+.btn, button
+  text-overflow ellipsis
+  padding 14px
+
 a.btn:visited
   color $button-font-color
 
@@ -182,6 +186,11 @@ hr
 ul
   ul()
 
+ul.unstyled
+  list-style none
+  margin 0
+  padding 0
+
 ul.tl
   tl()
 
@@ -196,6 +205,7 @@ img
   margin-bottom $half-headspace
   &.fit
     col 1
+    max-width 100%
 
   &.cover
     object-fit cover
@@ -203,8 +213,15 @@ img
 aside img, .aside img
   margin-bottom $quarter-headspace
 
-.photo img
-  margin-bottom 0
+.photo
+  margin $half-headspace 0
+  figure($base-color)
+
+  @media $mobile
+    margin 0
+
+  img
+    margin-bottom 0
 
 section
   // center($max-width)
@@ -221,7 +238,6 @@ section
     padding $full-headspace 0
 
 #container
-  transition .4s
   height 100%
   overflow auto
 

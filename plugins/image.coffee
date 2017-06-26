@@ -38,7 +38,7 @@ exports = module.exports = (options) ->
     opts.photos = gallery.photoset.photo
 
     for file, data of files
-      for element in (data.contents.toString().match(/image\|.\S*/g) or [])
+      for element in (data.contents?.toString().match(/image\|.\S*/g) or [])
         tag = getImgTag _.assign {id: element.split('|')[1]}, opts
         data.contents = data.contents.toString().replace(element, tag)
 

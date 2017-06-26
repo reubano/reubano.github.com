@@ -17,17 +17,18 @@ module.exports = (options) ->
   (files, metalsmith, done) ->
     for file, data of files
       if path.extname(file) is ext
-        if data.open_issues?
-          data.less = "#{data.name} is written in #{data.language}, has #{data.stargazers_count} stars, #{data.forks} forks, #{data.open_issues} open issues, and was last updated #{data.updatedFromNow}."
-        else
-          data.less = data.less or data.excerpt or data.description
+        data.less = data.less or data.excerpt or data.description
 
         if data.contents and not data.less
           string = data.contents.toString()
-          headingless = string.replace /^#.*$/mg, ''
+          headingless = string.replace(/^#.*$/mg, '').trim()
           index = headingless.search opts.regexp
           less = if index > -1 then index else opts.cutoff
-          lessHTML = marked "#{headingless[...less]}..."
+
+          if headingless and less and less >= headingless.length
+            lessHTML = marked headingless
+          else
+            lessHTML = marked "#{headingless[...less]}…"
 
           if not data.description
             regexp = /<p>(.*?)<\/p>/g

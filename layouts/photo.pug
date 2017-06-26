@@ -4,11 +4,11 @@ include _mixins/aside
 include _mixins/utils
 include _mixins/form
 
-block nav
-  +navbar(gallery.name)
-
 block title
   include _partials/title
+
+block nav
+  +navbar(gallery.name)
 
 block content
   - var postdate = format_date(page.date, 'MMM D, YYYY')

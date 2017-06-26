@@ -4,11 +4,11 @@ include _mixins/aside
 include _mixins/utils
 include _mixins/form
 
-block nav
-  +navbar(page.title)
-
 block title
   include _partials/title
+
+block nav
+  +navbar(page.title)
 
 block content
   ul.breadcrumb
@@ -19,6 +19,14 @@ block content
 
   article.article(itemscope itemtype='http://schema.org/Article')
     h1.non-mobile(itemprop='name')= page.title
+
+    if page.coverImage
+      - var srcset = get_srcset(page.coverImage, {ext: 'png', source: 'local'})
+      - var src = get_src(page.coverImage, null, {ext: 'png', source: 'local'})
+      - var img_sizes = '(min-width: 1024px) 66vw, 100vw'
+
+      .photo
+        img.fit(title=site.author, sizes=img_sizes, srcset=srcset, src=src, alt=site.author)
 
     div(class='content one-col non-hd', itemprop='articleBody')
       != page.html

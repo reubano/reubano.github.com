@@ -1,0 +1,29 @@
+- var upcomingEvents = upcoming(locals.podium.data)
+
+if upcomingEvents.length
+  h3 upcoming events
+
+  ul.unstyled
+    for talk in upcomingEvents
+      - var eventDate = get_event_date(talk)
+
+      li(class='meta mobile')
+        p.big
+          a(href=url_for(talk.path))= eventDate.date
+
+        p
+          a(href=url_for(talk.path)) #{talk.event_name}
+          |&nbsp;in #{talk.location}
+
+      li(class='meta tablet')
+        a(href=url_for(talk.path))= eventDate.date
+        |&nbsp;◆&nbsp;
+        a(href=talk.event_site, target='_blank', rel='noopener noreferrer')= talk.event_name
+        |&nbsp;[#{talk.session_type}] ◆ #{talk.location}
+
+      li(class='meta laptop big')
+        |#{eventDate.date} ◆&nbsp;
+        a(href=url_for(talk.path))= talk.session_name
+        |&nbsp;◆&nbsp;
+        a(href=talk.event_site, target='_blank', rel='noopener noreferrer')= talk.event_name
+        |&nbsp;◆ #{talk.location}

@@ -61,7 +61,7 @@ module.exports =
           utils.addClass statusMessage, 'hidden'
 
           for button in buttons
-            button.textContent = 'Loading...'
+            button.textContent = 'Loading…'
             utils.addClass button, 'disabled'
 
           xhr = utils.ajax "//#{apiInput.value}/subscription", 'POST'

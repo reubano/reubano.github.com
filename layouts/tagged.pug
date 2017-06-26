@@ -3,7 +3,7 @@ include _mixins/navbar
 include _mixins/aside
 include _mixins/utils
 include _mixins/github-card
-include _mixins/blog-excerpt
+include _mixins/excerpts
 
 block title
   title #{page.slug || page.name} | #{site.title}
@@ -62,6 +62,8 @@ block content
         .tag-content
           for post in tag.files
             case post.collection
+              when 'podium'
+                +podium-excerpt(post)
               when 'blog'
                 +blog-excerpt(post)
               when 'portfolio'

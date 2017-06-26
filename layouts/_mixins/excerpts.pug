@@ -1,0 +1,92 @@
+include utils
+
+mixin blog-excerpt(post)
+  - var readtime = min2read(post.markdown)
+  - var postdate = format_date(post.date, 'MMM D, YYYY')
+  - var postISO = post.date.toISOString()
+  - var month = format_date(post.date, 'MM')
+  - var year = format_date(post.date, 'YYYY')
+  - var archiveURL = archive.name + '/' + year + '/' + month
+
+  article.blog-excerpt(itemscope itemtype='http://schema.org/Article')
+    .header
+      h2(itemprop='name')
+        a(href=url_for(post.path))= post.title
+
+      p(class='small non-mobile', itemprop='datePublished', content=postISO)
+        | written by #{site.author} on&nbsp;
+        a(href=url_for(archiveURL))= postdate
+        |&nbsp;~&nbsp;
+        a(href=url_for(post.path)) #{readtime} minute read
+
+      p(class='small mobile', itemprop='datePublished', content=postISO)
+        a(href=url_for(archiveURL))= postdate
+        |&nbsp;~&nbsp;
+        a(href=url_for(post.path)) #{readtime} m read
+
+    .excerpt(itemprop='articleBody')
+      | !{post.less.toString()}
+      if post.tags
+        +list-tags(post.tags)
+
+    .excerpt-footer
+      a.link(href=url_for(post.path)) read post
+
+mixin podium-excerpt(talk)
+  - var eventDate = get_event_date(talk, true)
+  - var talkISO = talk.date.toISOString()
+  - var month = format_date(talk.date, 'MM')
+  - var year = format_date(talk.date, 'YYYY')
+  - var archiveURL = archive.name + '/' + year + '/' + month
+  - var upcomingTalk = talk.date >= new Date()
+
+  article.podium-excerpt(itemscope itemtype='http://schema.org/subEvent')
+    .header
+      p.big(itemprop='superEvent')
+        if upcomingTalk
+          a(href=talk.event_site, target='_blank', rel='noopener noreferrer')
+            | #{talk.event_name}&nbsp;
+        else
+          | #{talk.event_name}&nbsp;
+
+        span(itemprop='location') [#{talk.location}]&nbsp;
+        small
+          sup= talk.event_type
+
+      h2(itemprop='name')
+        a(href=url_for(talk.path))= talk.title
+
+      p(itemprop='doorTime', content=talkISO)
+        if upcomingTalk
+          .big= eventDate.date
+        else
+          .small
+            a(href=url_for(archiveURL))= eventDate.date
+            |&nbsp;~&nbsp;
+            a(class='non-mobile', href=url_for(talk.path))
+              | #{talk.session_duration} minute #{talk.session_type}
+            a(class='mobile', href=url_for(talk.path))
+              | #{talk.session_duration} m #{talk.session_type}
+
+    .excerpt(itemprop='about')
+      | !{talk.less.toString()}
+
+      if talk.tags
+        +list-tags(talk.tags)
+
+    .excerpt-footer
+      ul.inline-list
+        li
+          a.link(href=url_for(talk.path)) view #{talk.session_type}
+
+        if talk.session_video
+          li
+            a(href=talk.session_video, target='_blank', rel='noopener noreferrer') watch video
+
+        if talk.session_slides
+          li
+            a(href=talk.session_slides, target='_blank', rel='noopener noreferrer') view slides
+
+        if talk.session_repo
+          li
+            a(href=talk.session_repo, target='_blank', rel='noopener noreferrer') visit repo

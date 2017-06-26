@@ -34,7 +34,7 @@ module.exports = (options) ->
       else if collections and data.collection not in collections
         continue
 
-      year = data.date.getFullYear()
+      year = helpers.formatDate(data.date, 'YYYY')
 
       if year
         if not periodCache[year]

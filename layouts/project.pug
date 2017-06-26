@@ -4,16 +4,17 @@ include _mixins/aside
 include _mixins/utils
 include _mixins/form
 
-block nav
-  +navbar(portfolio.name)
-
 block title
   include _partials/title
+
+block nav
+  +navbar(portfolio.name)
 
 block content
   - var postdate = format_date(page.date, 'MMM D, YYYY')
   - var month = format_date(page.date, 'MM')
-  - var href = archive.name + '/' + page.date.getFullYear() + '/' + month
+  - var year = format_date(page.date, 'YYYY')
+  - var href = archive.name + '/' + year + '/' + month
 
   ul.breadcrumb
     li.non-mobile
@@ -35,7 +36,7 @@ block content
     .mentioned
       +get-mentioned-photos(portfolio.count, page, 'lg', false)
 
-    if page.description
+    if page.less && page.description && page.less !== page.description
       pullquote!= page.description
 
     .content(itemprop='articleBody')

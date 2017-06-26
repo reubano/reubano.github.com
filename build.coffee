@@ -1,5 +1,6 @@
 path = require 'path'
 helpers = require './helpers'
+descriptions = require './data/descriptions'
 
 _ = helpers._
 moment = helpers.moment
@@ -68,7 +69,7 @@ templateHelpers =
   get_first_page: helpers.getFirstPage
   get_related: helpers.getRelated
   get_mentioned_photos: helpers.getMentionedPhotos
-  get_mentioned_project: helpers.getMentionedProject
+  get_mentioned_projects: helpers.getMentionedProjects
   get_src: helpers.getSrc
   get_srcset: helpers.getSrcset
   get_featured: helpers.getFeatured
@@ -79,6 +80,9 @@ templateHelpers =
   range: _.range
   format_date: helpers.formatDate
   tags_by_collection: helpers.tagsByCollection
+  upcoming: helpers.upcoming
+  past: helpers.past
+  get_event_date: helpers.getEventDate
 
 fafFilter = (item) -> not _.intersection(item.tags, config.hidden).length
 
@@ -142,6 +146,15 @@ collectionConfig =
       title: 'portfolio'
       show: true
       count: 5
+  podium:
+    sortBy: 'event_date'
+    reverse: true
+    metadata:
+      singular: 'talk'
+      plural: 'talks'
+      title: 'podium'
+      show: true
+      count: 3
 
 paginationConfig =
   blog:
@@ -165,10 +178,15 @@ paginationConfig =
     path: 'gallery/page/:num/index.html'
     pageMetadata: title: 'gallery', name: 'gallery'
   portfolio:
-    perPage: 10
+    perPage: 9
     layout: 'portfolio.pug'
     path: 'portfolio/page/:num/index.html'
     pageMetadata: title: 'portfolio', name: 'portfolio'
+  podium:
+    perPage: 6
+    layout: 'podium.pug'
+    path: 'podium/page/:num/index.html'
+    pageMetadata: title: 'podium', name: 'podium'
   tagz:
     perPage: 12
     layout: 'tagged.pug'
@@ -225,40 +243,18 @@ paginationConfig =
 end = checkpoint 'set config', end
 DIR = __dirname
 
-projEnrichFunc = (entry) ->
-  tags = if entry.language then [entry.language.toLowerCase()] else []
-  _description = entry.description.toLowerCase().split(' ')
-  description = (d.replace(')', '').replace('(', '') for d in _description)
+addLess = (entry) -> _.get descriptions, entry.name, ''
+addFeatured = (entry) -> 'featured' in entry.topics
 
-  vizList = [
-    'visualization', 'viz', 'visualizer', 'graph', 'chart', 'displays', '4w',
-    '3w']
+addTags = (entry) ->
+  tags = (tag for tag in entry.topics when tag isnt 'featured')
 
-  if _.intersection(vizList, description).length
-    tags.push 'visualization'
-
-  if (
-    _.intersection(['hdx', 'ckan'], description).length or
-    ~entry.name.toLowerCase().indexOf('hdx') or
-    ~entry.name.toLowerCase().indexOf('scraper')
-  )
-    tags.push 'open data'
-
-  if ~entry.name.toLowerCase().indexOf('api')
-    tags.push 'api'
-
-  if _.intersection(['stock', 'portfolio', 'ofx', 'qif'], description).length
-    tags.push 'finance'
-
-  if _.intersection(['application', 'app', 'apps', 'webapp'], description).length
-    tags.push 'app'
-
-  dataList = ['csv', 'json', 'data', 'analysis', 'processing']
-
-  if _.intersection(dataList, description).length
-    tags.push 'data'
+  if entry.language
+    tags.push helpers.slug entry.language
 
   tags
+
+addTitle = (entry) -> entry.session_name or entry.event_name
 
 gallEnrichFunc = (entry) ->
   tags = _.filter entry.tags.split(' '), (tag) ->
@@ -314,12 +310,19 @@ app = new Metalsmith(DIR)
     source: 'data'
     extract: gallery: 'photoset.photo'
     enrich:
-      portfolio: [{field: 'tags', func: projEnrichFunc}]
+      portfolio: [
+        {field: 'tags', func: addTags}
+        {field: 'less', func: addLess}
+        {field: 'featured', func: addFeatured}]
       gallery: [
         {field: 'location', func: (entry) -> reverseGeoCode(entry).location}
         {field: 'country', func: (entry) -> reverseGeoCode(entry).country}
         {field: 'tags', func: gallEnrichFunc}
         {field: 'description', func: (entry) -> ''}]
+
+      podium: [
+        {field: 'title', func: addTitle}
+      ]
 
     filter:
       portfolio: [
@@ -330,7 +333,7 @@ app = new Metalsmith(DIR)
       portfolio: [
         'id', 'name', 'html_url', 'description', 'fork', 'homepage',
         'size', 'watchers', 'forks', 'created_at', 'updated_at', 'language',
-        'stargazers_count', 'open_issues', 'tags']
+        'stargazers_count', 'open_issues', 'tags', 'less', 'topics', 'featured']
 
       gallery: [
         'id', 'title', 'views', 'datetaken', 'latitude', 'longitude', 'url_sq',
@@ -351,7 +354,10 @@ app = new Metalsmith(DIR)
   .use time plugin: 'image'
   .use markdown()
   .use time plugin: 'markdown'
-  .use stylus compress: false, use: [axis(), jeet()]
+  .use stylus
+    compress: false
+    use: [axis(), jeet()]
+    # debug: not config.prod
   .use time plugin: 'stylus'
   .use browserify destFolder: js
   .use time plugin: 'browserify'
@@ -372,7 +378,7 @@ app = new Metalsmith(DIR)
     groupByMonth: true
     sortBy: 'date'
     reverse: true
-    collections: ['portfolio', 'blog']
+    collections: ['portfolio', 'blog', 'podium']
   .use time plugin: 'archive'
   .use permalinks
     pattern: ':title'
@@ -386,6 +392,7 @@ app = new Metalsmith(DIR)
       {match: {collection: 'family'}, pattern: 'family/:id'}
       {match: {collection: 'friends'}, pattern: 'friends/:id'}
       {match: {collection: 'portfolio'}, pattern: 'portfolio/:title'}
+      {match: {collection: 'podium'}, pattern: 'podium/:title-:location'}
       {match: {collection: 'tagz'}, pattern: 'tagged/:slug'}
       {match: {collection: 'archive'}, pattern: 'archive/:year'}
     ]
@@ -404,8 +411,9 @@ app = new Metalsmith(DIR)
     useMetadata: true
     pretty: true
     cache: true
+    # debug: not config.prod
   .use time plugin: 'pug'
-  # .use gist debug: true
+  # .use gist debug: not config.prod
   .use feed
     collection: 'blog'
     limit: 20

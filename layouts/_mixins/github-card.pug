@@ -7,18 +7,35 @@ mixin github-card(project)
       strong.name
         a(href=url_for(project.path))= project.title
         sup.language= project.language || 'n/a'
-      a(class='button laptop', href=project.html_url, target='_blank', rel='noopener noreferrer') ★ Star
+
+      if project.featured
+        span(title='featured project') &nbsp🏆
+
+      a(class='button laptop', href=project.html_url, target='_blank', rel='noopener noreferrer', title='view on GitHub') ★ Star
 
     .content
-      +get-mentioned-photos(1, project, 'sm', true, true)
+      .mobile
+        +get-mentioned-photos(1, project, 'lg', false, true)
 
-      if project.description
-        p= project.description
-      else
-        p= project.contents
+      .mobile
+        if project.description
+          p= project.description
+        else
+          p= project.contents
 
-      if project.tags
-        +list-tags(project.tags)
+        if project.tags
+          +list-tags(project.tags)
+
+      .non-mobile
+        +get-mentioned-photos(1, project, 'sm', true, true)
+
+        if project.description
+          p= project.description
+        else
+          p= project.contents
+
+        if project.tags
+          +list-tags(project.tags)
 
     .footer
       span.status <strong>#{project.stargazers_count || 0}</strong> Stars
