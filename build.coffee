@@ -104,6 +104,7 @@ collectionConfig =
       title: 'blog'
       show: true
       count: 5
+      order: 1
       image:
         src: 'team-meeting'
         title: 'Team members planning their Open Data Day presentation'
@@ -152,6 +153,7 @@ collectionConfig =
       title: 'portfolio'
       show: true
       count: 5
+      order: 3
       image:
         src: 'akili'
         title: 'U.S. choropleth'
@@ -164,6 +166,7 @@ collectionConfig =
       title: 'podium'
       show: true
       count: 3
+      order: 2
       image:
         src: 'kodi2'
         title: 'Reuben Cummings teaching a workshop on open data'
@@ -257,6 +260,7 @@ DIR = __dirname
 
 addLess = (entry) -> _.get descriptions, entry.name, ''
 addFeatured = (entry) -> 'featured' in entry.topics
+sortByCollection = (entry) -> collectionConfig[entry.collection].metadata.order
 
 addTags = (entry) ->
   tags = (tag for tag in entry.topics when tag isnt 'featured')
@@ -382,7 +386,7 @@ app = new Metalsmith(DIR)
   .use tags
     metadataKey: 'tagz'
     plural: 'tagz'
-    sortBy: 'updated'
+    sortBy: ['featured', sortByCollection, 'updated']
     reverse: true
     filter: (tags) -> not _.intersection(tags, config.hidden).length
   .use time plugin: 'tags'
