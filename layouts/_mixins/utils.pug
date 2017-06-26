@@ -34,6 +34,14 @@ mixin get-link(post, size='sm', thumbnail, long, link)
   else if post.title
     a(href=url_for(urlRef.path))= post.title
 
+mixin get-cover-photo(image)
+  - var srcset = get_srcset(image.src, {ext: 'png', source: 'local'})
+  - var src = get_src(image.src, null, {ext: 'png', source: 'local'})
+  - var img_sizes = '(min-width: 1024px) 66vw, 100vw'
+
+  .photo
+    img.fit(title=image.title, sizes=img_sizes, srcset=srcset, src=src, alt=image.title)
+
 mixin list-tags(tags, size, minCount=1)
   if tagz && tags && tags.length
     ul(class='inline-list tag-list')

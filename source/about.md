@@ -3,7 +3,8 @@ title: about
 name: about
 layout: page.pug
 collection: pages
-coverImage: kodi1
+imageSrc: kodi1
+imageTitle: Reuben Cummings giving a talk on open data
 ---
 
 ### Me

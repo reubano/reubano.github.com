@@ -104,6 +104,9 @@ collectionConfig =
       title: 'blog'
       show: true
       count: 5
+      image:
+        src: 'team-meeting'
+        title: 'Team members planning their Open Data Day presentation'
   friends:
     collection: 'gallery'
     sortBy: 'datetaken'
@@ -137,6 +140,9 @@ collectionConfig =
       title: 'gallery'
       show: true
       count: 6
+      image:
+        src: 'bird'
+        title: 'Bird at fountain'
   portfolio:
     sortBy: 'updated'
     reverse: true
@@ -146,6 +152,9 @@ collectionConfig =
       title: 'portfolio'
       show: true
       count: 5
+      image:
+        src: 'akili'
+        title: 'U.S. choropleth'
   podium:
     sortBy: 'event_date'
     reverse: true
@@ -155,6 +164,9 @@ collectionConfig =
       title: 'podium'
       show: true
       count: 3
+      image:
+        src: 'kodi2'
+        title: 'Reuben Cummings teaching a workshop on open data'
 
 paginationConfig =
   blog:

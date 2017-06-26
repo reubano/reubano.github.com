@@ -18,12 +18,8 @@ block content
   #category
     h1(class='category-title non-mobile')= page.title
 
-    - var srcset = get_srcset('kodi2', {ext: 'png', source: 'local'})
-    - var src = get_src('kodi2', null, {ext: 'png', source: 'local'})
-    - var img_sizes = '(min-width: 1024px) 66vw, 100vw'
-
-    .photo
-      img.fit(title=site.author, sizes=img_sizes, srcset=srcset, src=src, alt=site.author)
+    if collection.image
+      +get-cover-photo(collection.image)
 
     .excerpts
       div(class='category-tags non-mobile')
