@@ -145,7 +145,7 @@ collectionConfig =
         src: 'bird'
         title: 'Bird at fountain'
   portfolio:
-    sortBy: 'updated'
+    sortBy: ['featured', 'updated']
     reverse: true
     metadata:
       singular: 'project'
