@@ -12,7 +12,7 @@ tags = [
   'blog', 'python', 'clojure', 'clojurescript', 'javascript', 'mac', 'osx',
   'linux', 'investing', 'asset allocation', 'travel hacking',
   'portfolio performance', 'risk', 'web application development',
-  'restful api', 'flask', 'node', 'coffeescript']
+  'restful api', 'flask', 'node', 'coffeescript', 'entrepreneurship']
 
 module.exports =
   mode: mode
@@ -30,8 +30,8 @@ module.exports =
     version: '0.0.4'
 
     description: 'The personal website of Reuben Cummings covering' +
-      ' programming, data, finance, technology, photography, and travel.' +
-      ' When your data starts talking, I’m the one you want listening.'
+      ' programming, data, entrepreneurship, technology, photography, and ' +
+      ' travel. When your data starts talking, I’m the one you want listening.'
 
     tags: tags
     keywords: tags.join ', '

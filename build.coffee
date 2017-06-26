@@ -105,6 +105,7 @@ collectionConfig =
       show: true
       count: 5
       order: 1
+      description: 'My writings on technology and entrepreneurship'
       image:
         src: 'team-meeting'
         title: 'Team members planning their Open Data Day presentation'
@@ -141,6 +142,7 @@ collectionConfig =
       title: 'gallery'
       show: true
       count: 6
+      description: 'My photos and screen-shots'
       image:
         src: 'bird'
         title: 'Bird at fountain'
@@ -154,6 +156,7 @@ collectionConfig =
       show: true
       count: 5
       order: 3
+      description: 'My client and personal projects'
       image:
         src: 'akili'
         title: 'U.S. choropleth'
@@ -167,6 +170,7 @@ collectionConfig =
       show: true
       count: 3
       order: 2
+      description: 'My talks and workshops'
       image:
         src: 'kodi2'
         title: 'Reuben Cummings teaching a workshop on open data'
