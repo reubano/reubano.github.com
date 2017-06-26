@@ -63,7 +63,7 @@
       "jwt"
     ],
     "session_site": "https://www.facebook.com/events/1815810805311302/",
-    "content": "This month's we will discuss how to secure your API using passportjs, basic authentication, and json web tokens.",
+    "content": "This month we will discuss how to secure your API using passportjs, basic authentication, and json web tokens.",
     "session_type": "talk",
     "session_slides": "https://speakerdeck.com/reubano/securing-your-restful-api",
     "session_repo": "https://github.com/reubano/arusha-coders-api"
