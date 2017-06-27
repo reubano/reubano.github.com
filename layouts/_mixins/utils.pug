@@ -41,6 +41,7 @@ mixin get-cover-photo(image)
 
   .photo
     img.fit(title=image.title, sizes=img_sizes, srcset=srcset, src=src, alt=image.title)
+    figcaption= image.title
 
 mixin list-tags(tags, size, minCount=1)
   if tagz && tags && tags.length
