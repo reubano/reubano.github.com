@@ -250,6 +250,12 @@ section
   border-radius $border-radius
   col(1/3, cycle: 3)
 
+.gallery .category-items .thumb
+  col(1/3, uncycle: 2, cycle: 3)
+
+  @media $mobile
+    col(1/2, uncycle: 3, cycle: 2)
+
 .media
   display inline-block
   overflow hidden
