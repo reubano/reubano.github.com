@@ -108,7 +108,7 @@ collectionConfig =
       description: 'My writings on technology and entrepreneurship'
       image:
         src: 'team-meeting'
-        title: 'Team members planning their Open Data Day presentation'
+        title: 'Open Data Day attendees planning their team presentation'
   friends:
     collection: 'gallery'
     sortBy: 'datetaken'
