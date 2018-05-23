@@ -11,7 +11,7 @@
         "secret": "c3788ba887",
         "server": "4261",
         "farm": 5,
-        "photos": "35",
+        "photos": 35,
         "videos": 0,
         "title": {
           "_content": "Screenshots"
@@ -21,7 +21,7 @@
         },
         "needs_interstitial": 0,
         "visibility_can_see_set": 1,
-        "count_views": "0",
+        "count_views": "1",
         "count_comments": "0",
         "can_comment": 0,
         "date_create": "1497783993",
@@ -33,7 +33,7 @@
         "secret": "2bb96347c4",
         "server": "257",
         "farm": 1,
-        "photos": "13",
+        "photos": 14,
         "videos": 0,
         "title": {
           "_content": "Post Images"
@@ -47,7 +47,7 @@
         "count_comments": "0",
         "can_comment": 0,
         "date_create": "1481986550",
-        "date_update": "1497783284"
+        "date_update": "1498585603"
       },
       {
         "id": "72157663394312666",
@@ -55,7 +55,7 @@
         "secret": "fd2a4be30a",
         "server": "1513",
         "farm": 2,
-        "photos": "60",
+        "photos": 60,
         "videos": 0,
         "title": {
           "_content": "Nahla"
@@ -65,7 +65,7 @@
         },
         "needs_interstitial": 0,
         "visibility_can_see_set": 1,
-        "count_views": "31",
+        "count_views": "37",
         "count_comments": "0",
         "can_comment": 0,
         "date_create": "1452585803",
@@ -77,7 +77,7 @@
         "secret": "797568792f",
         "server": "2863",
         "farm": 3,
-        "photos": "11",
+        "photos": 11,
         "videos": 0,
         "title": {
           "_content": "icons"
@@ -99,7 +99,7 @@
         "secret": "8fc5eb43b9",
         "server": "7445",
         "farm": 8,
-        "photos": "26",
+        "photos": 26,
         "videos": 0,
         "title": {
           "_content": "finance"
@@ -121,7 +121,7 @@
         "secret": "db189f2f29",
         "server": "3777",
         "farm": 4,
-        "photos": "23",
+        "photos": 22,
         "videos": 0,
         "title": {
           "_content": "web"
@@ -143,7 +143,7 @@
         "secret": "e569529d6b",
         "server": "7448",
         "farm": 8,
-        "photos": "3",
+        "photos": 3,
         "videos": 0,
         "title": {
           "_content": "creatives"
@@ -165,7 +165,7 @@
         "secret": "98baea96db",
         "server": "3309",
         "farm": 4,
-        "photos": "80",
+        "photos": 80,
         "videos": 0,
         "title": {
           "_content": "Travels"
@@ -175,7 +175,7 @@
         },
         "needs_interstitial": 0,
         "visibility_can_see_set": 1,
-        "count_views": "24",
+        "count_views": "36",
         "count_comments": "0",
         "can_comment": 0,
         "date_create": "1273311390",
@@ -187,7 +187,7 @@
         "secret": "e657779370",
         "server": "2783",
         "farm": 3,
-        "photos": "11",
+        "photos": 11,
         "videos": 0,
         "title": {
           "_content": "Misc."
@@ -197,7 +197,7 @@
         },
         "needs_interstitial": 0,
         "visibility_can_see_set": 1,
-        "count_views": "5",
+        "count_views": "8",
         "count_comments": "0",
         "can_comment": 0,
         "date_create": "1273257728",
@@ -209,7 +209,7 @@
         "secret": "cf97b74caa",
         "server": "4056",
         "farm": 5,
-        "photos": "14",
+        "photos": 14,
         "videos": 0,
         "title": {
           "_content": "Arusha"
@@ -219,7 +219,7 @@
         },
         "needs_interstitial": 0,
         "visibility_can_see_set": 1,
-        "count_views": "6",
+        "count_views": "10",
         "count_comments": "0",
         "can_comment": 0,
         "date_create": "1270718955",
@@ -231,7 +231,7 @@
         "secret": "1ee610a73b",
         "server": "4054",
         "farm": 5,
-        "photos": "3",
+        "photos": 3,
         "videos": 0,
         "title": {
           "_content": "GCS"
@@ -241,7 +241,7 @@
         },
         "needs_interstitial": 0,
         "visibility_can_see_set": 1,
-        "count_views": "3",
+        "count_views": "4",
         "count_comments": "0",
         "can_comment": 0,
         "date_create": "1269940054",
