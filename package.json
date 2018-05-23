@@ -23,7 +23,6 @@
     "serve": true
   },
   "scripts": {
-    "deploy": "gh-pages-deploy",
     "update": "./update",
     "clean": "rimraf README.md source plugins layouts data package.json *.coffee",
     "start": "SITE=$npm_package_config_site SERVE=$npm_package_config_serve coffee build.coffee",
@@ -77,7 +76,6 @@
     "winston": "^2.3.0"
   },
   "devDependencies": {
-    "gh-pages-deploy": "^0.4.2",
     "coffeelint": "^1.16.0"
   }
 }
