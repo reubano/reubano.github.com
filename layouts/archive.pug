@@ -69,13 +69,8 @@ block content
           ul.tl
             li
               - var href = archive.name + '/' + period.year
-              if page.month
-
-                h2
-                  a(href=url_for(href))= period.year
-              else
-                h2= period.year
-
+              h2
+                a(href=url_for(href))= period.year
 
             li
               h2 title
