@@ -17,6 +17,13 @@ block content
 
   #category
     h1(class='category-title non-mobile')= page.title
+
+    if collection.description
+      p= collection.description
+
+    if collection.image
+      +get-cover-photo(collection.image)
+
     .portfolio
       div(class='category-tags non-mobile')
         +list-tags(tags_by_collection(collection), null, 6)

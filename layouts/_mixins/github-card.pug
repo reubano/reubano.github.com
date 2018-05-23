@@ -17,7 +17,6 @@ mixin github-card(project)
       .mobile
         +get-mentioned-photos(1, project, 'lg', false, true)
 
-      .mobile
         if project.description
           p= project.description
         else

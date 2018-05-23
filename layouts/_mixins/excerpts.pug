@@ -13,6 +13,9 @@ mixin blog-excerpt(post)
       h2(itemprop='name')
         a(href=url_for(post.path))= post.title
 
+        if post.featured
+          span(title='featured post') &nbsp🏆
+
       p(class='small non-mobile', itemprop='datePublished', content=postISO)
         | written by #{site.author} on&nbsp;
         a(href=url_for(archiveURL))= postdate
@@ -55,6 +58,9 @@ mixin podium-excerpt(talk)
 
       h2(itemprop='name')
         a(href=url_for(talk.path))= talk.title
+
+        if talk.featured
+          span(title='featured ' + talk.session_type) &nbsp🏆
 
       p(itemprop='doorTime', content=talkISO)
         if upcomingTalk

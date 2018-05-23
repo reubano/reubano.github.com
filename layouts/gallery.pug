@@ -17,13 +17,11 @@ block content
   #category
     h1(class='category-title non-mobile')= page.title
 
-    - var srcset = get_srcset('bird', {ext: 'png', source: 'local'})
-    - var src = get_src('bird', null, {ext: 'png', source: 'local'})
-    - var img_sizes = '(min-width: 1024px) 66vw, 100vw'
-    - var img_title = 'Bird at fountain'
+    if collection.description
+      p= collection.description
 
-    .photo
-      img.fit(title=img_title, sizes=img_sizes, srcset=srcset, src=src, alt=img_title)
+    if collection.image
+      +get-cover-photo(collection.image)
 
     .gallery
       if page.name == 'gallery'

@@ -1,6 +1,30 @@
 [
   {
     "featured": true,
+    "event_name": "Data Day Mexico",
+    "event_site": "https://sg.com.mx/dataday/",
+    "event_type": "conference",
+    "location": "Mexico City, Mexico",
+    "session_date": "2018-03-15 13:00, America/Mexico_City",
+    "session_duration": 40,
+    "event_date": "2018-03-15",
+    "event_end": "2018-03-15",
+    "session_name": "You might not need Pandas",
+    "tags": [
+      "meza",
+      "python",
+      "pandas",
+      "functional-programming",
+      "data"
+    ],
+    "session_type": "talk",
+    "session_site": "https://sg.com.mx/dataday/session/you-might-not-need-pandas/",
+    "content": "Using pure Python code snippets and examples from my data analysis library meza, this talk will walk you through some of the common tabular data tasks. In the process, I will teach you alternatives to their Pandas counterparts.",
+    "session_video": "https://www.youtube.com/watch?v=bpn2G3TAAYY&list=PL5fKnSm4M_VWxdWRwNuXSxQ3TsYFG4C_l&index=6",
+    "session_slides": "https://speakerdeck.com/reubano/you-might-not-need-pandas"
+  },
+  {
+    "featured": true,
     "event_name": "PyCon ZA",
     "event_site": "https://2016.za.pycon.org/",
     "event_type": "conference",
@@ -63,7 +87,7 @@
       "jwt"
     ],
     "session_site": "https://www.facebook.com/events/1815810805311302/",
-    "content": "This month's we will discuss how to secure your API using passportjs, basic authentication, and json web tokens.",
+    "content": "This month we will discuss how to secure your API using passportjs, basic authentication, and json web tokens.",
     "session_type": "talk",
     "session_slides": "https://speakerdeck.com/reubano/securing-your-restful-api",
     "session_repo": "https://github.com/reubano/arusha-coders-api"
@@ -322,7 +346,7 @@
     "session_slides": "https://speakerdeck.com/reubano/open-data-day-arusha"
   },
   {
-    "featured": true,
+    "featured": false,
     "event_name": "Data Science Africa",
     "event_site": "http://www.datascienceafrica.org/dsa2017/#workshop",
     "event_type": "conference",

@@ -104,6 +104,11 @@ collectionConfig =
       title: 'blog'
       show: true
       count: 5
+      order: 1
+      description: 'My writings on technology and entrepreneurship'
+      image:
+        src: 'team-meeting'
+        title: 'Open Data Day attendees planning their team presentation'
   friends:
     collection: 'gallery'
     sortBy: 'datetaken'
@@ -137,8 +142,12 @@ collectionConfig =
       title: 'gallery'
       show: true
       count: 6
+      description: 'My photos and screen-shots'
+      image:
+        src: 'bird'
+        title: 'Bird at fountain'
   portfolio:
-    sortBy: 'updated'
+    sortBy: ['featured', 'updated']
     reverse: true
     metadata:
       singular: 'project'
@@ -146,6 +155,11 @@ collectionConfig =
       title: 'portfolio'
       show: true
       count: 5
+      order: 3
+      description: 'My client and personal projects'
+      image:
+        src: 'akili'
+        title: 'U.S. choropleth'
   podium:
     sortBy: 'event_date'
     reverse: true
@@ -155,6 +169,11 @@ collectionConfig =
       title: 'podium'
       show: true
       count: 3
+      order: 2
+      description: 'My talks and workshops'
+      image:
+        src: 'kodi2'
+        title: 'Reuben Cummings teaching a workshop on open data'
 
 paginationConfig =
   blog:
@@ -245,6 +264,7 @@ DIR = __dirname
 
 addLess = (entry) -> _.get descriptions, entry.name, ''
 addFeatured = (entry) -> 'featured' in entry.topics
+sortByCollection = (entry) -> collectionConfig[entry.collection].metadata.order
 
 addTags = (entry) ->
   tags = (tag for tag in entry.topics when tag isnt 'featured')
@@ -370,7 +390,7 @@ app = new Metalsmith(DIR)
   .use tags
     metadataKey: 'tagz'
     plural: 'tagz'
-    sortBy: 'updated'
+    sortBy: ['featured', sortByCollection, 'updated']
     reverse: true
     filter: (tags) -> not _.intersection(tags, config.hidden).length
   .use time plugin: 'tags'
