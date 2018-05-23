@@ -15,13 +15,13 @@ if upcomingEvents.length
           a(href=url_for(talk.path)) #{talk.event_name}
           |&nbsp;in #{talk.location}
 
-      li(class='meta tablet')
+      li(class='meta tablet laptop')
         a(href=url_for(talk.path))= eventDate.date
         |&nbsp;◆&nbsp;
         a(href=talk.event_site, target='_blank', rel='noopener noreferrer')= talk.event_name
         |&nbsp;[#{talk.session_type}] ◆ #{talk.location}
 
-      li(class='meta laptop big')
+      li(class='meta big')
         |#{eventDate.date} ◆&nbsp;
         a(href=url_for(talk.path))= talk.session_name
         |&nbsp;◆&nbsp;
