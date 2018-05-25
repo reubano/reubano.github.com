@@ -26,7 +26,7 @@ block content
   article.article(itemscope itemtype='http://schema.org/Article')
     h2.non-mobile(itemprop='name')= page.title
     p(class='small non-mobile', itemprop='datePublished', content=postISO)
-      | taken by #{site.author} on&nbsp; #{postdate}
+      | taken by #{site.author} on #{postdate}
 
       if page.location
         |&nbsp;in #{page.location}
@@ -38,7 +38,7 @@ block content
         figcaption= page.description
 
     p(class='small mobile', itemprop='datePublished', content=postISO)
-      | taken by #{site.author} on&nbsp; #{postdate}
+      | taken by #{site.author} on #{postdate}
 
       if page.location
         |&nbsp;in #{page.location}
