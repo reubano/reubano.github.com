@@ -2920,7 +2920,6 @@
     "topics": [
       "app",
       "chaplin",
-      "featured",
       "leaflet",
       "map",
       "visualization"
@@ -7830,7 +7829,6 @@
     "license": null,
     "topics": [
       "blog",
-      "featured",
       "metalsmith",
       "static-site"
     ],
