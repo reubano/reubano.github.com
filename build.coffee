@@ -161,7 +161,7 @@ collectionConfig =
         src: 'akili'
         title: 'U.S. choropleth'
   podium:
-    sortBy: 'event_date'
+    sortBy: ['featured', 'event_date']
     reverse: true
     metadata:
       singular: 'talk'
