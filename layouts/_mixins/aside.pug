@@ -33,6 +33,10 @@ mixin truncate-posts(posts, count, name, size='sm', thumbnail=true, force, link)
 
     if name == 'blog'
       a.link(href=url_for(post.path)) read full post
+    else if name == 'portfolio'
+      a.link(href=url_for(post.path)) view project
+    else if name == 'podium'
+      a.link(href=url_for(post.path)) view talk
 
 mixin get-recent(category, count, filterby)
   +pluralize('recent', category, count)
