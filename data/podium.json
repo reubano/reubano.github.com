@@ -20,7 +20,7 @@
     "session_type": "talk",
     "session_site": "https://sg.com.mx/dataday/session/you-might-not-need-pandas/",
     "content": "Using pure Python code snippets and examples from my data analysis library meza, this talk will walk you through some of the common tabular data tasks. In the process, I will teach you alternatives to their Pandas counterparts.",
-    "session_video": "https://www.youtube.com/watch?v=bpn2G3TAAYY&list=PL5fKnSm4M_VWxdWRwNuXSxQ3TsYFG4C_l&index=6",
+    "session_video": "https://www.youtube.com/watch?v=imBiAAvlwRw&list=PL5fKnSm4M_VWxdWRwNuXSxQ3TsYFG4C_l&index=6",
     "session_slides": "https://speakerdeck.com/reubano/you-might-not-need-pandas"
   },
   {
