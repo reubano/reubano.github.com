@@ -5,11 +5,9 @@
 - var pageDesc = page.description || (page.less ? page.less.toString() : null) || site.description
 - var pageImage = url_for(page.image || 'images/logo.png')
 - var pageContentType = page.contentType || 'article'
-- var fnf = (pageTags.indexOf('friends') >= 0) || (pageTags.indexOf('family') >= 0)
-- var robotValue = fnf ? 'none' : 'index,follow'
 
 //- https://moz.com/blog/meta-data-templates-123
-meta(name='robots', content=robotValue)
+meta(name='robots', content='index,follow')
 
 //- Google data
 meta(itemprop='name', content=pageTitle)

@@ -24,71 +24,27 @@ block content
       div(class='hd two-cols')
         include _partials/index-text
 
-  #podium.non-desktop
-    .mobile
-      h2
-        a(href=url_for('podium')) podium
-
-      include _partials/upcoming
-
-      div
-        +get-featured(podium)
-
-    .tablet
-      include _partials/upcoming
-
-    .lapdesk
-      h2
-        a(href=url_for('podium')) podium
-
-      include _partials/upcoming
-
-      div
-        +get-featured(podium)
+  #podium
+    include _partials/upcoming
 
   #categories
     each category in collections
       if category.show
         div(class='category category-' + category.name)
-          if category.name === 'podium'
-            .tablet
-              h2
-                a(href=url_for(category.name))= category.name
+          h2
+            a(href=url_for(category.name))= category.name
 
-              +get-featured(category)
+          +get-featured(category)
 
-            .desktop
-              h2
-                a(href=url_for(category.name))= category.name
-
-              +get-featured(category)
-              +get-recent(category, category.count, category.filterby)
-          else if category.name === 'gallery'
-            h2
-              a(href=url_for(category.name))= category.name
-
-            +get-featured(category)
-
-            .lapdesk
-              +get-recent(category, category.count, category.filterby)
-          else
-            h2
-              a(href=url_for(category.name))= category.name
-
-            +get-featured(category)
-
-            .laptop
-              +get-recent(category, category.count, category.filterby)
+  #recents
+    each category in collections
+      if category.show
+        div(class='category category-' + category.name)
+          .lapdesk
+            +get-recent(category, category.count, category.filterby)
 
   div(id='about', class='about-home non-hd')
     include _partials/about
-
-  #photos.hd
-    div(class='category category-gallery')
-      h2
-        a(href=url_for('gallery')) recent gallery photos
-
-      +get-recent(gallery, 8)
 
 block alt
   section#alt.alt

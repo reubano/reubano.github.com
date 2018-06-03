@@ -9,8 +9,7 @@ imageTitle: Reuben Cummings giving a talk on open data
 
 ### Me
 
-Hi, I'm Reuben Cummings, an [open source enthusiast](/blog/) and [Pythonista](/tagged/python/)
-who bounces between [Chicago, IL](//goo.gl/maps/98QbKDXjsD42) and [Arusha, Tanzania](//goo.gl/maps/33NnTaeekys). I believe the ability to understand data is key to making informed decisions. To this end, I have [made it my mission](/portfolio/) to lower the barriers to transforming data and extracting meaningful information from it.
+Hi, I'm Reuben Cummings, a [Peoria](//goo.gl/maps/NdYAEhF1yBv) native [open source enthusiast](/blog/) and [Pythonista](/tagged/python/). I believe the ability to understand data is key to making informed decisions. To this end, I have [made it my mission](/portfolio/) to lower the barriers to transforming data and extracting meaningful information from it.
 
 With this data driven mindset, I help software companies eliminate inefficiencies and identify how customers are using their products and services. Whether you suffer from problems with customer engagement, churn, operating expenses, or productivity, [we can work together](/contact/) to devise a solution. When your data starts talking, I’m the one you want listening.<!-- more -->
 
@@ -37,7 +36,7 @@ And in the course of answering those questions, I may employ any of a number of 
   - A/B testing
   - data analysis and [visualization](/tagged/visualization/)
 
-My interests span technology, [finance](/tagged/finance/), healthcare, and entrepreneurship. I also enjoy [taking photos](/gallery/) and [traveling](/tagged/travel/).
+My interests span technology, [finance](/tagged/finance/), healthcare, entrepreneurship, and [traveling](/tagged/travel/).
 
 ### My Bio
 
@@ -73,7 +72,7 @@ I started investing at the end of 1999 at the age of 17. Unknown to me at the ti
 
 #### _Travel_
 
-I love to travel and have so far been to around 20 countries including 13 in Africa. I occasionally post pictures from my travels [here](/gallery/).
+I love to travel and have so far been to around 20 countries including 13 in Africa. I occasionally post pictures from my travels [here](//www.flickr.com/photos/reubano/albums/72157623891823165).
 
 #### _Other_
 

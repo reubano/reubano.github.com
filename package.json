@@ -1,6 +1,6 @@
 {
   "name": "reubano",
-  "version": "0.24.0",
+  "version": "0.25.0",
   "description": "Reuben's website",
   "repository": {
     "type": "git",
@@ -23,7 +23,6 @@
     "serve": true
   },
   "scripts": {
-    "deploy": "gh-pages-deploy",
     "update": "./update",
     "clean": "rimraf README.md source plugins layouts data package.json *.coffee",
     "start": "SITE=$npm_package_config_site SERVE=$npm_package_config_serve coffee build.coffee",
@@ -41,16 +40,16 @@
     "cheerio": "^0.22.0",
     "chokidar": "^1.6.1",
     "clean-css": "^3.3.0",
-    "cloudinary": "^1.4.6",
-    "coffee-script": "^1.10.0",
+    "cloudinary": "^1.11.0",
     "coffeeify": "^2.0.1",
+    "coffeescript": "^1.11.0",
     "highlight.js": "^9.9.0",
     "http-status": "^0.2.3",
     "jeet": "^6.1.2",
-    "lodash": "^4.15.0",
+    "lodash": "^4.17.10",
     "lodash.frompairs": "^4.0.1",
     "lunr": "^0.7.1",
-    "marked": "^0.3.6",
+    "marked": "^0.4.0",
     "metalsmith": "^2.3.0",
     "metalsmith-changed": "^3.0.0",
     "metalsmith-clean": "^0.0.0",
@@ -59,25 +58,24 @@
     "metalsmith-html-minifier": "^2.1.0",
     "metalsmith-if": "^0.1.1",
     "metalsmith-linkcheck": "^0.2.8",
-    "metalsmith-livereload": "0.0.2",
+    "metalsmith-livereload": "^0.1.0",
     "metalsmith-permalinks": "^0.5.0",
     "metalsmith-sitemap": "^1.1.0",
-    "metalsmith-uglify": "^1.5.1",
+    "metalsmith-uglify": "^2.2.0",
     "moment-timezone": "^0.5.13",
     "multimatch": "^2.1.0",
     "node-static": "^0.7.9",
     "open": "0.0.5",
-    "pug": "^2.0.0-beta4",
+    "pug": "^2.0.3",
     "rimraf": "^2.5.4",
     "rss": "^1.1.0",
     "slug": "^0.9.1",
-    "stylus": "^0.52.0",
+    "stylus": "^0.54.5",
     "urijs": "^1.17.0",
     "url": "^0.11.0",
     "winston": "^2.3.0"
   },
   "devDependencies": {
-    "gh-pages-deploy": "^0.4.2",
     "coffeelint": "^1.16.0"
   }
 }

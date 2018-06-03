@@ -43,11 +43,13 @@ mixin get-cover-photo(image)
     img.fit(title=image.title, sizes=img_sizes, srcset=srcset, src=src, alt=image.title)
     figcaption= image.title
 
-mixin list-tags(tags, size, minCount=1)
+mixin list-tags(tags, size, collection, minCount=1)
   if tagz && tags && tags.length
     ul(class='inline-list tag-list')
       for tag in tagz.data
-        if (tags.indexOf(tag.name) > -1) && (tag.sanitizedLength >= minCount)
+        - var sanitizedLength = collection ? tag.sanitizedLength[collection.name] : tag.sanitizedLength.all
+
+        if (tags.indexOf(tag.name) > -1) && (sanitizedLength >= minCount)
           - var tagURL = url_for(tag.path)
 
           li

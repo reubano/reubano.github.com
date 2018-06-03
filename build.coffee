@@ -84,7 +84,9 @@ templateHelpers =
   past: helpers.past
   get_event_date: helpers.getEventDate
 
-fafFilter = (item) -> not _.intersection(item.tags, config.hidden).length
+isHiddenFilter = (item) -> not _.intersection(item.tags, config.hidden).length
+isGalleryFilter = (item) ->
+  item.collection isnt 'gallery' and isHiddenFilter(item)
 
 collectionConfig =
   home: 'index.html'
@@ -109,43 +111,17 @@ collectionConfig =
       image:
         src: 'team-meeting'
         title: 'Open Data Day attendees planning their team presentation'
-  friends:
-    collection: 'gallery'
-    sortBy: 'datetaken'
-    reverse: true
-    filter: (item) -> 'friends' in item.tags
-    metadata:
-      singular: 'photo'
-      filterby: 'datetaken'
-      plural: 'photos'
-      title: 'friends'
-      count: 6
-  family:
-    collection: 'gallery'
-    sortBy: 'datetaken'
-    reverse: true
-    filter: (item) -> 'family' in item.tags
-    metadata:
-      singular: 'photo'
-      filterby: 'datetaken'
-      plural: 'photos'
-      title: 'family'
-      count: 6
   gallery:
     sortBy: 'datetaken'
     reverse: true
-    filter: fafFilter
+    filter: isHiddenFilter
     metadata:
       singular: 'photo'
       filterby: 'datetaken'
       plural: 'photos'
       title: 'gallery'
-      show: true
-      count: 6
-      description: 'My photos and screen-shots'
-      image:
-        src: 'bird'
-        title: 'Bird at fountain'
+      show: false
+      description: 'My portfolio screen-shots'
   portfolio:
     sortBy: ['featured', 'updated']
     reverse: true
@@ -161,7 +137,7 @@ collectionConfig =
         src: 'akili'
         title: 'U.S. choropleth'
   podium:
-    sortBy: 'event_date'
+    sortBy: ['featured', 'event_date']
     reverse: true
     metadata:
       singular: 'talk'
@@ -181,21 +157,6 @@ paginationConfig =
     layout: 'blog.pug'
     path: 'blog/page/:num/index.html'
     pageMetadata: title: 'blog', name: 'blog'
-  family:
-    perPage: 12
-    layout: 'gallery.pug'
-    path: 'family/page/:num/index.html'
-    pageMetadata: title: 'family', name: 'family'
-  friends:
-    perPage: 12
-    layout: 'gallery.pug'
-    path: 'friends/page/:num/index.html'
-    pageMetadata: title: 'friends', name: 'friends'
-  gallery:
-    perPage: 12
-    layout: 'gallery.pug'
-    path: 'gallery/page/:num/index.html'
-    pageMetadata: title: 'gallery', name: 'gallery'
   portfolio:
     perPage: 9
     layout: 'portfolio.pug'
@@ -213,7 +174,7 @@ paginationConfig =
     page: []
     path: 'tagz/page/:num/index.html'
     pageMetadata: title: 'tagz', name: 'tagz'
-    fileFilter: fafFilter
+    fileFilter: isGalleryFilter
   tagged:
     collection: 'tagz'
     perPage: 12
@@ -223,7 +184,7 @@ paginationConfig =
     firstPage: 'tagged/:slug/index.html'
     path: 'tagged/:slug/page/:num/index.html'
     pageMetadata: title: 'tagged :slug', name: 'tagged :slug'
-    fileFilter: fafFilter
+    fileFilter: isGalleryFilter
   archive:
     perPage: 15
     layout: 'archive.pug'
@@ -280,45 +241,7 @@ gallEnrichFunc = (entry) ->
   tags = _.filter entry.tags.split(' '), (tag) ->
     tag not in ['facebook', 'iphotorating5']
 
-  tags = if tags[0] is '' then [] else tags
-
-  if entry.source in ['nahla', 'arusha']
-    tags.push 'family'
-  else if entry.source in ['misc', 'arusha']
-    tags.push 'friends'
-  else if _.intersection(tags, config.hidden).length
-    false
-  else if entry.source is 'travel'
-    tags.push 'travel'
-
-  if entry.country
-    tags.push entry.country.toLowerCase()
-
-  if entry.latitude and entry.longitude
-    tags.push 'geocoded'
-  else
-    tags.push 'uncoded'
-
-  tags
-
-geocodes =
-  '-1,37': city: 'Nairobi', country: 'Kenya', location: 'Nairobi, Kenya'
-  '-10,34': city: 'Kyela', country: 'Tanzania', location: 'Kyela, Tanzania'
-  '-3,37': city: 'Arusha', country: 'Tanzania', location: 'Arusha, Tanzania'
-  '-30,29': city: 'Sanipass', country: 'South Africa', location: 'Sanipass, South Africa'
-  '-6,39': city: 'Zanzibar', country: 'Tanzania', location: 'Zanzibar, Tanzania'
-  '-6,40': city: 'Zanzibar', country: 'Tanzania', location: 'Zanzibar, Tanzania'
-  '-9,33': city: 'Mbeya', country: 'Tanzania', location: 'Mbeya, Tanzania'
-  '42,-71': city: 'Boston', state: 'MA', country: 'USA', location: 'Boston, MA'
-  '9,39': city: 'Addis Ababa', country: 'Ethiopia', location: 'Addis Ababa, Ethiopia'
-
-reverseGeoCode = (entry) ->
-  if entry.latitude and entry.longitude
-    key = "#{Math.round(entry.latitude)},#{Math.round(entry.longitude)}"
-    defValue = city: 'Unknown', country: 'Unknown', location: 'Unknown'
-    _.get geocodes, key, defValue
-  else
-    {}
+  if tags[0] is '' then [] else tags
 
 app = new Metalsmith(DIR)
   .use time plugin: 'start', start: end
@@ -335,8 +258,6 @@ app = new Metalsmith(DIR)
         {field: 'less', func: addLess}
         {field: 'featured', func: addFeatured}]
       gallery: [
-        {field: 'location', func: (entry) -> reverseGeoCode(entry).location}
-        {field: 'country', func: (entry) -> reverseGeoCode(entry).country}
         {field: 'tags', func: gallEnrichFunc}
         {field: 'description', func: (entry) -> ''}]
 
@@ -361,7 +282,7 @@ app = new Metalsmith(DIR)
         'url_l', 'url_h', 'url_k', 'url_o', 'tags', 'name', 'description',
         'width_sq', 'width_t', 'width_q', 'width_s','width_n', 'width_m',
         'width_e', 'width_z', 'width_c', 'width_l', 'width_h', 'width_k',
-        'width_o', 'place_id', 'woeid', 'lastupdate', 'location', 'country']
+        'width_o', 'place_id', 'woeid', 'lastupdate']
 
   .use time plugin: 'json2files'
   # .use changed force: true
@@ -392,7 +313,8 @@ app = new Metalsmith(DIR)
     plural: 'tagz'
     sortBy: ['featured', sortByCollection, 'updated']
     reverse: true
-    filter: (tags) -> not _.intersection(tags, config.hidden).length
+    tagsFilter: (tags) -> not _.intersection(tags, config.hidden).length
+    dataFilter: (data) -> data.collection isnt 'gallery'
   .use time plugin: 'tags'
   .use archive
     groupByMonth: true
@@ -408,9 +330,6 @@ app = new Metalsmith(DIR)
       {match: {collection: 'home'}, pattern: ''}
       {match: {collection: 'pages'}, pattern: ':title'}
       {match: {collection: 'blog'}, pattern: 'blog/:title'}
-      {match: {collection: 'gallery'}, pattern: 'gallery/:id'}
-      {match: {collection: 'family'}, pattern: 'family/:id'}
-      {match: {collection: 'friends'}, pattern: 'friends/:id'}
       {match: {collection: 'portfolio'}, pattern: 'portfolio/:title'}
       {match: {collection: 'podium'}, pattern: 'podium/:title-:location'}
       {match: {collection: 'tagz'}, pattern: 'tagged/:slug'}

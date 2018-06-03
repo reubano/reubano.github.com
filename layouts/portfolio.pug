@@ -26,7 +26,7 @@ block content
 
     .portfolio
       div(class='category-tags non-mobile')
-        +list-tags(tags_by_collection(collection), null, 6)
+        +list-tags(tags_by_collection(collection), null, collection, 3)
 
       .category-items
         if collection.pagination

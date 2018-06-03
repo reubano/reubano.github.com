@@ -4,11 +4,7 @@ mixin truncate-posts(posts, count, name, size='sm', thumbnail=true, force, link)
   - var truncated = posts.slice(0, count)
   - var gtOne = truncated.length && count && count > 1
 
-  if gtOne && ['gallery', 'friends', 'family'].indexOf(name) > -1
-    .gallery
-      each post in truncated
-        +get-link(post, size, thumbnail)
-  else if gtOne
+  if gtOne
     ul.bordered-count
       each post in truncated
         li
@@ -33,6 +29,10 @@ mixin truncate-posts(posts, count, name, size='sm', thumbnail=true, force, link)
 
     if name == 'blog'
       a.link(href=url_for(post.path)) read full post
+    else if name == 'portfolio'
+      a.link(href=url_for(post.path)) view project
+    else if name == 'podium'
+      a.link(href=url_for(post.path)) view talk
 
 mixin get-recent(category, count, filterby)
   +pluralize('recent', category, count)
@@ -77,10 +77,10 @@ mixin get-site(collection, minCount=1, format='MMM &lsquo;YY')
         for tag in collection.data
           - var isHidden = hidden.indexOf(tag.name) > -1
 
-          if !isHidden && tag.sanitizedLength >= minCount
+          if !isHidden && tag.sanitizedLength.all >= minCount
             li.archive-list-item
               a.archive-list-link(href=url_for(tag.path))= tag.name
-                span.archive-list-count= tag.sanitizedLength
+                span.archive-list-count= tag.sanitizedLength.all
   else
     +pluralize('site', blog, 2)
       ul.inline-list
