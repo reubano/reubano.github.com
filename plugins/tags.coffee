@@ -12,6 +12,7 @@ module.exports = (options) ->
   plural = options.plural or 'tags'
   sortBy = options.sortBy or 'title'
   tagsFilter = options.tagsFilter
+  dataFilter = options.dataFilter
   reverse = options.reverse
 
   past = pattern.split('/')[0]
@@ -57,6 +58,9 @@ module.exports = (options) ->
 
           data[handle].push(tag)
           tagCache[tag].files.push(data)
+
+        if dataFilter and not dataFilter data
+          continue
 
         for tag in data[handle]
           sanitizedLength = tagCache[tag].sanitizedLength

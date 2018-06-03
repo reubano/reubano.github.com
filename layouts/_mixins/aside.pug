@@ -4,11 +4,7 @@ mixin truncate-posts(posts, count, name, size='sm', thumbnail=true, force, link)
   - var truncated = posts.slice(0, count)
   - var gtOne = truncated.length && count && count > 1
 
-  if gtOne && ['gallery', 'friends', 'family'].indexOf(name) > -1
-    .gallery
-      each post in truncated
-        +get-link(post, size, thumbnail)
-  else if gtOne
+  if gtOne
     ul.bordered-count
       each post in truncated
         li

@@ -36,7 +36,7 @@ And in the course of answering those questions, I may employ any of a number of 
   - A/B testing
   - data analysis and [visualization](/tagged/visualization/)
 
-My interests span technology, [finance](/tagged/finance/), healthcare, and entrepreneurship. I also enjoy [taking photos](/gallery/) and [traveling](/tagged/travel/).
+My interests span technology, [finance](/tagged/finance/), healthcare, entrepreneurship, and [traveling](/tagged/travel/).
 
 ### My Bio
 
@@ -72,7 +72,7 @@ I started investing at the end of 1999 at the age of 17. Unknown to me at the ti
 
 #### _Travel_
 
-I love to travel and have so far been to around 20 countries including 13 in Africa. I occasionally post pictures from my travels [here](/gallery/).
+I love to travel and have so far been to around 20 countries including 13 in Africa. I occasionally post pictures from my travels [here](//www.flickr.com/photos/reubano/albums/72157623891823165).
 
 #### _Other_
 

@@ -8,7 +8,7 @@ URLS =
   api: if prod then 'blog-subs-api.herokuapp.com' else 'localhost:5000'
 
 tags = [
-  'programming', 'data', 'finance', 'technology', 'photography',  'travel',
+  'programming', 'data', 'finance', 'technology',  'travel',
   'blog', 'python', 'clojure', 'clojurescript', 'javascript', 'mac', 'osx',
   'linux', 'investing', 'asset allocation', 'travel hacking',
   'portfolio performance', 'risk', 'web application development',
@@ -18,7 +18,7 @@ module.exports =
   mode: mode
   prod: prod
   serve: process.env.SERVE
-  hidden: ['friends', 'family']
+  hidden: []
   site:
     name: 'reubano'
     author: 'Reuben Cummings'
