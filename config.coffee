@@ -29,9 +29,10 @@ module.exports =
     api: URLS.api
     version: '0.0.4'
 
-    description: 'The personal website of Reuben Cummings covering' +
-      ' programming, data, entrepreneurship, technology, photography, and ' +
-      ' travel. When your data starts talking, I’m the one you want listening.'
+    description: "I'm Reuben Cummings, an open source enthusiast and " +
+      'Pythonista. I help software companies eliminate inefficiencies and ' +
+      'identify how customers are using their products and services. When' +
+      ' your data starts talking, I’m the one you want listening.'
 
     tags: tags
     keywords: tags.join ', '
