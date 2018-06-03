@@ -46,7 +46,7 @@ module.exports = (options) ->
 
           if not tagCache[tag]
             tagCache[tag] =
-              sanitizedLength: 0
+              sanitizedLength: {all: 0}
               layout: layout
               name: tag
               slug: helpers.slug tag
@@ -59,7 +59,13 @@ module.exports = (options) ->
           tagCache[tag].files.push(data)
 
         for tag in data[handle]
-          tagCache[tag].sanitizedLength += 1
+          sanitizedLength = tagCache[tag].sanitizedLength
+          sanitizedLength.all += 1
+
+          if sanitizedLength[data.collection]?
+            sanitizedLength[data.collection] += 1
+          else
+            sanitizedLength[data.collection] = 0
 
     if _.keys(tagCache).length
       for key, tag of tagCache

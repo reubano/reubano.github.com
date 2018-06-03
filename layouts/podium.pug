@@ -26,7 +26,7 @@ block content
 
     .excerpts
       div(class='category-tags non-mobile')
-        +list-tags(tags_by_collection(collection))
+        +list-tags(tags_by_collection(collection), null, collection)
 
       .category-items
         - var upcomingEvents = collection.pagination ? upcoming(page.data) : upcoming(collection.data)

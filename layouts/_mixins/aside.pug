@@ -81,10 +81,10 @@ mixin get-site(collection, minCount=1, format='MMM &lsquo;YY')
         for tag in collection.data
           - var isHidden = hidden.indexOf(tag.name) > -1
 
-          if !isHidden && tag.sanitizedLength >= minCount
+          if !isHidden && tag.sanitizedLength.all >= minCount
             li.archive-list-item
               a.archive-list-link(href=url_for(tag.path))= tag.name
-                span.archive-list-count= tag.sanitizedLength
+                span.archive-list-count= tag.sanitizedLength.all
   else
     +pluralize('site', blog, 2)
       ul.inline-list
