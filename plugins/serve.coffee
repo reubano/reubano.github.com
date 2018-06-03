@@ -46,8 +46,8 @@ log = (message, options) ->
   timestamp = if options.stamp then " #{tstamp}" else ''
   logFunction "[metalsmith-serve]#{timestamp} #{message}"
 
-sendError = (res, status, message) ->
-  res.writeHead status, message
+sendError = (res, status, headers) ->
+  res.writeHead status, headers
   res.end HTTPStatus[status]
 
 module.exports = (options) ->
