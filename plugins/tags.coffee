@@ -11,7 +11,7 @@ module.exports = (options) ->
   singular = options.singular or 'tag'
   plural = options.plural or 'tags'
   sortBy = options.sortBy or 'title'
-  filter = options.filter
+  tagsFilter = options.tagsFilter
   reverse = options.reverse
 
   past = pattern.split('/')[0]
@@ -35,6 +35,9 @@ module.exports = (options) ->
         if typeof tagsData is 'string'
           tagsData = tagsData.split(',')
 
+        if tagsFilter and not tagsFilter tagsData
+          continue
+
         # reset original tag data so we can replace it with cleaned tags
         data[handle] = []
 
@@ -55,9 +58,8 @@ module.exports = (options) ->
           data[handle].push(tag)
           tagCache[tag].files.push(data)
 
-        if (filter and filter data[handle]) or not filter
-          for tag in data[handle]
-            tagCache[tag].sanitizedLength += 1
+        for tag in data[handle]
+          tagCache[tag].sanitizedLength += 1
 
     if _.keys(tagCache).length
       for key, tag of tagCache

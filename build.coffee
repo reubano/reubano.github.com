@@ -392,7 +392,7 @@ app = new Metalsmith(DIR)
     plural: 'tagz'
     sortBy: ['featured', sortByCollection, 'updated']
     reverse: true
-    filter: (tags) -> not _.intersection(tags, config.hidden).length
+    tagsFilter: (tags) -> not _.intersection(tags, config.hidden).length
   .use time plugin: 'tags'
   .use archive
     groupByMonth: true
