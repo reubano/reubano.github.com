@@ -9,11 +9,11 @@ imageTitle: Reuben Cummings giving a talk on open data
 
 ### Me
 
-Hi, I'm Reuben Cummings, a [Peoria](//goo.gl/maps/NdYAEhF1yBv) native, open source enthusiast, and [Pythonista](/tagged/python/). I believe the ability to understand data is key to making informed decisions. To this end, I have [made it my mission](/portfolio/) to lower the barriers to transforming data and extracting meaningful information from it.
+Hi, I'm Reuben Cummings, a [Peoria](//goo.gl/maps/NdYAEhF1yBv) native, open source enthusiast, and [Pythonista](/tagged/python/). I believe the ability to understand data is key to making informed decisions. To this end, I have [made it my mission](/podium/) to lower the barriers to transforming data and extracting meaningful information from it.
 
 With this data driven mindset, I help software companies eliminate inefficiencies and identify how customers are using their products and services. Whether you suffer from problems with customer engagement, churn, operating expenses, or productivity, [we can work together](/contact/) to devise a solution. When your data starts talking, I’m the one you want listening.<!-- more -->
 
-As a skilled developer and analyst, I specialize in collecting and interpreting business [data](/tagged/data/) to uncover a path to increased profitability. I've worked with Fortune 500 companies, NGOs, and startups alike to build business intelligence systems, automated reporting solutions, and interactive dashboards.
+As a skilled developer and analyst, I specialize in collecting and interpreting [business data](/tagged/data/) to uncover a path to increased profitability. I've worked with Fortune 500 companies, NGOs, and startups alike to build business intelligence systems, automated reporting solutions, and interactive dashboards.
 
 As part of my service offerings, I can help you answer questions such as the following:
 
